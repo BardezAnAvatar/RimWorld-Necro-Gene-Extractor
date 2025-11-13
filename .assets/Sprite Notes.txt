@@ -55,3 +55,19 @@ Skull Overlay:
 			- Shirnk 8px
 			- Feather 2
 			- Flood Fill Red
+			
+		Red highlights:
+			Add red bars to the pipes on the right.
+			- Give 4px or 2px padding for outlining
+			- Reduce the parallel plane by 4 px
+			- Flood fill with Death red color
+
+Tank:
+	Want to try a Purple target color (nuetroamine + red)
+	
+	Color Balance:
+		Red: 		+25
+		Magenta: 	-50
+		Blue:		+50
+		
+	Same balance on the "top" tank layer
