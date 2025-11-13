@@ -1,0 +1,57 @@
+Neutroamine item color in bottle:
+	52919a
+
+Red "death" color:
+	b92b2b
+
+
+Right Circular "Nutrition" tank Color Shift Experiments:
+
+	Color Shift:
+		Green:	50
+		Blue: 	100
+		Result: 00bdf3
+		
+		Green:	25
+		Blue: 	50
+		Result: 4d95a6
+		
+		Green:	33
+		Blue: 	66
+		Result: 2f99c4
+		
+		Red: 	10
+		Green:	25
+		Blue: 	50
+		Result: 558b9e
+		
+		Red: 	15
+		Green:	30
+		Blue: 	60
+		Result: 4786ac
+		(Going with this)
+
+Body tank color shift Experiments:
+	Cyan: 	-45
+	Green: 	10
+	Blue: 	60
+	
+	
+Skull Overlay:
+	North:
+		Center on the block.
+		50 px top, bottom
+		start with 96x96, need to rescale and sharpen (1.4x ?) :-/
+
+		Underlay:
+			- Draw a 96x96 Circle around Skull. Expand 16 px in each direction Left, Top, bottom
+			- Expand all the way to the right via Rect
+				- Leave 16px padding to right
+			- Alternatively
+				- Draw a 112x112 circle, center vertically, pad 16px inward of the left side
+				- Expand all the way to the right via Rect
+				- Leave 16px padding to right
+			- Flood Fill Black/gray
+			- Shirnk 8px
+			- Feather 2
+			- Flood Fill Red
