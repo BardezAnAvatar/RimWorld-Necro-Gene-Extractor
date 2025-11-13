@@ -75,7 +75,7 @@ Tank:
 	Seat:
 		Copy Seat from gene exgtractor from base game, remove surrounding color, paste as a layer between tank, overlay
 		- Scale the seat with no interpolation 300%
-		- Copy bubbles to an middle layer above the seat
+		- Copy bubbles to a middle layer above the seat
 		- Copy the base of the machine atop it as well so that anything "above" the seat will render over it.
 		- Sharpen the seat
 			- Radius 15
