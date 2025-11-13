@@ -38,3 +38,11 @@ This mod is an extension of [Gene Extractor Tiers](https://github.com/RedMattis/
 
 # Changelog
 All notable changes to this project will be documented in this file.
+
+
+# Credits
+- Inspired by [Necrogene](https://steamcommunity.com/sharedfiles/filedetails/?id=2981697023) by [Cybranian](https://steamcommunity.com/id/Cybranian/myworkshopfiles/?appid=294100).
+- Based off of [Gene Extractor Tiers](https://github.com/RedMattis/Gene-Extractor/) by [RedMattis](https://steamcommunity.com/sharedfiles/filedetails/?id=3016454783).
+- Textures
+  - Art originally by Phaneron
+    - Remixed and recolored by me (Bardez).
