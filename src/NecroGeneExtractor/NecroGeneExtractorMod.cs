@@ -1,0 +1,148 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Runtime.Remoting.Messaging;
+using System.Text;
+using System.Threading.Tasks;
+using Bardez.Biotech.NecroGeneExtractor.Settings;
+using GeneExtractorTiers;
+using Mono.Unix.Native;
+using RimWorld;
+using UnityEngine;
+using Verse;
+using Verse.Noise;
+
+namespace Bardez.Biotech.NecroGeneExtractor;
+
+public class NecroGeneExtractorMod : Mod
+{
+    private Vector2 _scrollPosition = new(0f, 0f);
+    private float _totalContentHeight = 800f;
+    private const float SCROLL_BAR_WIDTH_MARGIN = 20f;
+    private const float SCROLLABLE_AREA_HEIGHT = 9999f;
+    private const float TIER_AREA_LINES = 8f;
+    private const float HOURS_MIN = 1f;
+    private const float HOURS_MAX = 24f;
+    private const float NEUTROAMINE_MIN = 2f;
+    private const float NEUTROAMINE_MAX = 50f;
+
+    private const float LINE_HEIGHT_LABEL = 1.3f;
+    private const float LINE_HEIGHT_CHECKBOX = 1.4f;
+    private const float LINE_HEIGHT_SLIDER = 1.3f;
+
+
+    public static NecroGeneExtractorSettings _settings = null;
+    public static NecroGeneExtractorSettings Settings => _settings;
+
+    public NecroGeneExtractorMod(ModContentPack content) : base(content)
+    {
+        _settings = GetSettings<NecroGeneExtractorSettings>();
+
+        //ApplyHarmonyPatches();
+    }
+
+    /// <summary>
+    /// The (optional) GUI part to set your settings.
+    /// </summary>
+    /// <param name="inRect">A Unity Rect with the size of the settings window.</param>
+    public override void DoSettingsWindowContents(Rect inRect)
+    {
+        Rect outerRect = new Rect(inRect);
+
+        DrawSettings_Variables(outerRect);
+
+        base.DoSettingsWindowContents(inRect);
+    }
+
+    private void DrawSettings_Variables(Rect settingsArea)
+    {
+        bool scrollBarVisible = _totalContentHeight > settingsArea.height;
+
+        Rect scrollViewTotal = new Rect(0f, 0f, settingsArea.width - (scrollBarVisible ? SCROLL_BAR_WIDTH_MARGIN : 0f), _totalContentHeight);
+        Widgets.BeginScrollView(settingsArea, ref _scrollPosition, scrollViewTotal);
+
+        Rect viewRect = new Rect(0f, 0f, scrollViewTotal.width, SCROLLABLE_AREA_HEIGHT);
+
+        // Create the generic listing, which we'll fill with our settings.
+        Listing_Standard listing = new Listing_Standard();
+        listing.Begin(viewRect);
+
+        DrawSettingsTier(listing, viewRect.width, "NGET_ExtractorTier2", _settings.SettingsTier2);
+        DrawGapBetweenSections(listing);
+        DrawSettingsTier(listing, viewRect.width, "NGET_ExtractorTier3", _settings.SettingsTier4);
+        DrawGapBetweenSections(listing);
+        DrawSettingsTier(listing, viewRect.width, "NGET_ExtractorTier4", _settings.SettingsTier4);
+
+        _totalContentHeight = listing.CurHeight;
+        listing.End();
+
+        Widgets.EndScrollView();
+    }
+
+    private void DrawSettingsTier(Listing_Standard parent, float width, string tierName, NecroGeneExtractorTierSettings tierSettings)
+    {
+        var size = TIER_AREA_LINES;
+        Listing_Standard subSection = BeginSubSection(parent, Text.LineHeight * size, width: width);
+
+        subSection.Label(tierName.Translate());
+        DrawSettingsFresh(subSection, width, ref tierSettings.Fresh.CostMultiplierTime, ref tierSettings.Fresh.CostMultiplierResource);
+        DrawGapBetweenSections(subSection);
+        DrawSettingsNonFresh(subSection, width, "RotStateRotting", ref tierSettings.Rotting.Accept, ref tierSettings.Rotting.CostMultiplierTime, ref tierSettings.Rotting.CostMultiplierResource);
+        DrawGapBetweenSections(subSection);
+        DrawSettingsNonFresh(subSection, width, "RotStateDessicated", ref tierSettings.Dessicated.Accept, ref tierSettings.Dessicated.CostMultiplierTime, ref tierSettings.Dessicated.CostMultiplierResource);
+
+        subSection.End();
+    }
+
+    private void DrawSettingsFresh(Listing_Standard parent, float width, ref float hours, ref float neutroamine)
+    {
+        var size = LINE_HEIGHT_LABEL + LINE_HEIGHT_SLIDER + LINE_HEIGHT_SLIDER;
+        Listing_Standard subSection = BeginSubSection(parent, Text.LineHeight * size, width);
+
+        subSection.Label("RotStateFresh".Translate()); //base game string
+        hours = subSection.SliderLabeled("NGET_WorkHours".Translate(), hours, HOURS_MIN, HOURS_MAX, tooltip: "NGET_WorkHoursTooltip".Translate());
+        neutroamine = subSection.SliderLabeled("NGET_CostNeutroamine".Translate(), hours, NEUTROAMINE_MIN, NEUTROAMINE_MAX, tooltip: "NGET_CostNeutroamineTooltip".Translate());
+
+        subSection.End();
+    }
+
+    private void DrawSettingsNonFresh(Listing_Standard parent, float width, string corpseType, ref bool enabled, ref float hours, ref float neutroamine)
+    {
+        var size = LINE_HEIGHT_LABEL + LINE_HEIGHT_CHECKBOX + LINE_HEIGHT_SLIDER + LINE_HEIGHT_SLIDER;
+        Listing_Standard subSection = BeginSubSection(parent, Text.LineHeight * size, width);
+
+        subSection.Label(corpseType.Translate()); //base game string
+        subSection.CheckboxLabeled("NGET_CorpseTypeEnabled".Translate(), ref enabled, tooltip: "NGET_CorpseTypeEnabledTooltip"); //base game string
+
+        if (enabled)
+        {
+            hours = subSection.SliderLabeled("NGET_WorkHours".Translate(), hours, HOURS_MIN, HOURS_MAX, tooltip: "NGET_WorkHoursTooltip".Translate());
+            neutroamine = subSection.SliderLabeled("NGET_CostNeutroamine".Translate(), hours, NEUTROAMINE_MIN, NEUTROAMINE_MAX, tooltip: "NGET_CostNeutroamineTooltip".Translate());
+        }
+
+        subSection.End();
+    }
+
+    public Listing_Standard BeginSubSection(Listing_Standard parent, float height, float width, float sectionBorder = 4f, float bottomBorder = 4f)
+    {
+        Rect rect = parent.GetRect(height + sectionBorder + bottomBorder);
+        rect.width = width;
+        Widgets.DrawMenuSection(rect);
+        Listing_Standard listing_Standard = new Listing_Standard();
+        Rect rect2 = new Rect(rect.x + sectionBorder, rect.y + sectionBorder, rect.width - sectionBorder * 2f, rect.height - (sectionBorder + bottomBorder));
+        listing_Standard.Begin(rect2);
+
+        return listing_Standard;
+    }
+
+    public void DrawGapBetweenSections(Listing_Standard listing)
+    {
+        listing.Gap(20f);
+    }
+
+    public override string SettingsCategory()
+    {
+        return "NGET_ModName".Translate();
+    }
+}
