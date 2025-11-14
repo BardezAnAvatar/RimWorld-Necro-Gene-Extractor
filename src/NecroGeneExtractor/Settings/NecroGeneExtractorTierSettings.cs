@@ -2,11 +2,11 @@
 
 namespace Bardez.Biotech.NecroGeneExtractor.Settings;
 
-public class NecroGeneExtractorTierSettings(NecroGeneExtractorCorpseSettings fresh, NecroGeneExtractorCorpseSettings rotting, NecroGeneExtractorCorpseSettings dessicated)
+public class NecroGeneExtractorTierSettings(NecroGeneExtractorCorpseSettingsFresh fresh, NecroGeneExtractorCorpseSettingsNonFresh rotting, NecroGeneExtractorCorpseSettingsNonFresh dessicated)
 {
-    NecroGeneExtractorCorpseSettings Fresh => fresh;
-    NecroGeneExtractorCorpseSettings Rotting => rotting;
-    NecroGeneExtractorCorpseSettings Dessicated => dessicated;
+    public NecroGeneExtractorCorpseSettingsFresh Fresh => fresh;
+    public NecroGeneExtractorCorpseSettingsNonFresh Rotting => rotting;
+    public NecroGeneExtractorCorpseSettingsNonFresh Dessicated => dessicated;
 
     public void ExposeData(string prefix)
     {

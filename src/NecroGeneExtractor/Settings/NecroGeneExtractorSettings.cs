@@ -14,11 +14,11 @@ public class NecroGeneExtractorSettings : ModSettings
     public float CostTimeFresh = 3f;
 
     private readonly NecroGeneExtractorTierSettings _settingsTier2 
-        = new(new(null, 5f, 6f), new(false, defaultCostResourceMultiplierRotting, defaultCostTimeMultipierRotting), new(false, defaultCostResourceMultiplierDessicated, defaultCostTimeMultipierDessicated));
+        = new(new(5f, 6f), new(false, defaultCostResourceMultiplierRotting, defaultCostTimeMultipierRotting), new(false, defaultCostResourceMultiplierDessicated, defaultCostTimeMultipierDessicated));
     private readonly NecroGeneExtractorTierSettings _settingsTier3
-        = new(new(null, 4f, 4.5f), new(true, defaultCostResourceMultiplierRotting, defaultCostTimeMultipierRotting), new(false, defaultCostResourceMultiplierDessicated, defaultCostTimeMultipierDessicated));
+        = new(new(4f, 4.5f), new(true, defaultCostResourceMultiplierRotting, defaultCostTimeMultipierRotting), new(false, defaultCostResourceMultiplierDessicated, defaultCostTimeMultipierDessicated));
     private readonly NecroGeneExtractorTierSettings _settingsTier4
-        = new(new(null, 3f, 2.5f), new(true, defaultCostResourceMultiplierRotting, defaultCostTimeMultipierRotting), new(true, defaultCostResourceMultiplierDessicated, defaultCostTimeMultipierDessicated));
+        = new(new(3f, 2.5f), new(true, defaultCostResourceMultiplierRotting, defaultCostTimeMultipierRotting), new(true, defaultCostResourceMultiplierDessicated, defaultCostTimeMultipierDessicated));
 
     public NecroGeneExtractorTierSettings SettingsTier2 => _settingsTier2;
     public NecroGeneExtractorTierSettings SettingsTier3 => _settingsTier3;
