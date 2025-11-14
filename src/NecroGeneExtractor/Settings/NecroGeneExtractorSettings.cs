@@ -1,5 +1,4 @@
 ﻿using Verse;
-using static System.Security.Cryptography.ECCurve;
 
 namespace Bardez.Biotech.NecroGeneExtractor.Settings;
 
