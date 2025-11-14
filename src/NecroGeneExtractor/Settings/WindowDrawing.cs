@@ -7,6 +7,11 @@ internal static class WindowDrawing
 {
     private const float SCROLL_BAR_WIDTH_MARGIN = 20f;
     private const float SCROLLABLE_AREA_HEIGHT = 9999f;
+
+    private const float SECTION_HEIGHT_FRESH = 200f;
+    private const float SECTION_HEIGHT_NONFRESH = 300f;
+    private const float SECTION_HEIGHT_TIER = 600f;
+
     private const float TIER_AREA_LINES = 8f;
     private const float HOURS_MIN = 1f;
     private const float HOURS_MAX = 24f;
@@ -47,8 +52,7 @@ internal static class WindowDrawing
 
     private static void DrawSettingsTier(Listing_Standard parent, float width, string tierName, NecroGeneExtractorTierSettings tierSettings)
     {
-        var size = TIER_AREA_LINES;
-        Listing_Standard subSection = BeginSubSection(parent, Text.LineHeight * size, width: width);
+        Listing_Standard subSection = BeginSubSection(parent, SECTION_HEIGHT_TIER, width: width);
 
         subSection.Label(tierName.Translate());
         DrawSettingsFresh(subSection, width, ref tierSettings.Fresh.CostMultiplierTime, ref tierSettings.Fresh.CostMultiplierResource);
@@ -62,8 +66,7 @@ internal static class WindowDrawing
 
     private static void DrawSettingsFresh(Listing_Standard parent, float width, ref float hours, ref float neutroamine)
     {
-        var size = LINE_HEIGHT_LABEL + LINE_HEIGHT_SLIDER + LINE_HEIGHT_SLIDER;
-        Listing_Standard subSection = BeginSubSection(parent, Text.LineHeight * size, width);
+        Listing_Standard subSection = BeginSubSection(parent, SECTION_HEIGHT_FRESH, width);
 
         subSection.Label("RotStateFresh".Translate()); //base game string
         hours = subSection.SliderLabeled("NGET_WorkHours".Translate(), hours, HOURS_MIN, HOURS_MAX, tooltip: "NGET_WorkHoursTooltip".Translate());
@@ -74,8 +77,7 @@ internal static class WindowDrawing
 
     private static void DrawSettingsNonFresh(Listing_Standard parent, float width, string corpseType, ref bool enabled, ref float hours, ref float neutroamine)
     {
-        var size = LINE_HEIGHT_LABEL + LINE_HEIGHT_CHECKBOX + LINE_HEIGHT_SLIDER + LINE_HEIGHT_SLIDER;
-        Listing_Standard subSection = BeginSubSection(parent, Text.LineHeight * size, width);
+        Listing_Standard subSection = BeginSubSection(parent, SECTION_HEIGHT_NONFRESH, width);
 
         subSection.Label(corpseType.Translate()); //base game string
         subSection.CheckboxLabeled("NGET_CorpseTypeEnabled".Translate(), ref enabled, tooltip: "NGET_CorpseTypeEnabledTooltip"); //base game string
@@ -92,7 +94,7 @@ internal static class WindowDrawing
     public static Listing_Standard BeginSubSection(Listing_Standard parent, float height, float width, float sectionBorder = 4f, float bottomBorder = 4f)
     {
         Rect rect = parent.GetRect(height + sectionBorder + bottomBorder);
-        rect.width = width;
+        rect.width = width - sectionBorder;
         Widgets.DrawMenuSection(rect);
         Listing_Standard listing_Standard = new Listing_Standard();
         Rect rect2 = new Rect(rect.x + sectionBorder, rect.y + sectionBorder, rect.width - sectionBorder * 2f, rect.height - (sectionBorder + bottomBorder));
