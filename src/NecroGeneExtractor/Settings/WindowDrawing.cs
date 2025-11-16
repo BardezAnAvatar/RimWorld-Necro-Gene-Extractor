@@ -22,6 +22,8 @@ internal static class WindowDrawing
     private const float LINE_HEIGHT_CHECKBOX = 1.4f;
     private const float LINE_HEIGHT_SLIDER = 1.3f;
 
+    private const float LINE_HEIGHT_MULTIPIER = 1.35f;
+
     private static Vector2 _scrollPosition = new(0f, 0f);
     private static float _totalContentHeight = 800f;
 
