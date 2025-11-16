@@ -56,7 +56,13 @@ internal static class WindowDrawing
     {
         Listing_Standard subSection = BeginSubSection(parent, SECTION_HEIGHT_TIER, width: width);
 
-        subSection.Label(tierName.Translate());
+        // Make section text bigger
+        var previousFont = Text.Font;
+        Text.Font = GameFont.Medium;
+        TaggedString header = "<b><color=\"green\">" + tierName.Translate() + "</color></b>";
+        subSection.Label(header);
+        Text.Font = previousFont;
+
         DrawSettingsFresh(subSection, width, ref tierSettings.Fresh.CostMultiplierTime, ref tierSettings.Fresh.CostMultiplierResource);
         DrawGapBetweenSections(subSection);
         DrawSettingsNonFresh(subSection, width, "RotStateRotting", ref tierSettings.Rotting.Accept, ref tierSettings.Rotting.CostMultiplierTime, ref tierSettings.Rotting.CostMultiplierResource);
