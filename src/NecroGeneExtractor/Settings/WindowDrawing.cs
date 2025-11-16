@@ -82,12 +82,8 @@ internal static class WindowDrawing
         Listing_Standard subSection = BeginSubSection(parent, height, width);
 
         DrawCorpseTypeHeader(subSection, "RotStateFresh");
-
-        var hoursLabel = "NGET_WorkHours".Translate().Formatted(hours);
-        hours = subSection.SliderLabeled(hoursLabel, hours, HOURS_MIN, HOURS_MAX, tooltip: "NGET_WorkHoursTooltip".Translate());
-
-        var neutroamineLabel = "NGET_CostNeutroamine".Translate().Formatted(neutroamine);
-        neutroamine = subSection.SliderLabeled(neutroamineLabel, neutroamine, NEUTROAMINE_MIN, NEUTROAMINE_MAX, tooltip: "NGET_CostNeutroamineTooltip".Translate());
+        DrawHoursAndNeutroamine(subSection, ref hours, ref neutroamine,
+            "NGET_WorkHours", "NGET_WorkHoursTooltip", "NGET_CostNeutroamine", "NGET_CostNeutroamineTooltip");
 
         parent.EndSection(subSection);
     }
@@ -123,11 +119,11 @@ internal static class WindowDrawing
     {
         var hoursLabel = hoursLabelKey.Translate().Formatted(hours);
         var hoursTooltip = hoursTooltipKey.Translate();
-        hours = subSection.SliderLabeled(hoursLabel, hours, HOURS_MIN, HOURS_MAX, tooltip: hoursTooltip);
+        hours = subSection.SliderLabeled(hoursLabel, hours, HOURS_MIN, HOURS_MAX, 0.1f, tooltip: hoursTooltip);
 
         var neutroamineLabel = neutroLabelKey.Translate().Formatted(neutroamine);
         var neutroTooltip = neutroTooltipKey.Translate();
-        neutroamine = subSection.SliderLabeled(neutroamineLabel, neutroamine, NEUTROAMINE_MIN, NEUTROAMINE_MAX, tooltip: neutroTooltip);
+        neutroamine = subSection.SliderLabeled(neutroamineLabel, neutroamine, NEUTROAMINE_MIN, NEUTROAMINE_MAX, 0.1f, tooltip: neutroTooltip);
     }
 
     private static Listing_Standard BeginSubSection(Listing_Standard parent, float height, float width, float sectionBorder = 6f, float bottomBorder = 4f)
