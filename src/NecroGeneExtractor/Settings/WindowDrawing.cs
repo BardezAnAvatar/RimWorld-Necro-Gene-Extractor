@@ -110,7 +110,7 @@ internal static class WindowDrawing
         parent.EndSection(subSection);
     }
 
-    public static Listing_Standard BeginSubSection(Listing_Standard parent, float height, float width, float sectionBorder = 6f, float bottomBorder = 4f)
+    private static Listing_Standard BeginSubSection(Listing_Standard parent, float height, float width, float sectionBorder = 6f, float bottomBorder = 4f)
     {
         Rect rect = parent.GetRect(height + sectionBorder + bottomBorder);
         Widgets.DrawMenuSection(rect);
