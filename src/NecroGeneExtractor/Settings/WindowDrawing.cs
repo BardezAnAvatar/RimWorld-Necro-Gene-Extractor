@@ -73,10 +73,7 @@ internal static class WindowDrawing
         var height = GetHeightCorpseTypeFresh();
         Listing_Standard subSection = BeginSubSection(parent, height, width);
 
-        var stateString = "RotStateFresh".Translate(); //base game string
-        var corpseString = "<b>" + "NGET_CorpseType".Translate().Formatted(stateString) + "</b>";
-
-        subSection.Label(corpseString);
+        DrawCorpseTypeHeader(parent, "RotStateFresh");
 
         var hoursLabel = "NGET_WorkHours".Translate().Formatted(hours);
         hours = subSection.SliderLabeled(hoursLabel, hours, HOURS_MIN, HOURS_MAX, tooltip: "NGET_WorkHoursTooltip".Translate());
@@ -92,10 +89,7 @@ internal static class WindowDrawing
         var height = GetHeightCorpseTypeNonFresh(enabled);
         Listing_Standard subSection = BeginSubSection(parent, height, width);
 
-        var stateString = corpseType.Translate(); //base game string
-        var corpseString = "<b>" + "NGET_CorpseType".Translate().Formatted(stateString) + "</b>";
-        subSection.Label(corpseString);
-
+        DrawCorpseTypeHeader(parent, corpseType);
         subSection.CheckboxLabeled("NGET_CorpseTypeEnabled".Translate(), ref enabled, tooltip: "NGET_CorpseTypeEnabledTooltip");
 
         if (enabled)
