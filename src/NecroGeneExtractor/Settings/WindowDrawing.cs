@@ -92,8 +92,11 @@ internal static class WindowDrawing
     {
         Listing_Standard subSection = BeginSubSection(parent, SECTION_HEIGHT_NONFRESH, width);
 
-        subSection.Label(corpseType.Translate()); //base game string
-        subSection.CheckboxLabeled("NGET_CorpseTypeEnabled".Translate(), ref enabled, tooltip: "NGET_CorpseTypeEnabledTooltip"); //base game string
+        var stateString = corpseType.Translate(); //base game string
+        var corpseString = "<b>" + "NGET_CorpseType".Translate().Formatted(stateString) + "</b>";
+
+        subSection.Label(corpseString);
+        subSection.CheckboxLabeled("NGET_CorpseTypeEnabled".Translate(), ref enabled, tooltip: "NGET_CorpseTypeEnabledTooltip");
 
         if (enabled)
         {
