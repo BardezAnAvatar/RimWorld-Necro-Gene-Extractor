@@ -10,7 +10,7 @@ internal static class WindowDrawing
 
     private const float SECTION_HEIGHT_FRESH = 200f;
     private const float SECTION_HEIGHT_NONFRESH = 300f;
-    private const float SECTION_HEIGHT_TIER = 600f;
+    private const float SECTION_HEIGHT_TIER = 1000f;
 
     private const float TIER_AREA_LINES = 8f;
     private const float HOURS_MIN = 1f;
