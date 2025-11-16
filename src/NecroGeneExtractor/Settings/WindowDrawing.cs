@@ -61,7 +61,7 @@ internal static class WindowDrawing
         DrawGapBetweenSections(subSection);
         DrawSettingsNonFresh(subSection, width, "RotStateDessicated", ref tierSettings.Dessicated.Accept, ref tierSettings.Dessicated.CostMultiplierTime, ref tierSettings.Dessicated.CostMultiplierResource);
 
-        subSection.End();
+        parent.EndSection(subSection);
     }
 
     private static void DrawSettingsFresh(Listing_Standard parent, float width, ref float hours, ref float neutroamine)
@@ -72,7 +72,7 @@ internal static class WindowDrawing
         hours = subSection.SliderLabeled("NGET_WorkHours".Translate(), hours, HOURS_MIN, HOURS_MAX, tooltip: "NGET_WorkHoursTooltip".Translate());
         neutroamine = subSection.SliderLabeled("NGET_CostNeutroamine".Translate(), hours, NEUTROAMINE_MIN, NEUTROAMINE_MAX, tooltip: "NGET_CostNeutroamineTooltip".Translate());
 
-        subSection.End();
+        parent.EndSection(subSection);
     }
 
     private static void DrawSettingsNonFresh(Listing_Standard parent, float width, string corpseType, ref bool enabled, ref float hours, ref float neutroamine)
@@ -88,7 +88,7 @@ internal static class WindowDrawing
             neutroamine = subSection.SliderLabeled("NGET_CostNeutroamine".Translate(), hours, NEUTROAMINE_MIN, NEUTROAMINE_MAX, tooltip: "NGET_CostNeutroamineTooltip".Translate());
         }
 
-        subSection.End();
+        parent.EndSection(subSection);
     }
 
     public static Listing_Standard BeginSubSection(Listing_Standard parent, float height, float width, float sectionBorder = 4f, float bottomBorder = 4f)
