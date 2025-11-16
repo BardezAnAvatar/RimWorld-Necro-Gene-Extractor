@@ -137,12 +137,7 @@ internal static class WindowDrawing
     private static float GetHeightCorpseTypeNonFresh(bool enabled)
     {
         var textLineHeight = Text.LineHeight;
-        var height = (Text.LineHeight * LINE_HEIGHT_MULTIPIER);
-
-        if (enabled)
-        {
-            height *= 3f;
-        }
+        var height = (Text.LineHeight * LINE_HEIGHT_MULTIPIER) * (enabled ? 4f : 2f);
 
         return height;
     }
