@@ -77,8 +77,7 @@ internal static class WindowDrawing
 
     private static void DrawSettingsFresh(Listing_Standard parent, float width, ref float hours, ref float neutroamine)
     {
-        var textLineHeight = Text.LineHeight;
-        var height = (Text.LineHeight * LINE_HEIGHT_MULTIPIER) * 3f;
+        var height = GetHeightCorpseTypeFresh();
         Listing_Standard subSection = BeginSubSection(parent, height, width);
 
         var stateString = "RotStateFresh".Translate(); //base game string
@@ -93,7 +92,8 @@ internal static class WindowDrawing
 
     private static void DrawSettingsNonFresh(Listing_Standard parent, float width, string corpseType, ref bool enabled, ref float hours, ref float neutroamine)
     {
-        Listing_Standard subSection = BeginSubSection(parent, SECTION_HEIGHT_NONFRESH, width);
+        var height = GetHeightCorpseTypeNonFresh(enabled);
+        Listing_Standard subSection = BeginSubSection(parent, height, width);
 
         var stateString = corpseType.Translate(); //base game string
         var corpseString = "<b>" + "NGET_CorpseType".Translate().Formatted(stateString) + "</b>";
@@ -124,5 +124,26 @@ internal static class WindowDrawing
     private static void DrawGapBetweenSections(Listing_Standard listing)
     {
         listing.Gap(SECTION_GAP);
+    }
+
+    private static float GetHeightCorpseTypeFresh()
+    {
+        var textLineHeight = Text.LineHeight;
+        var height = (Text.LineHeight * LINE_HEIGHT_MULTIPIER) * 3f;
+
+        return height;
+    }
+
+    private static float GetHeightCorpseTypeNonFresh(bool enabled)
+    {
+        var textLineHeight = Text.LineHeight;
+        var height = (Text.LineHeight * LINE_HEIGHT_MULTIPIER);
+
+        if (enabled)
+        {
+            height *= 3f;
+        }
+
+        return height;
     }
 }
