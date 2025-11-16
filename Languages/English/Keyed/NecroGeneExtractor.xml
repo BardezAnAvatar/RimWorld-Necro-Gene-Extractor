@@ -14,4 +14,7 @@
 	<NGET_CostNeutroamine>Neutroamine required: {0}</NGET_CostNeutroamine>
 	<NGET_CostNeutroamineTooltip>The amount of neutroamine it should cost to extract one genepack from this type of corpse</NGET_CostNeutroamineTooltip>
 
+	<NGET_WorkHoursMultiplier>Hours of work: {0}×</NGET_WorkHoursMultiplier>
+	<NGET_CostNeutroamineMultiplier>Neutroamine required: {0}×</NGET_CostNeutroamineMultiplier>
+	
 </LanguageData>
