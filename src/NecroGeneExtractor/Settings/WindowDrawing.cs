@@ -9,19 +9,12 @@ internal static class WindowDrawing
     private const float SCROLL_BAR_WIDTH_MARGIN = 20f;
     private const float SCROLLABLE_AREA_HEIGHT = 9999f;
 
-    private const float SECTION_HEIGHT_FRESH = 200f;
-    private const float SECTION_HEIGHT_NONFRESH = 300f;
     private const float SECTION_HEIGHT_TIER = 1000f;
 
-    private const float TIER_AREA_LINES = 8f;
     private const float HOURS_MIN = 1f;
     private const float HOURS_MAX = 24f;
     private const float NEUTROAMINE_MIN = 2f;
     private const float NEUTROAMINE_MAX = 50f;
-
-    private const float LINE_HEIGHT_LABEL = 1.3f;
-    private const float LINE_HEIGHT_CHECKBOX = 1.4f;
-    private const float LINE_HEIGHT_SLIDER = 1.3f;
 
     private const float LINE_HEIGHT_MULTIPIER = 1.35f;
 
