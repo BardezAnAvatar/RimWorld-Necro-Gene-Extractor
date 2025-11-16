@@ -77,8 +77,12 @@ internal static class WindowDrawing
         var corpseString = "<b>" + "NGET_CorpseType".Translate().Formatted(stateString) + "</b>";
 
         subSection.Label(corpseString);
-        hours = subSection.SliderLabeled("NGET_WorkHours".Translate(), hours, HOURS_MIN, HOURS_MAX, tooltip: "NGET_WorkHoursTooltip".Translate());
-        neutroamine = subSection.SliderLabeled("NGET_CostNeutroamine".Translate(), hours, NEUTROAMINE_MIN, NEUTROAMINE_MAX, tooltip: "NGET_CostNeutroamineTooltip".Translate());
+
+        var hoursLabel = "NGET_WorkHours".Translate().Formatted(hours);
+        hours = subSection.SliderLabeled(hoursLabel, hours, HOURS_MIN, HOURS_MAX, tooltip: "NGET_WorkHoursTooltip".Translate());
+
+        var neutroamineLabel = "NGET_CostNeutroamine".Translate().Formatted(neutroamine);
+        neutroamine = subSection.SliderLabeled(neutroamineLabel, hours, NEUTROAMINE_MIN, NEUTROAMINE_MAX, tooltip: "NGET_CostNeutroamineTooltip".Translate());
 
         parent.EndSection(subSection);
     }
