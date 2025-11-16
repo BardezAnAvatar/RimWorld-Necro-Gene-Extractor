@@ -50,14 +50,10 @@ internal static class WindowDrawing
 
     private static void DrawSettingsTier(Listing_Standard parent, float width, string tierName, NecroGeneExtractorTierSettings tierSettings)
     {
+        TaggedString header = "<b><color=\"green\">" + tierName.Translate() + "</color></b>";
         Listing_Standard subSection = BeginSubSection(parent, SECTION_HEIGHT_TIER, width: width);
 
-        // Make section text bigger
-        var previousFont = Text.Font;
-        Text.Font = GameFont.Medium;
-        TaggedString header = "<b><color=\"green\">" + tierName.Translate() + "</color></b>";
-        subSection.Label(header);
-        Text.Font = previousFont;
+        DrawTierHeader(subSection, header);
 
         DrawSettingsFresh(subSection, width, ref tierSettings.Fresh.CostMultiplierTime, ref tierSettings.Fresh.CostMultiplierResource);
         DrawGapBetweenSections(subSection);
@@ -66,6 +62,15 @@ internal static class WindowDrawing
         DrawSettingsNonFresh(subSection, width, "RotStateDessicated", ref tierSettings.Dessicated.Accept, ref tierSettings.Dessicated.CostMultiplierTime, ref tierSettings.Dessicated.CostMultiplierResource);
 
         parent.EndSection(subSection);
+    }
+
+    private static void DrawTierHeader(Listing_Standard subSection, TaggedString header)
+    {
+        // Make section text bigger
+        var previousFont = Text.Font;
+        Text.Font = GameFont.Medium;
+        subSection.Label(header);
+        Text.Font = previousFont;
     }
 
     private static void DrawSettingsFresh(Listing_Standard parent, float width, ref float hours, ref float neutroamine)
