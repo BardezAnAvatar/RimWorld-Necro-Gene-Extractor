@@ -25,6 +25,8 @@ internal static class WindowDrawing
 
     private const float LINE_HEIGHT_MULTIPIER = 1.35f;
 
+    private const float SECTION_GAP = 20f;
+
     private static Vector2 _scrollPosition = new(0f, 0f);
     private static float _totalContentHeight = 800f;
 
@@ -119,8 +121,8 @@ internal static class WindowDrawing
         return listing_Standard;
     }
 
-    public static void DrawGapBetweenSections(Listing_Standard listing)
+    private static void DrawGapBetweenSections(Listing_Standard listing)
     {
-        listing.Gap(20f);
+        listing.Gap(SECTION_GAP);
     }
 }
