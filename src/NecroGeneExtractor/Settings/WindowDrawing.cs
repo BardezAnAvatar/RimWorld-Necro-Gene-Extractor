@@ -101,10 +101,10 @@ internal static class WindowDrawing
         if (enabled)
         {
             var hoursLabel = "NGET_WorkHoursMultiplier".Translate().Formatted(hours);
-            hours = subSection.SliderLabeled(hoursLabel, hours, HOURS_MIN, HOURS_MAX, tooltip: "NGET_WorkHoursTooltip".Translate());
-            
+            hours = subSection.SliderLabeled(hoursLabel, hours, HOURS_MIN, HOURS_MAX, tooltip: "NGET_WorkHoursMultiplierTooltip".Translate());
+
             var neutroamineLabel = "NGET_CostNeutroamineMultiplier".Translate().Formatted(neutroamine);
-            neutroamine = subSection.SliderLabeled(neutroamineLabel, neutroamine, NEUTROAMINE_MIN, NEUTROAMINE_MAX, tooltip: "NGET_CostNeutroamineTooltip".Translate());
+            neutroamine = subSection.SliderLabeled(neutroamineLabel, neutroamine, NEUTROAMINE_MIN, NEUTROAMINE_MAX, tooltip: "NGET_CostNeutroamineMultiplierTooltip".Translate());
         }
 
         parent.EndSection(subSection);

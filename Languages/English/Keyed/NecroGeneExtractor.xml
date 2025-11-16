@@ -11,10 +11,12 @@
 
 	<NGET_WorkHours>Hours of work: {0}</NGET_WorkHours>
 	<NGET_WorkHoursTooltip>The amount of in-game hours it should take to extract one genepack from this type of corpse</NGET_WorkHoursTooltip>
+	<NGET_WorkHoursMultiplier>Hours of work multiplier: {0}×</NGET_WorkHoursMultiplier>
+	<NGET_WorkHoursMultiplierTooltip>The multiplier for length of time that it should take to extract one genepack from this type of corpse</NGET_WorkHoursMultiplierTooltip>
+	
 	<NGET_CostNeutroamine>Neutroamine required: {0}</NGET_CostNeutroamine>
 	<NGET_CostNeutroamineTooltip>The amount of neutroamine it should cost to extract one genepack from this type of corpse</NGET_CostNeutroamineTooltip>
-
-	<NGET_WorkHoursMultiplier>Hours of work: {0}×</NGET_WorkHoursMultiplier>
 	<NGET_CostNeutroamineMultiplier>Neutroamine required: {0}×</NGET_CostNeutroamineMultiplier>
-	
+	<NGET_CostNeutroamineMultiplierTooltip>The multiplier for amount of neutroamine that it should take to extract one genepack from this type of corpse</NGET_CostNeutroamineMultiplierTooltip>
+
 </LanguageData>
