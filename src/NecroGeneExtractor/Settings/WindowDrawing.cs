@@ -94,8 +94,8 @@ internal static class WindowDrawing
 
         var stateString = corpseType.Translate(); //base game string
         var corpseString = "<b>" + "NGET_CorpseType".Translate().Formatted(stateString) + "</b>";
-
         subSection.Label(corpseString);
+
         subSection.CheckboxLabeled("NGET_CorpseTypeEnabled".Translate(), ref enabled, tooltip: "NGET_CorpseTypeEnabledTooltip");
 
         if (enabled)
@@ -106,6 +106,13 @@ internal static class WindowDrawing
         }
 
         parent.EndSection(subSection);
+    }
+
+    private static void DrawCorpseTypeHeader(Listing_Standard subSection, string corpseTypeKey)
+    {
+        var stateString = corpseTypeKey.Translate(); //base game string
+        var corpseString = "<b>" + "NGET_CorpseType".Translate().Formatted(stateString) + "</b>";
+        subSection.Label(corpseString);
     }
 
     private static void DrawHoursAndNeutroamine(Listing_Standard subSection, ref float hours, ref float neutroamine,
