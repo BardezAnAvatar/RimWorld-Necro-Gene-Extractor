@@ -13,7 +13,7 @@ internal static class WindowDrawing
 
     private const float HOURS_MIN = 1f;
     private const float HOURS_MAX = 24f;
-    private const float NEUTROAMINE_MIN = 2f;
+    private const float NEUTROAMINE_MIN = 1f;
     private const float NEUTROAMINE_MAX = 50f;
 
     private const float LINE_HEIGHT_MULTIPIER = 1.35f;
