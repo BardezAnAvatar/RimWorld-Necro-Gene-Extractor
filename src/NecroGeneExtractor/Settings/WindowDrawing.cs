@@ -1,5 +1,5 @@
 ﻿using Bardez.Biotech.NecroGeneExtractor.Utilities;
-﻿using UnityEngine;
+using UnityEngine;
 using Verse;
 
 namespace Bardez.Biotech.NecroGeneExtractor.Settings;
@@ -111,7 +111,6 @@ internal static class WindowDrawing
     public static Listing_Standard BeginSubSection(Listing_Standard parent, float height, float width, float sectionBorder = 6f, float bottomBorder = 4f)
     {
         Rect rect = parent.GetRect(height + sectionBorder + bottomBorder);
-        rect.width = width - sectionBorder;
         Widgets.DrawMenuSection(rect);
         Listing_Standard listing_Standard = new Listing_Standard();
         Rect rect2 = new Rect(rect.x + sectionBorder, rect.y + sectionBorder, rect.width - (sectionBorder * 2f), rect.height - (sectionBorder + bottomBorder));
