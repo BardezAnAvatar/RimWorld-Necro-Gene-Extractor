@@ -82,7 +82,7 @@ internal static class WindowDrawing
         hours = subSection.SliderLabeled(hoursLabel, hours, HOURS_MIN, HOURS_MAX, tooltip: "NGET_WorkHoursTooltip".Translate());
 
         var neutroamineLabel = "NGET_CostNeutroamine".Translate().Formatted(neutroamine);
-        neutroamine = subSection.SliderLabeled(neutroamineLabel, hours, NEUTROAMINE_MIN, NEUTROAMINE_MAX, tooltip: "NGET_CostNeutroamineTooltip".Translate());
+        neutroamine = subSection.SliderLabeled(neutroamineLabel, neutroamine, NEUTROAMINE_MIN, NEUTROAMINE_MAX, tooltip: "NGET_CostNeutroamineTooltip".Translate());
 
         parent.EndSection(subSection);
     }
