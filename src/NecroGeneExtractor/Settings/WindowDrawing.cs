@@ -73,7 +73,7 @@ internal static class WindowDrawing
         var height = GetHeightCorpseTypeFresh();
         Listing_Standard subSection = BeginSubSection(parent, height, width);
 
-        DrawCorpseTypeHeader(parent, "RotStateFresh");
+        DrawCorpseTypeHeader(subSection, "RotStateFresh");
 
         var hoursLabel = "NGET_WorkHours".Translate().Formatted(hours);
         hours = subSection.SliderLabeled(hoursLabel, hours, HOURS_MIN, HOURS_MAX, tooltip: "NGET_WorkHoursTooltip".Translate());
@@ -89,7 +89,7 @@ internal static class WindowDrawing
         var height = GetHeightCorpseTypeNonFresh(enabled);
         Listing_Standard subSection = BeginSubSection(parent, height, width);
 
-        DrawCorpseTypeHeader(parent, corpseType);
+        DrawCorpseTypeHeader(subSection, corpseType);
         subSection.CheckboxLabeled("NGET_CorpseTypeEnabled".Translate(), ref enabled, tooltip: "NGET_CorpseTypeEnabledTooltip");
 
         if (enabled)
@@ -105,8 +105,9 @@ internal static class WindowDrawing
     private static void DrawCorpseTypeHeader(Listing_Standard subSection, string corpseTypeKey)
     {
         var stateString = corpseTypeKey.Translate(); //base game string
-        var corpseString = "<b>" + "NGET_CorpseType".Translate().Formatted(stateString) + "</b>";
-        subSection.Label(corpseString);
+        var corpseString = "NGET_CorpseType".Translate().Formatted(stateString);
+        var labelString = "<b>" + corpseString + "</b>";
+        subSection.Label(labelString);
     }
 
     private static void DrawHoursAndNeutroamine(Listing_Standard subSection, ref float hours, ref float neutroamine,
