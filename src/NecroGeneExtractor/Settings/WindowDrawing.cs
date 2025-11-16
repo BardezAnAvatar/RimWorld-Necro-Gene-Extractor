@@ -19,6 +19,8 @@ internal static class WindowDrawing
     private const float LINE_HEIGHT_MULTIPIER = 1.35f;
 
     private const float SECTION_GAP = 20f;
+    private const float LINE_MARGIN_VERTICAL = 12f;
+    private const float SUBSECTION_PADDING = 2f;
 
     private static Vector2 _scrollPosition = new(0f, 0f);
     private static float _totalContentHeight = 800f;
@@ -51,7 +53,8 @@ internal static class WindowDrawing
     private static void DrawSettingsTier(Listing_Standard parent, float width, string tierName, NecroGeneExtractorTierSettings tierSettings)
     {
         TaggedString header = "<b><color=\"green\">" + tierName.Translate() + "</color></b>";
-        Listing_Standard subSection = BeginSubSection(parent, SECTION_HEIGHT_TIER, width: width);
+        float height = GetHeightTierSubsection(tierSettings);
+        Listing_Standard subSection = BeginSubSection(parent, height, width: width);
 
         DrawTierHeader(subSection, header);
 
@@ -141,6 +144,26 @@ internal static class WindowDrawing
     private static void DrawGapBetweenSections(Listing_Standard listing)
     {
         listing.Gap(SECTION_GAP);
+    }
+
+    private static float GetHeightTierSubsection(NecroGeneExtractorTierSettings tierSettings)
+    {
+        var previousFont = Text.Font;
+
+        Text.Font = GameFont.Medium;
+        var headerHeight = Text.LineHeight + LINE_MARGIN_VERTICAL;
+        Text.Font = previousFont;
+
+        var height = headerHeight
+            + SUBSECTION_PADDING + GetHeightCorpseTypeFresh() + SUBSECTION_PADDING
+            + SECTION_GAP
+            + SUBSECTION_PADDING + GetHeightCorpseTypeNonFresh(tierSettings.Rotting.Accept) + SUBSECTION_PADDING
+            + SECTION_GAP
+            + SUBSECTION_PADDING + GetHeightCorpseTypeNonFresh(tierSettings.Dessicated.Accept) + SUBSECTION_PADDING
+            + SECTION_GAP
+         ;
+
+        return height;
     }
 
     private static float GetHeightCorpseTypeFresh()
