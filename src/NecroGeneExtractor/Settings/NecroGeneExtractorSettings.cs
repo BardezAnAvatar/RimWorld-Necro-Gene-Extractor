@@ -28,6 +28,7 @@ public class NecroGeneExtractorSettings : ModSettings
     /// </summary>
     public override void ExposeData()
     {
+        base.ExposeData();
         _settingsTier2.ExposeData(nameof(SettingsTier2));
         _settingsTier2.ExposeData(nameof(SettingsTier3));
         _settingsTier2.ExposeData(nameof(SettingsTier4));
