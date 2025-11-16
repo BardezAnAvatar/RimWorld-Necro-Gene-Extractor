@@ -74,7 +74,9 @@ internal static class WindowDrawing
 
     private static void DrawSettingsFresh(Listing_Standard parent, float width, ref float hours, ref float neutroamine)
     {
-        Listing_Standard subSection = BeginSubSection(parent, SECTION_HEIGHT_FRESH, width);
+        var textLineHeight = Text.LineHeight;
+        var height = (Text.LineHeight * LINE_HEIGHT_MULTIPIER) * 3f;
+        Listing_Standard subSection = BeginSubSection(parent, height, width);
 
         subSection.Label("RotStateFresh".Translate()); //base game string
         hours = subSection.SliderLabeled("NGET_WorkHours".Translate(), hours, HOURS_MIN, HOURS_MAX, tooltip: "NGET_WorkHoursTooltip".Translate());
