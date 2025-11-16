@@ -78,7 +78,10 @@ internal static class WindowDrawing
         var height = (Text.LineHeight * LINE_HEIGHT_MULTIPIER) * 3f;
         Listing_Standard subSection = BeginSubSection(parent, height, width);
 
-        subSection.Label("RotStateFresh".Translate()); //base game string
+        var stateString = "RotStateFresh".Translate(); //base game string
+        var corpseString = "<b>" + "NGET_CorpseType".Translate().Formatted(stateString) + "</b>";
+
+        subSection.Label(corpseString);
         hours = subSection.SliderLabeled("NGET_WorkHours".Translate(), hours, HOURS_MIN, HOURS_MAX, tooltip: "NGET_WorkHoursTooltip".Translate());
         neutroamine = subSection.SliderLabeled("NGET_CostNeutroamine".Translate(), hours, NEUTROAMINE_MIN, NEUTROAMINE_MAX, tooltip: "NGET_CostNeutroamineTooltip".Translate());
 
