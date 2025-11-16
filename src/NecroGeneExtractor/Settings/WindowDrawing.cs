@@ -1,3 +1,4 @@
+﻿using Bardez.Biotech.NecroGeneExtractor.Utilities;
 ﻿using UnityEngine;
 using Verse;
 
