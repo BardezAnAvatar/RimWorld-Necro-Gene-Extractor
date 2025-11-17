@@ -1,16 +1,18 @@
-﻿using Verse;
+﻿using Bardez.Biotech.NecroGeneExtractor.Utilities;
+using Verse;
 
 namespace Bardez.Biotech.NecroGeneExtractor.Settings;
 
-public class NecroGeneExtractorCorpseSettingsFresh(float multiplierResource, float multiplierTime)
+public class NecroGeneExtractorCorpseSettingsFresh(float costResource, float costTime) : IExposable
 {
-    public float CostMultiplierResource = multiplierResource;
+    public float CostResource = costResource;
 
-    public float CostMultiplierTime = multiplierTime;
+    public float CostTime = costTime;
 
-    public virtual void ExposeData(string prefix)
+    public void ExposeData()
     {
-        Scribe_Values.Look(ref CostMultiplierResource, $"{prefix}.{nameof(CostMultiplierResource)}", CostMultiplierResource);
-        Scribe_Values.Look(ref CostMultiplierTime, $"{prefix}.{nameof(CostMultiplierTime)}", CostMultiplierTime);
+        Scribe_Values.Look(ref CostResource, nameof(CostResource), CostResource);
+        Scribe_Values.Look(ref CostTime, nameof(CostTime), CostTime);
+        DebugMessaging.DebugMessage($"{nameof(CostTime)} changed: {CostTime}");
     }
 }

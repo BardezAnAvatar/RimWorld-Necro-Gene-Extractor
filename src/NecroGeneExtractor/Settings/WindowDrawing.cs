@@ -58,7 +58,7 @@ internal static class WindowDrawing
 
         DrawTierHeader(subSection, header);
 
-        DrawSettingsFresh(subSection, width, ref tierSettings.Fresh.CostMultiplierTime, ref tierSettings.Fresh.CostMultiplierResource);
+        DrawSettingsFresh(subSection, width, ref tierSettings.Fresh.CostTime, ref tierSettings.Fresh.CostResource);
         DrawGapBetweenSections(subSection);
         DrawSettingsNonFresh(subSection, width, "RotStateRotting", ref tierSettings.Rotting.Accept, ref tierSettings.Rotting.CostMultiplierTime, ref tierSettings.Rotting.CostMultiplierResource);
         DrawGapBetweenSections(subSection);
