@@ -15,6 +15,8 @@ internal static class WindowDrawing
     private const float HOURS_MAX = 24f;
     private const float NEUTROAMINE_MIN = 1f;
     private const float NEUTROAMINE_MAX = 50f;
+    private const float INCREMENT_TIME = 0.25f;
+    private const float INCREMENT_RESOURCE = 0.25f;
 
     private const float LINE_HEIGHT_MULTIPIER = 1.35f;
 
@@ -137,11 +139,11 @@ internal static class WindowDrawing
     {
         var hoursLabel = hoursLabelKey.Translate().Formatted(hours);
         var hoursTooltip = hoursTooltipKey.Translate();
-        hours = subSection.SliderLabeled(hoursLabel, hours, HOURS_MIN, HOURS_MAX, 0.1f, tooltip: hoursTooltip);
+        hours = subSection.SliderLabeled(hoursLabel, hours, HOURS_MIN, HOURS_MAX, INCREMENT_TIME, tooltip: hoursTooltip);
 
         var neutroamineLabel = neutroLabelKey.Translate().Formatted(neutroamine);
         var neutroTooltip = neutroTooltipKey.Translate();
-        neutroamine = subSection.SliderLabeled(neutroamineLabel, neutroamine, NEUTROAMINE_MIN, NEUTROAMINE_MAX, 0.1f, tooltip: neutroTooltip);
+        neutroamine = subSection.SliderLabeled(neutroamineLabel, neutroamine, NEUTROAMINE_MIN, NEUTROAMINE_MAX, INCREMENT_RESOURCE, tooltip: neutroTooltip);
     }
 
     private static Listing_Standard BeginSubSection(Listing_Standard parent, float height, float width, float sectionBorder = 6f, float bottomBorder = 4f)
