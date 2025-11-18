@@ -1,4 +1,5 @@
-﻿using Bardez.Biotech.NecroGeneExtractor.Settings;
+﻿using Bardez.Biotech.NecroGeneExtractor.Gui;
+using Bardez.Biotech.NecroGeneExtractor.Settings;
 using RimWorld;
 using UnityEngine;
 using Verse;

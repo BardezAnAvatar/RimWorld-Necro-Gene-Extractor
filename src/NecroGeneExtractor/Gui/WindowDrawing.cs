@@ -1,9 +1,10 @@
-﻿using Bardez.Biotech.NecroGeneExtractor.Utilities;
+﻿using Bardez.Biotech.NecroGeneExtractor.Settings;
 using UnityEngine;
 using Verse;
 
-namespace Bardez.Biotech.NecroGeneExtractor.Settings;
+namespace Bardez.Biotech.NecroGeneExtractor.Gui;
 
+/// <summary>Class that performs drawing and such via Unity and Rimworld windows</summary>
 internal static class WindowDrawing
 {
     private const float SCROLL_BAR_WIDTH_MARGIN = 20f;
@@ -151,7 +152,7 @@ internal static class WindowDrawing
         Rect rect = parent.GetRect(height + sectionBorder + bottomBorder);
         Widgets.DrawMenuSection(rect);
         Listing_Standard listing_Standard = new Listing_Standard();
-        Rect rect2 = new Rect(rect.x + sectionBorder, rect.y + sectionBorder, rect.width - (sectionBorder * 2f), rect.height - (sectionBorder + bottomBorder));
+        Rect rect2 = new Rect(rect.x + sectionBorder, rect.y + sectionBorder, rect.width - sectionBorder * 2f, rect.height - (sectionBorder + bottomBorder));
         listing_Standard.Begin(rect2);
 
         return listing_Standard;
@@ -185,7 +186,7 @@ internal static class WindowDrawing
     private static float GetHeightCorpseTypeFresh()
     {
         var textLineHeight = Text.LineHeight;
-        var height = (Text.LineHeight * LINE_HEIGHT_MULTIPIER) * 3f;
+        var height = Text.LineHeight * LINE_HEIGHT_MULTIPIER * 3f;
 
         return height;
     }
@@ -193,7 +194,7 @@ internal static class WindowDrawing
     private static float GetHeightCorpseTypeNonFresh(bool enabled)
     {
         var textLineHeight = Text.LineHeight;
-        var height = (Text.LineHeight * LINE_HEIGHT_MULTIPIER) * (enabled ? 4f : 2f);
+        var height = Text.LineHeight * LINE_HEIGHT_MULTIPIER * (enabled ? 4f : 2f);
 
         return height;
     }
