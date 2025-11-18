@@ -14,8 +14,6 @@ public class Tier4Settings : TierSettings
 
     public override CorpseSettingsNonFresh Dessicated => dessicated;
 
-    protected override string ClassName => nameof(Tier4Settings);
-
     public override void ExposeData()
     {
         Scribe_Deep.Look(ref fresh, nameof(Fresh));

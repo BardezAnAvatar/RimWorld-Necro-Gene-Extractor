@@ -13,13 +13,10 @@ public abstract class TierSettings : IExposable
 
     public abstract void ExposeData();
 
-    protected abstract string ClassName { get; }
-
     public override string ToString()
     {
         StringBuilder builder = new();
-        builder.Append(ClassName);
-        builder.Append(" {");
+        builder.Append("{");
         builder.Append(nameof(Fresh));
         builder.Append(": ");
         builder.Append(Fresh);
