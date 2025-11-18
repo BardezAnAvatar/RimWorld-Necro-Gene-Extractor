@@ -19,9 +19,11 @@ internal static class WindowDrawing
     private const float NEUTROAMINE_MIN = 1f;
     private const float NEUTROAMINE_MAX = 50f;
 
-    private const float SLIDER_LABEL_AREA_PCT = 0.25f;
     private const float INCREMENT_TIME = 0.25f;
     private const float INCREMENT_RESOURCE = 0.25f;
+
+    private const float SLIDER_LABEL_AREA_PCT = 0.25f;
+    private const float SLIDER_LABEL_SEPARATION_PCT = 0.1f;
 
     private const float LINE_HEIGHT_MULTIPIER = 1.4f;
 
@@ -170,12 +172,12 @@ internal static class WindowDrawing
         float y = subSection.CurHeight;
         float width = subSection.ColumnWidth;
         float labelWidth = SLIDER_LABEL_AREA_PCT;
-        float sliderWidth = 1f - SLIDER_LABEL_AREA_PCT - .1f;
+        float sliderWidth = 1f - SLIDER_LABEL_AREA_PCT - SLIDER_LABEL_SEPARATION_PCT;
         float heightNeeded = Text.LineHeight * LINE_HEIGHT_MULTIPIER;
 
-        var area = subSection.GetRect(heightNeeded);
+        var area = subSection.GetRect(heightNeeded); //reserve the area for the slider/label from the Listing_Standard
         var labelArea = area.LeftPart(labelWidth);
-        labelArea.y += 8; //it was drawing over the previous controls on screen
+        labelArea.y += 8; //move it down to center vertically a bit
         var sliderArea = area.RightPart(sliderWidth);
         sliderArea.y += 14; //it was drawing over the previous controls on screen
 
