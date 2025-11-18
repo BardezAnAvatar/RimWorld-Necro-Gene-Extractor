@@ -23,7 +23,7 @@ internal static class WindowDrawing
     private const float INCREMENT_TIME = 0.25f;
     private const float INCREMENT_RESOURCE = 0.25f;
 
-    private const float LINE_HEIGHT_MULTIPIER = 1.35f;
+    private const float LINE_HEIGHT_MULTIPIER = 1.4f;
 
     private const float SECTION_GAP = 20f;
     private const float LINE_MARGIN_VERTICAL = 12f;
@@ -157,11 +157,33 @@ internal static class WindowDrawing
     {
         var hoursLabel = hoursLabelKey.Translate().Formatted(hours.ToString("F2"));
         var hoursTooltip = hoursTooltipKey.Translate();
-        hours = subSection.SliderLabeled(hoursLabel, hours, HOURS_MIN, HOURS_MAX, SLIDER_LABEL_AREA_PCT, tooltip: hoursTooltip);
+        DrawHorizontalSlider(subSection, ref hours, hoursLabel, hoursTooltip, HOURS_MIN, HOURS_MAX, INCREMENT_TIME);
 
         var neutroamineLabel = neutroLabelKey.Translate().Formatted(neutroamine.ToString("F2"));
         var neutroTooltip = neutroTooltipKey.Translate();
-        neutroamine = subSection.SliderLabeled(neutroamineLabel, neutroamine, NEUTROAMINE_MIN, NEUTROAMINE_MAX, SLIDER_LABEL_AREA_PCT, tooltip: neutroTooltip);
+        DrawHorizontalSlider(subSection, ref neutroamine, neutroamineLabel, neutroTooltip, NEUTROAMINE_MIN, NEUTROAMINE_MAX, INCREMENT_RESOURCE);
+    }
+
+    private static void DrawHorizontalSlider(Listing_Standard subSection, ref float variable, TaggedString label, TaggedString tooltip,
+        float min, float max, float increment)
+    {
+        float y = subSection.CurHeight;
+        float width = subSection.ColumnWidth;
+        float labelWidth = SLIDER_LABEL_AREA_PCT;
+        float sliderWidth = 1f - SLIDER_LABEL_AREA_PCT - .1f;
+        float heightNeeded = Text.LineHeight * LINE_HEIGHT_MULTIPIER;
+
+        var area = subSection.GetRect(heightNeeded);
+        var labelArea = area.LeftPart(labelWidth);
+        labelArea.y += 8; //it was drawing over the previous controls on screen
+        var sliderArea = area.RightPart(sliderWidth);
+        sliderArea.y += 14; //it was drawing over the previous controls on screen
+
+        GUIContent labelInfo = new GUIContent(label, tooltip);
+        var range = new FloatRange(min, max);
+
+        Widgets.Label(labelArea, labelInfo);
+        Widgets.HorizontalSlider(sliderArea, ref variable, range, roundTo: increment);
     }
 
     private static Listing_Standard BeginSubSection(Listing_Standard parent, float height, float width, float sectionBorder = 6f, float bottomBorder = 4f)
