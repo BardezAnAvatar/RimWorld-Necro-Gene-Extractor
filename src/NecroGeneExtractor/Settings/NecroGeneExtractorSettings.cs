@@ -7,11 +7,11 @@ namespace Bardez.Biotech.NecroGeneExtractor.Settings;
 
 public class NecroGeneExtractorSettings : ModSettings
 {
-    public NecroGeneExtractorTier2Settings SettingsTier2 = new();
+    public Tier2Settings SettingsTier2 = new();
 
-    public NecroGeneExtractorTier3Settings SettingsTier3 = new();
+    public Tier3Settings SettingsTier3 = new();
 
-    public NecroGeneExtractorTier4Settings SettingsTier4 = new();
+    public Tier4Settings SettingsTier4 = new();
 
     /// <summary>
     /// The part that writes our settings to a file. Note that saving is by ref. Labels cannot use spaces (xml tags)

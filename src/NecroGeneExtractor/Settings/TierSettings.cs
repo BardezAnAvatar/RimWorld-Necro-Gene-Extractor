@@ -3,13 +3,13 @@ using Verse;
 
 namespace Bardez.Biotech.NecroGeneExtractor.Settings;
 
-public abstract class NecroGeneExtractorTierSettings : IExposable
+public abstract class TierSettings : IExposable
 {
-    public abstract NecroGeneExtractorCorpseSettingsFresh Fresh { get; }
+    public abstract CorpseSettingsFresh Fresh { get; }
 
-    public abstract NecroGeneExtractorCorpseSettingsNonFresh Rotting { get; }
+    public abstract CorpseSettingsNonFresh Rotting { get; }
 
-    public abstract NecroGeneExtractorCorpseSettingsNonFresh Dessicated { get; }
+    public abstract CorpseSettingsNonFresh Dessicated { get; }
 
     public abstract void ExposeData();
 

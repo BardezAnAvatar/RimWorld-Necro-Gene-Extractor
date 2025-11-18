@@ -1,7 +1,7 @@
 ﻿namespace Bardez.Biotech.NecroGeneExtractor.Settings.Tier3;
 
-public class NecroGeneExtractorTier3CorpseSettingsFresh
-    : NecroGeneExtractorCorpseSettingsFresh
+public class Tier3CorpseSettingsFresh
+    : CorpseSettingsFresh
 {
     protected override float DefaultResource => DefaultSettings.TIER3_FRESH_RESOURCE;
 

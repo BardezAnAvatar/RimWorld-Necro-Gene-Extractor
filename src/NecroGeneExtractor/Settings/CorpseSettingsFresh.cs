@@ -4,7 +4,7 @@ using Verse;
 
 namespace Bardez.Biotech.NecroGeneExtractor.Settings;
 
-public abstract class NecroGeneExtractorCorpseSettingsFresh : IExposable
+public abstract class CorpseSettingsFresh : IExposable
 {
     public float CostResource;
 

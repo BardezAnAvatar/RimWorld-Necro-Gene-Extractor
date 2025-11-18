@@ -3,7 +3,7 @@ using Verse;
 
 namespace Bardez.Biotech.NecroGeneExtractor.Settings;
 
-public abstract class NecroGeneExtractorCorpseSettingsNonFresh : IExposable
+public abstract class CorpseSettingsNonFresh : IExposable
 {
     public bool Accept;
 

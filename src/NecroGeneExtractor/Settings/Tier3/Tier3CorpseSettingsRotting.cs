@@ -1,7 +1,7 @@
 ﻿namespace Bardez.Biotech.NecroGeneExtractor.Settings.Tier3;
 
-public class NecroGeneExtractorTier3CorpseSettingsRotting
-    : NecroGeneExtractorCorpseSettingsNonFresh
+public class Tier3CorpseSettingsRotting
+    : CorpseSettingsNonFresh
 {
     protected override bool DefaultAccept => DefaultSettings.TIER3_ROTTING_ACCEPT;
 }

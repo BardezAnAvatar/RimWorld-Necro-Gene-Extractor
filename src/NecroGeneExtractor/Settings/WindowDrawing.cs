@@ -50,7 +50,7 @@ internal static class WindowDrawing
         Widgets.EndScrollView();
     }
 
-    private static void DrawSettingsTier(Listing_Standard parent, float width, string tierName, NecroGeneExtractorTierSettings tierSettings)
+    private static void DrawSettingsTier(Listing_Standard parent, float width, string tierName, TierSettings tierSettings)
     {
         TaggedString header = "<b><color=\"green\">" + tierName.Translate() + "</color></b>";
         float height = GetHeightTierSubsection(tierSettings);
@@ -142,7 +142,7 @@ internal static class WindowDrawing
         listing.Gap(SECTION_GAP);
     }
 
-    private static float GetHeightTierSubsection(NecroGeneExtractorTierSettings tierSettings)
+    private static float GetHeightTierSubsection(TierSettings tierSettings)
     {
         var previousFont = Text.Font;
 
