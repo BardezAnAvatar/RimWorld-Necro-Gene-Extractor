@@ -25,7 +25,6 @@ public abstract class CorpseSettingsFresh : IExposable
     {
         Scribe_Values.Look(ref CostResource, nameof(CostResource), DefaultResource);
         Scribe_Values.Look(ref CostTime, nameof(CostTime), DefaultTime);
-        DebugMessaging.DebugMessage($"{nameof(CostTime)} changed: {CostTime}");
     }
 
     public override string ToString()
