@@ -1,5 +1,4 @@
 ﻿using Bardez.Biotech.NecroGeneExtractor.Settings;
-using Bardez.Biotech.NecroGeneExtractor.Utilities;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -26,7 +25,6 @@ public class NecroGeneExtractorMod : Mod
     {
         Rect outerRect = new Rect(inRect);
 
-        DebugMessaging.DebugMessage($"{nameof(NecroGeneExtractorSettings)}.{nameof(NecroGeneExtractorSettings.SettingsTier2)}: {_settings.SettingsTier2}");
         WindowDrawing.DrawSettings_Variables(outerRect, _settings);
 
         base.DoSettingsWindowContents(inRect);
