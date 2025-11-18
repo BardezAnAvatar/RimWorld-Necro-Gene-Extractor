@@ -31,4 +31,6 @@ public abstract class TierSettings : IExposable
         builder.Append("}");
         return builder.ToString();
     }
+
+    protected abstract void Initialize();
 }
