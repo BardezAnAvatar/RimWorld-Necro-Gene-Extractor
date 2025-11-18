@@ -137,11 +137,11 @@ internal static class WindowDrawing
     private static void DrawHoursAndNeutroamine(Listing_Standard subSection, ref float hours, ref float neutroamine,
         string hoursLabelKey, string hoursTooltipKey, string neutroLabelKey, string neutroTooltipKey)
     {
-        var hoursLabel = hoursLabelKey.Translate().Formatted(hours);
+        var hoursLabel = hoursLabelKey.Translate().Formatted(hours.ToString("F2"));
         var hoursTooltip = hoursTooltipKey.Translate();
         hours = subSection.SliderLabeled(hoursLabel, hours, HOURS_MIN, HOURS_MAX, INCREMENT_TIME, tooltip: hoursTooltip);
 
-        var neutroamineLabel = neutroLabelKey.Translate().Formatted(neutroamine);
+        var neutroamineLabel = neutroLabelKey.Translate().Formatted(neutroamine.ToString("F2"));
         var neutroTooltip = neutroTooltipKey.Translate();
         neutroamine = subSection.SliderLabeled(neutroamineLabel, neutroamine, NEUTROAMINE_MIN, NEUTROAMINE_MAX, INCREMENT_RESOURCE, tooltip: neutroTooltip);
     }
