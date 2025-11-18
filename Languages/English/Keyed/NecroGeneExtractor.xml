@@ -1,0 +1,25 @@
+<LanguageData>
+	<NGET_ModName>Necro Gene Extractor Tiers</NGET_ModName>
+
+	<NGET_ExtractorTier2>Necro Gene Extractor Tier 2</NGET_ExtractorTier2>
+	<NGET_ExtractorTier3>Necro Gene Extractor Tier 3</NGET_ExtractorTier3>
+	<NGET_ExtractorTier4>Necro Gene Extractor Tier 4</NGET_ExtractorTier4>
+
+	<NGET_CorpseType>Corpse: {0}</NGET_CorpseType>
+	<NGET_CorpseTypeEnabled>Enabled</NGET_CorpseTypeEnabled>
+	<NGET_CorpseTypeEnabledTooltip>Is the corpse type enabled for processing inside the extractor type?</NGET_CorpseTypeEnabledTooltip>
+
+	<NGET_WorkHours>Hours of work: {0}</NGET_WorkHours>
+	<NGET_WorkHoursTooltip>The amount of in-game hours it should take to extract one genepack from this type of corpse</NGET_WorkHoursTooltip>
+	<NGET_WorkHoursMultiplier>Hours of work multiplier: {0}×</NGET_WorkHoursMultiplier>
+	<NGET_WorkHoursMultiplierTooltip>The multiplier for length of time that it should take to extract one genepack from this type of corpse</NGET_WorkHoursMultiplierTooltip>
+	
+	<NGET_CostNeutroamine>Neutroamine required: {0}</NGET_CostNeutroamine>
+	<NGET_CostNeutroamineTooltip>The amount of neutroamine it should cost to extract one genepack from this type of corpse</NGET_CostNeutroamineTooltip>
+	<NGET_CostNeutroamineMultiplier>Neutroamine required: {0}×</NGET_CostNeutroamineMultiplier>
+	<NGET_CostNeutroamineMultiplierTooltip>The multiplier for amount of neutroamine that it should take to extract one genepack from this type of corpse</NGET_CostNeutroamineMultiplierTooltip>
+
+	<NGET_RestoreDefaultSettings>Restore Defaults</NGET_RestoreDefaultSettings>
+	<NGET_DefaultSettingsRestored>Default settings restored.</NGET_DefaultSettingsRestored>
+
+</LanguageData>

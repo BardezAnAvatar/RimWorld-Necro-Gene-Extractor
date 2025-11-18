@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+  <packageId>Bardez.Biotech.NecroGeneExtractor</packageId>
+  <name>Necro Gene Extractor Tiers</name>
+  <supportedVersions>
+    <li>1.6</li>
+  </supportedVersions>
+  <author>Bardez</author>
+  <description>Adds a new set of biotech building, the Necro Genepack Extractors. These extract genes from dead bodies.</description>
+</ModMetaData>
