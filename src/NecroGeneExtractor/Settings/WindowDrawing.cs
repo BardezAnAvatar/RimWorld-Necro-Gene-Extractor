@@ -32,22 +32,27 @@ internal static class WindowDrawing
         Rect scrollViewTotal = new Rect(0f, 0f, settingsArea.width - (scrollBarVisible ? SCROLL_BAR_WIDTH_MARGIN : 0f), _totalContentHeight);
         Widgets.BeginScrollView(settingsArea, ref _scrollPosition, scrollViewTotal);
 
-        Rect viewRect = new Rect(0f, 0f, scrollViewTotal.width, SCROLLABLE_AREA_HEIGHT);
+        try
+        {
+            Rect viewRect = new Rect(0f, 0f, scrollViewTotal.width, SCROLLABLE_AREA_HEIGHT);
 
-        // Create the generic listing, which we'll fill with our settings.
-        Listing_Standard listing = new Listing_Standard();
-        listing.Begin(viewRect);
+            // Create the generic listing, which we'll fill with our settings.
+            Listing_Standard listing = new Listing_Standard();
+            listing.Begin(viewRect);
 
-        DrawSettingsTier(listing, viewRect.width, "NGET_ExtractorTier2", settings.SettingsTier2);
-        DrawGapBetweenSections(listing);
-        DrawSettingsTier(listing, viewRect.width, "NGET_ExtractorTier3", settings.SettingsTier3);
-        DrawGapBetweenSections(listing);
-        DrawSettingsTier(listing, viewRect.width, "NGET_ExtractorTier4", settings.SettingsTier4);
+            DrawSettingsTier(listing, viewRect.width, "NGET_ExtractorTier2", settings.SettingsTier2);
+            DrawGapBetweenSections(listing);
+            DrawSettingsTier(listing, viewRect.width, "NGET_ExtractorTier3", settings.SettingsTier3);
+            DrawGapBetweenSections(listing);
+            DrawSettingsTier(listing, viewRect.width, "NGET_ExtractorTier4", settings.SettingsTier4);
 
-        _totalContentHeight = listing.CurHeight;
-        listing.End();
-
-        Widgets.EndScrollView();
+            _totalContentHeight = listing.CurHeight;
+            listing.End();
+        }
+        finally
+        {
+            Widgets.EndScrollView();
+        }
     }
 
     private static void DrawSettingsTier(Listing_Standard parent, float width, string tierName, TierSettings tierSettings)
