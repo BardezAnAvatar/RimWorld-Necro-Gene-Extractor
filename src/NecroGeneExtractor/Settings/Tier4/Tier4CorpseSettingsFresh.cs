@@ -7,9 +7,5 @@ public class Tier4CorpseSettingsFresh
 
     protected override float DefaultTime => DefaultSettings.TIER4_FRESH_TIME;
 
-    public Tier4CorpseSettingsFresh()
-    {
-        CostResource = DefaultResource;
-        CostTime = DefaultTime;
-    }
+    public Tier4CorpseSettingsFresh() => SetDefaults();
 }

@@ -6,9 +6,5 @@ public class Tier2CorpseSettingsFresh : CorpseSettingsFresh
 
     protected override float DefaultTime => DefaultSettings.TIER2_FRESH_TIME;
 
-    public Tier2CorpseSettingsFresh()
-    {
-        CostResource = DefaultResource;
-        CostTime = DefaultTime;
-    }
+    public Tier2CorpseSettingsFresh() => SetDefaults();
 }
