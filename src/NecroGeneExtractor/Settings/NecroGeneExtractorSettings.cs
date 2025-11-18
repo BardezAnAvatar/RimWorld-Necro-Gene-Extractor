@@ -22,6 +22,13 @@ public class NecroGeneExtractorSettings : ModSettings
         SettingsTier4 ??= new();
     }
 
+    public void SetDefaults()
+    {
+        SettingsTier2.SetDefaults();
+        SettingsTier3.SetDefaults();
+        SettingsTier4.SetDefaults();
+    }
+
     /// <summary>
     /// The part that writes our settings to a file.
     /// Note that saving is by ref. Labels cannot use spaces (xml tags)

@@ -33,4 +33,11 @@ public abstract class TierSettings : IExposable
     }
 
     protected abstract void Initialize();
+
+    public void SetDefaults()
+    {
+        Fresh.SetDefaults();
+        Rotting.SetDefaults();
+        Dessicated.SetDefaults();
+    }
 }
