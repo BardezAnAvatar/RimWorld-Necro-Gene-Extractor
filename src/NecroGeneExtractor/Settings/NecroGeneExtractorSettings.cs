@@ -13,10 +13,7 @@ public class NecroGeneExtractorSettings : ModSettings
 
     public Tier4Settings SettingsTier4;
 
-    public NecroGeneExtractorSettings()
-    {
-        Initialize();
-    }
+    public NecroGeneExtractorSettings() => Initialize();
 
     protected void Initialize()
     {
