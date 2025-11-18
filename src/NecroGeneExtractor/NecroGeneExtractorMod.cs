@@ -27,7 +27,7 @@ public class NecroGeneExtractorMod : Mod
     {
         Rect outerRect = new Rect(inRect);
 
-        WindowDrawing.DrawSettings_Variables(outerRect, _settings);
+        WindowDrawing.DrawSettings(outerRect, _settings);
 
         base.DoSettingsWindowContents(inRect);
     }

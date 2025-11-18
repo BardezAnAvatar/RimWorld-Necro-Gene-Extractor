@@ -28,7 +28,7 @@ internal static class WindowDrawing
     private static Vector2 _scrollPosition = new(0f, 0f);
     private static float _totalContentHeight = 800f;
 
-    public static void DrawSettings_Variables(Rect settingsArea, NecroGeneExtractorSettings settings)
+    public static void DrawSettings(Rect settingsArea, NecroGeneExtractorSettings settings)
     {
         bool scrollBarVisible = _totalContentHeight > settingsArea.height;
 
