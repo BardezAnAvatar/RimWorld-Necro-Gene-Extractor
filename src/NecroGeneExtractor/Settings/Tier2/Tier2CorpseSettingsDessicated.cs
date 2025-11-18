@@ -4,4 +4,6 @@ public class Tier2CorpseSettingsDessicated
     : CorpseSettingsNonFresh
 {
     protected override bool DefaultAccept => DefaultSettings.TIER2_DESSICATED_ACCEPT;
+
+    public Tier2CorpseSettingsDessicated() => SetDefaults();
 }

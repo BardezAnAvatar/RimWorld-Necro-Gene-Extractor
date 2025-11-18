@@ -17,6 +17,13 @@ public abstract class CorpseSettingsNonFresh : IExposable
 
     protected virtual float DefaultTime => DefaultSettings.ROTTING_TIME;
 
+    public virtual void SetDefaults()
+    {
+        Accept = DefaultAccept;
+        CostMultiplierResource = DefaultResource;
+        CostMultiplierTime = DefaultTime;
+    }
+
     public virtual void ExposeData()
     {
         Scribe_Values.Look(ref Accept, nameof(Accept), DefaultAccept);

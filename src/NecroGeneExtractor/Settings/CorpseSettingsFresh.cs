@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using Bardez.Biotech.NecroGeneExtractor.Settings.Tier2;
 using Bardez.Biotech.NecroGeneExtractor.Utilities;
 using Verse;
 
@@ -13,6 +14,12 @@ public abstract class CorpseSettingsFresh : IExposable
     protected abstract float DefaultResource { get; }
 
     protected abstract float DefaultTime { get; }
+
+    public virtual void SetDefaults()
+    {
+        CostResource = DefaultResource;
+        CostTime = DefaultTime;
+    }
 
     public void ExposeData()
     {

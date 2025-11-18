@@ -4,4 +4,6 @@ public class Tier4CorpseSettingsRotting
     : CorpseSettingsNonFresh
 {
     protected override bool DefaultAccept => DefaultSettings.TIER4_ROTTING_ACCEPT;
+
+    public Tier4CorpseSettingsRotting() => SetDefaults();
 }
