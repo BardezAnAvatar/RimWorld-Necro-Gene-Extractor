@@ -24,6 +24,7 @@ internal static class WindowDrawing
 
     private const float SLIDER_LABEL_AREA_PCT = 0.25f;
     private const float SLIDER_LABEL_SEPARATION_PCT = 0.1f;
+    private const float BUTTON_DEFAULTS_AREA_PCT = 0.2f;
 
     private const float LINE_HEIGHT_MULTIPIER = 1.4f;
 
@@ -66,11 +67,10 @@ internal static class WindowDrawing
         }
     }
 
-
     private static void DrawSettings_DefaultButton(Listing_Standard listing, Action restore)
     {
         //did this "Default Settings" button just get pressed?
-        if (listing.ButtonText("NGET_RestoreDefaultSettings".Translate()))
+        if (listing.ButtonText("NGET_RestoreDefaultSettings".Translate(), widthPct: BUTTON_DEFAULTS_AREA_PCT))
         {
             restore();
             Messages.Message("NGET_DefaultSettingsRestored".Translate(), null, MessageTypeDefOf.NeutralEvent, historical: false);
