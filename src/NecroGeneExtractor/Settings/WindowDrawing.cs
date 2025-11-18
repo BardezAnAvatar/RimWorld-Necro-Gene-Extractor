@@ -60,16 +60,20 @@ internal static class WindowDrawing
         TaggedString header = "<b><color=\"green\">" + tierName.Translate() + "</color></b>";
         float height = GetHeightTierSubsection(tierSettings);
         Listing_Standard subSection = BeginSubSection(parent, height, width: width);
+        try
+        {
+            DrawTierHeader(subSection, header);
 
-        DrawTierHeader(subSection, header);
-
-        DrawSettingsFresh(subSection, width, ref tierSettings.Fresh.CostTime, ref tierSettings.Fresh.CostResource);
-        DrawGapBetweenSections(subSection);
-        DrawSettingsNonFresh(subSection, width, "RotStateRotting", ref tierSettings.Rotting.Accept, ref tierSettings.Rotting.CostMultiplierTime, ref tierSettings.Rotting.CostMultiplierResource);
-        DrawGapBetweenSections(subSection);
-        DrawSettingsNonFresh(subSection, width, "RotStateDessicated", ref tierSettings.Dessicated.Accept, ref tierSettings.Dessicated.CostMultiplierTime, ref tierSettings.Dessicated.CostMultiplierResource);
-
-        parent.EndSection(subSection);
+            DrawSettingsFresh(subSection, width, ref tierSettings.Fresh.CostTime, ref tierSettings.Fresh.CostResource);
+            DrawGapBetweenSections(subSection);
+            DrawSettingsNonFresh(subSection, width, "RotStateRotting", ref tierSettings.Rotting.Accept, ref tierSettings.Rotting.CostMultiplierTime, ref tierSettings.Rotting.CostMultiplierResource);
+            DrawGapBetweenSections(subSection);
+            DrawSettingsNonFresh(subSection, width, "RotStateDessicated", ref tierSettings.Dessicated.Accept, ref tierSettings.Dessicated.CostMultiplierTime, ref tierSettings.Dessicated.CostMultiplierResource);
+        }
+        finally
+        {
+            parent.EndSection(subSection);
+        }
     }
 
     private static void DrawTierHeader(Listing_Standard subSection, TaggedString header)
@@ -85,12 +89,16 @@ internal static class WindowDrawing
     {
         var height = GetHeightCorpseTypeFresh();
         Listing_Standard subSection = BeginSubSection(parent, height, width);
-
-        DrawCorpseTypeHeader(subSection, "RotStateFresh");
-        DrawHoursAndNeutroamine(subSection, ref hours, ref neutroamine,
-            "NGET_WorkHours", "NGET_WorkHoursTooltip", "NGET_CostNeutroamine", "NGET_CostNeutroamineTooltip");
-
-        parent.EndSection(subSection);
+        try
+        {
+            DrawCorpseTypeHeader(subSection, "RotStateFresh");
+            DrawHoursAndNeutroamine(subSection, ref hours, ref neutroamine,
+                "NGET_WorkHours", "NGET_WorkHoursTooltip", "NGET_CostNeutroamine", "NGET_CostNeutroamineTooltip");
+        }
+        finally
+        {
+            parent.EndSection(subSection);
+        }
     }
 
     private static void DrawSettingsNonFresh(Listing_Standard parent, float width, string corpseType, ref bool enabled, ref float hours, ref float neutroamine)
@@ -98,17 +106,22 @@ internal static class WindowDrawing
         var height = GetHeightCorpseTypeNonFresh(enabled);
         Listing_Standard subSection = BeginSubSection(parent, height, width);
 
-        DrawCorpseTypeHeader(subSection, corpseType);
-        subSection.CheckboxLabeled("NGET_CorpseTypeEnabled".Translate(), ref enabled, tooltip: "NGET_CorpseTypeEnabledTooltip");
-
-        if (enabled)
+        try
         {
-            DrawHoursAndNeutroamine(subSection, ref hours, ref neutroamine,
-                "NGET_WorkHoursMultiplier", "NGET_WorkHoursMultiplierTooltip",
-                "NGET_CostNeutroamineMultiplier", "NGET_CostNeutroamineMultiplierTooltip");
-        }
+            DrawCorpseTypeHeader(subSection, corpseType);
+            subSection.CheckboxLabeled("NGET_CorpseTypeEnabled".Translate(), ref enabled, tooltip: "NGET_CorpseTypeEnabledTooltip");
 
-        parent.EndSection(subSection);
+            if (enabled)
+            {
+                DrawHoursAndNeutroamine(subSection, ref hours, ref neutroamine,
+                    "NGET_WorkHoursMultiplier", "NGET_WorkHoursMultiplierTooltip",
+                    "NGET_CostNeutroamineMultiplier", "NGET_CostNeutroamineMultiplierTooltip");
+            }
+        }
+        finally
+        {
+            parent.EndSection(subSection);
+        }
     }
 
     private static void DrawCorpseTypeHeader(Listing_Standard subSection, string corpseTypeKey)
