@@ -14,10 +14,7 @@ public class Tier4Settings : TierSettings
 
     public override CorpseSettingsNonFresh Dessicated => dessicated;
 
-    public Tier4Settings()
-    {
-        Initialize();
-    }
+    public Tier4Settings() => Initialize();
 
     protected override void Initialize()
     {
