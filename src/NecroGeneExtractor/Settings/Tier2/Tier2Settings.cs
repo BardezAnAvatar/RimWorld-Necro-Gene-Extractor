@@ -4,15 +4,20 @@ namespace Bardez.Biotech.NecroGeneExtractor.Settings.Tier2;
 
 public class Tier2Settings : TierSettings
 {
-    protected Tier2CorpseSettingsFresh fresh = new();
-    protected Tier2CorpseSettingsRotting rotting = new();
-    protected Tier2CorpseSettingsDessicated dessicated = new();
+    protected Tier2CorpseSettingsFresh fresh;
+    protected Tier2CorpseSettingsRotting rotting;
+    protected Tier2CorpseSettingsDessicated dessicated;
 
     public override CorpseSettingsFresh Fresh => fresh;
 
     public override CorpseSettingsNonFresh Rotting => rotting;
 
     public override CorpseSettingsNonFresh Dessicated => dessicated;
+
+    public Tier2Settings()
+    {
+        Initialize();
+    }
 
     protected override void Initialize()
     {
