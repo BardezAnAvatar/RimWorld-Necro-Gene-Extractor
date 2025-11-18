@@ -13,9 +13,9 @@ public abstract class CorpseSettingsNonFresh : IExposable
 
     protected abstract bool DefaultAccept { get; }
 
-    protected virtual float DefaultResource { get; }
+    protected abstract float DefaultResource { get; }
 
-    protected virtual float DefaultTime { get; }
+    protected abstract float DefaultTime { get; }
 
     public virtual void SetDefaults()
     {
