@@ -2,9 +2,9 @@
 
 namespace Bardez.Biotech.NecroGeneExtractor.Settings;
 
-public class NecroGeneExtractorTierSettings(NecroGeneExtractorCorpseSettingsFresh fresh,
+public abstract class NecroGeneExtractorTierSettings(NecroGeneExtractorCorpseSettingsFresh fresh,
     NecroGeneExtractorCorpseSettingsNonFresh rotting,
-    NecroGeneExtractorCorpseSettingsNonFresh dessicated) : IExposable
+    NecroGeneExtractorCorpseSettingsNonFresh dessicated) : IExposable, ILoadReferenceable
 {
     public NecroGeneExtractorCorpseSettingsFresh Fresh => fresh;
 
@@ -12,10 +12,14 @@ public class NecroGeneExtractorTierSettings(NecroGeneExtractorCorpseSettingsFres
 
     public NecroGeneExtractorCorpseSettingsNonFresh Dessicated => dessicated;
 
+    protected abstract string ClassName { get; }
+
     public void ExposeData()
     {
-        Scribe_Values.Look(ref fresh, nameof(Fresh));
-        Scribe_Values.Look(ref rotting, nameof(Rotting));
-        Scribe_Values.Look(ref dessicated, nameof(Dessicated));
+        Scribe_References.Look(ref fresh, nameof(Fresh));
+        Scribe_References.Look(ref rotting, nameof(Rotting));
+        Scribe_References.Look(ref dessicated, nameof(Dessicated));
     }
+
+    public string GetUniqueLoadID() => ClassName + "_" + GetHashCode();
 }

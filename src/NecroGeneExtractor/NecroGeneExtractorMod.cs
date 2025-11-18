@@ -1,17 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Runtime.Remoting.Messaging;
-using System.Text;
-using System.Threading.Tasks;
-using Bardez.Biotech.NecroGeneExtractor.Settings;
-using GeneExtractorTiers;
-using Mono.Unix.Native;
+﻿using Bardez.Biotech.NecroGeneExtractor.Settings;
 using RimWorld;
 using UnityEngine;
 using Verse;
-using Verse.Noise;
 
 namespace Bardez.Biotech.NecroGeneExtractor;
 

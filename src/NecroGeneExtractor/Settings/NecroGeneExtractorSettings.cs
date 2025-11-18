@@ -1,38 +1,17 @@
-﻿using Verse;
+﻿using Bardez.Biotech.NecroGeneExtractor.Settings.Tier2;
+using Bardez.Biotech.NecroGeneExtractor.Settings.Tier3;
+using Bardez.Biotech.NecroGeneExtractor.Settings.Tier4;
+using Verse;
 
 namespace Bardez.Biotech.NecroGeneExtractor.Settings;
 
 public class NecroGeneExtractorSettings : ModSettings
 {
-    private const float defaultCostTimeMultipierRotting = 6f;
-    private const float defaultCostTimeMultipierDessicated = 10f;
-    private const float defaultCostResourceMultiplierRotting = 3f;
-    private const float defaultCostResourceMultiplierDessicated = 5f;
+    public NecroGeneExtractorTier2Settings SettingsTier2 = new();
 
-    public float CostResourceFresh = 5f;
-    public float CostTimeFresh = 3f;
+    public NecroGeneExtractorTier3Settings SettingsTier3 = new();
 
-    private NecroGeneExtractorTierSettings _settingsTier2 
-        = new(
-            new(5f, 6f),
-            new(false, defaultCostResourceMultiplierRotting, defaultCostTimeMultipierRotting),
-            new(false, defaultCostResourceMultiplierDessicated, defaultCostTimeMultipierDessicated));
-    private NecroGeneExtractorTierSettings _settingsTier3
-        = new(
-            new(4f, 4.5f),
-            new(true, defaultCostResourceMultiplierRotting, defaultCostTimeMultipierRotting),
-            new(false, defaultCostResourceMultiplierDessicated, defaultCostTimeMultipierDessicated));
-    private NecroGeneExtractorTierSettings _settingsTier4
-        = new(
-            new(3f, 2.5f),
-            new(true, defaultCostResourceMultiplierRotting, defaultCostTimeMultipierRotting),
-            new(true, defaultCostResourceMultiplierDessicated, defaultCostTimeMultipierDessicated));
-
-    public NecroGeneExtractorTierSettings SettingsTier2 => _settingsTier2;
-
-    public NecroGeneExtractorTierSettings SettingsTier3 => _settingsTier3;
-
-    public NecroGeneExtractorTierSettings SettingsTier4 => _settingsTier4;
+    public NecroGeneExtractorTier4Settings SettingsTier4 = new();
 
     /// <summary>
     /// The part that writes our settings to a file. Note that saving is by ref. Labels cannot use spaces (xml tags)
@@ -40,8 +19,8 @@ public class NecroGeneExtractorSettings : ModSettings
     public override void ExposeData()
     {
         base.ExposeData();
-        Scribe_Values.Look(ref _settingsTier2, nameof(SettingsTier2));
-        Scribe_Values.Look(ref _settingsTier3, nameof(SettingsTier3));
-        Scribe_Values.Look(ref _settingsTier4, nameof(SettingsTier4));
+        Scribe_References.Look(ref SettingsTier2, nameof(SettingsTier2));
+        Scribe_References.Look(ref SettingsTier3, nameof(SettingsTier3));
+        Scribe_References.Look(ref SettingsTier4, nameof(SettingsTier4));
     }
 }

@@ -2,18 +2,27 @@
 
 namespace Bardez.Biotech.NecroGeneExtractor.Settings;
 
-public class NecroGeneExtractorCorpseSettingsNonFresh(bool accept, float multiplierResource, float multiplierTime) : IExposable
+public abstract class NecroGeneExtractorCorpseSettingsNonFresh
+    : IExposable, ILoadReferenceable
 {
-    public bool Accept = accept;
+    public bool Accept;
 
-    public float CostMultiplierResource = multiplierResource;
+    public float CostMultiplierResource;
 
-    public float CostMultiplierTime = multiplierTime;
+    public float CostMultiplierTime;
 
-    public void ExposeData()
+    protected abstract bool DefaultAccept { get; }
+
+    protected virtual float DefaultResource => DefaultSettings.ROTTING_RESOURCE;
+
+    protected virtual float DefaultTime => DefaultSettings.ROTTING_TIME;
+
+    public virtual void ExposeData()
     {
-        Scribe_Values.Look(ref Accept, nameof(Accept), Accept);
-        Scribe_Values.Look(ref CostMultiplierResource, nameof(CostMultiplierResource), CostMultiplierResource);
-        Scribe_Values.Look(ref CostMultiplierTime, nameof(CostMultiplierTime), CostMultiplierTime);
+        Scribe_Values.Look(ref Accept, nameof(Accept), DefaultAccept);
+        Scribe_Values.Look(ref CostMultiplierResource, nameof(CostMultiplierResource), DefaultResource);
+        Scribe_Values.Look(ref CostMultiplierTime, nameof(CostMultiplierTime), DefaultTime);
     }
+
+    public string GetUniqueLoadID() => nameof(NecroGeneExtractorCorpseSettingsNonFresh) + "_" + GetHashCode();
 }
