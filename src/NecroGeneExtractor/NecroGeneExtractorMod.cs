@@ -5,6 +5,7 @@ using Verse;
 
 namespace Bardez.Biotech.NecroGeneExtractor;
 
+[StaticConstructorOnStartup]
 public class NecroGeneExtractorMod : Mod
 {
     public static NecroGeneExtractorSettings _settings = null;
