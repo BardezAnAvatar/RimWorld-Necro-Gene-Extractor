@@ -1,6 +1,4 @@
 ﻿using System.Text;
-using Bardez.Biotech.NecroGeneExtractor.Settings.Tier2;
-using Bardez.Biotech.NecroGeneExtractor.Utilities;
 using Verse;
 
 namespace Bardez.Biotech.NecroGeneExtractor.Settings;
