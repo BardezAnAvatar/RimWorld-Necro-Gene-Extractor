@@ -13,9 +13,9 @@ public abstract class CorpseSettingsNonFresh : IExposable
 
     protected abstract bool DefaultAccept { get; }
 
-    protected virtual float DefaultResource => DefaultSettings.ROTTING_RESOURCE;
+    protected virtual float DefaultResource { get; }
 
-    protected virtual float DefaultTime => DefaultSettings.ROTTING_TIME;
+    protected virtual float DefaultTime { get; }
 
     public virtual void SetDefaults()
     {

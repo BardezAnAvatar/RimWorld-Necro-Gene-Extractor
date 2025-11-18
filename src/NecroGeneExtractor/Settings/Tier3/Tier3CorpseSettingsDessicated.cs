@@ -5,5 +5,9 @@ public class Tier3CorpseSettingsDessicated
 {
     protected override bool DefaultAccept => DefaultSettings.TIER3_DESSICATED_ACCEPT;
 
+    protected override float DefaultResource => DefaultSettings.DESSICATED_RESOURCE;
+
+    protected override float DefaultTime => DefaultSettings.DESSICATED_TIME;
+
     public Tier3CorpseSettingsDessicated() => SetDefaults();
 }
