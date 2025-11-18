@@ -19,8 +19,8 @@ public class NecroGeneExtractorSettings : ModSettings
     public override void ExposeData()
     {
         base.ExposeData();
-        Scribe_References.Look(ref SettingsTier2, nameof(SettingsTier2));
-        Scribe_References.Look(ref SettingsTier3, nameof(SettingsTier3));
-        Scribe_References.Look(ref SettingsTier4, nameof(SettingsTier4));
+        Scribe_Deep.Look(ref SettingsTier2, nameof(SettingsTier2));
+        Scribe_Deep.Look(ref SettingsTier3, nameof(SettingsTier3));
+        Scribe_Deep.Look(ref SettingsTier4, nameof(SettingsTier4));
     }
 }

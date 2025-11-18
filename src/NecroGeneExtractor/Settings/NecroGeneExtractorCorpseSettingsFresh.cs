@@ -1,10 +1,10 @@
-﻿using Bardez.Biotech.NecroGeneExtractor.Utilities;
+﻿using System.Text;
+using Bardez.Biotech.NecroGeneExtractor.Utilities;
 using Verse;
 
 namespace Bardez.Biotech.NecroGeneExtractor.Settings;
 
-public abstract class NecroGeneExtractorCorpseSettingsFresh
-    : IExposable, ILoadReferenceable
+public abstract class NecroGeneExtractorCorpseSettingsFresh : IExposable
 {
     public float CostResource;
 
@@ -21,5 +21,28 @@ public abstract class NecroGeneExtractorCorpseSettingsFresh
         DebugMessaging.DebugMessage($"{nameof(CostTime)} changed: {CostTime}");
     }
 
-    public string GetUniqueLoadID() => nameof(NecroGeneExtractorCorpseSettingsFresh) + "_" + GetHashCode();
+    public override string ToString()
+    {
+        StringBuilder builder = new();
+        builder.Append("{");
+        builder.Append(nameof(CostResource));
+        builder.Append(": ");
+        builder.Append(CostResource);
+        builder.Append(", ");
+        builder.Append(nameof(CostTime));
+        builder.Append(": ");
+        builder.Append(CostTime);
+        builder.Append(", ");
+        builder.Append('(');
+        builder.Append(nameof(CostResource));
+        builder.Append(": ");
+        builder.Append(CostResource);
+        builder.Append(", ");
+        builder.Append(nameof(CostTime));
+        builder.Append(": ");
+        builder.Append(CostTime);
+        builder.Append(')');
+        builder.Append("}");
+        return builder.ToString();
+    }
 }

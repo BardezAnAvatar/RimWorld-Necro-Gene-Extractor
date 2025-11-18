@@ -1,25 +1,37 @@
-﻿using Verse;
+﻿using System.Text;
+using Verse;
 
 namespace Bardez.Biotech.NecroGeneExtractor.Settings;
 
-public abstract class NecroGeneExtractorTierSettings(NecroGeneExtractorCorpseSettingsFresh fresh,
-    NecroGeneExtractorCorpseSettingsNonFresh rotting,
-    NecroGeneExtractorCorpseSettingsNonFresh dessicated) : IExposable, ILoadReferenceable
+public abstract class NecroGeneExtractorTierSettings : IExposable
 {
-    public NecroGeneExtractorCorpseSettingsFresh Fresh => fresh;
+    public abstract NecroGeneExtractorCorpseSettingsFresh Fresh { get; }
 
-    public NecroGeneExtractorCorpseSettingsNonFresh Rotting => rotting;
+    public abstract NecroGeneExtractorCorpseSettingsNonFresh Rotting { get; }
 
-    public NecroGeneExtractorCorpseSettingsNonFresh Dessicated => dessicated;
+    public abstract NecroGeneExtractorCorpseSettingsNonFresh Dessicated { get; }
+
+    public abstract void ExposeData();
 
     protected abstract string ClassName { get; }
 
-    public void ExposeData()
+    public override string ToString()
     {
-        Scribe_References.Look(ref fresh, nameof(Fresh));
-        Scribe_References.Look(ref rotting, nameof(Rotting));
-        Scribe_References.Look(ref dessicated, nameof(Dessicated));
+        StringBuilder builder = new();
+        builder.Append(ClassName);
+        builder.Append(" {");
+        builder.Append(nameof(Fresh));
+        builder.Append(": ");
+        builder.Append(Fresh);
+        builder.Append(", ");
+        builder.Append(nameof(Rotting));
+        builder.Append(": ");
+        builder.Append(Rotting);
+        builder.Append(", ");
+        builder.Append(nameof(Dessicated));
+        builder.Append(": ");
+        builder.Append(Dessicated);
+        builder.Append("}");
+        return builder.ToString();
     }
-
-    public string GetUniqueLoadID() => ClassName + "_" + GetHashCode();
 }
