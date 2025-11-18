@@ -1,4 +1,6 @@
-﻿using Bardez.Biotech.NecroGeneExtractor.Settings;
+﻿using System;
+using Bardez.Biotech.NecroGeneExtractor.Settings;
+using RimWorld;
 using UnityEngine;
 using Verse;
 
@@ -43,6 +45,8 @@ internal static class WindowDrawing
             Listing_Standard listing = new Listing_Standard();
             listing.Begin(viewRect);
 
+            DrawSettings_DefaultButton(listing, settings.SetDefaults);
+            DrawGapBetweenSections(listing);
             DrawSettingsTier(listing, viewRect.width, "NGET_ExtractorTier2", settings.SettingsTier2);
             DrawGapBetweenSections(listing);
             DrawSettingsTier(listing, viewRect.width, "NGET_ExtractorTier3", settings.SettingsTier3);
@@ -55,6 +59,17 @@ internal static class WindowDrawing
         finally
         {
             Widgets.EndScrollView();
+        }
+    }
+
+
+    private static void DrawSettings_DefaultButton(Listing_Standard listing, Action restore)
+    {
+        //did this "Default Settings" button just get pressed?
+        if (listing.ButtonText("NGET_RestoreDefaultSettings".Translate()))
+        {
+            restore();
+            Messages.Message("NGET_DefaultSettingsRestored".Translate(), null, MessageTypeDefOf.NeutralEvent, historical: false);
         }
     }
 

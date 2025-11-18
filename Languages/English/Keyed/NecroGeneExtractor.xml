@@ -19,4 +19,7 @@
 	<NGET_CostNeutroamineMultiplier>Neutroamine required: {0}×</NGET_CostNeutroamineMultiplier>
 	<NGET_CostNeutroamineMultiplierTooltip>The multiplier for amount of neutroamine that it should take to extract one genepack from this type of corpse</NGET_CostNeutroamineMultiplierTooltip>
 
+	<NGET_RestoreDefaultSettings>Restore Defaults</NGET_RestoreDefaultSettings>
+	<NGET_DefaultSettingsRestored>Default settings restored.</NGET_DefaultSettingsRestored>
+
 </LanguageData>
