@@ -21,7 +21,7 @@
 	<NGET_WorkHoursMultiplierOverdrive>Overdrive work multiplier:</NGET_WorkHoursMultiplierOverdrive>
 	<NGET_WorkHoursMultiplierOverdriveTooltip>The multiplier for how much work is performed per tick while running this extractor in overdrive</NGET_WorkHoursMultiplierOverdriveTooltip>
 	
-	<NGET_CostNeutroamine>Neutroamine required: {0}</NGET_CostNeutroamine>
+	<NGET_CostNeutroamine>Neutroamine required:</NGET_CostNeutroamine>
 	<NGET_CostNeutroamineTooltip>The amount of neutroamine it should cost per hour to extract one genepack from a fresh corpse</NGET_CostNeutroamineTooltip>
 	<NGET_CostNeutroamineMultiplier>Neutroamine required multiplier:</NGET_CostNeutroamineMultiplier>
 	<NGET_CostNeutroamineMultiplierTooltip>The multiplier for amount of neutroamine that it should take to extract one genepack from this type of corpse</NGET_CostNeutroamineMultiplierTooltip>
