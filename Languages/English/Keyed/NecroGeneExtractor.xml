@@ -28,7 +28,7 @@
 	<NGET_CostNeutroamineTooltip>The amount of neutroamine it should cost per hour to extract one genepack from a fresh corpse</NGET_CostNeutroamineTooltip>
 	<NGET_CostNeutroamineMultiplier>Neutroamine required multiplier:</NGET_CostNeutroamineMultiplier>
 	<NGET_CostNeutroamineMultiplierTooltip>The multiplier for amount of neutroamine that it should take to extract one genepack from this type of corpse</NGET_CostNeutroamineMultiplierTooltip>
-	<NGET_CostNeutroamineEfficiencyMultiplier>Neutroamine efficiency multiplier:</NGET_CostNeutroamineEfficiencyMultiplier>
+	<NGET_CostNeutroamineEfficiencyMultiplier>Neutroamine inefficiency multiplier:</NGET_CostNeutroamineEfficiencyMultiplier>
 	<NGET_CostNeutroamineEfficiencyMultiplierTooltip>The multiplier applied to the neutroamine consumption per hour to enhance or degrade the total neutroamine consumption efficiency</NGET_CostNeutroamineEfficiencyMultiplierTooltip>
 	<NGET_CostNeutroaminMultiplierOverdrive>Overdrive neutroamine multiplier:</NGET_CostNeutroaminMultiplierOverdrive>
 	<NGET_CostNeutroaminMultiplierOverdriveTooltip>The multiplier for how much neutroamine is consumed per hour while running this extractor in overdrive</NGET_CostNeutroaminMultiplierOverdriveTooltip>
