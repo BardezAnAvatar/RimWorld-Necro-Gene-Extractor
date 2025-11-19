@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Bardez.Biotech.NecroGeneExtractor.Settings;
+using Bardez.Biotech.NecroGeneExtractor.Settings.Tiers;
 using GeneExtractorTiers.Extractors;
 using RimWorld;
 using UnityEngine;
@@ -14,7 +15,9 @@ namespace Bardez.Biotech.NecroGeneExtractor.Buildings;
 public abstract class NecroGeneExtractorBase : GeneExtractorBase
 //Building_Enterable, IStoreSettingsParent, IThingHolderWithDrawnPawn, IThingHolder
 {
-    protected abstract TierSettings NecroSettings { get; }
+    protected abstract NecroGeneExtractorSettings NecroSettings { get; }
+    
+    protected abstract TierSettings TierSettings { get; }
 
     protected abstract ProcessingCosts Costs { get; }
 
@@ -91,6 +94,7 @@ public abstract class NecroGeneExtractorBase : GeneExtractorBase
                 //if starving, consume more to get back to normal.
                 num *= 1.1f;
             }
+
             if (OverchargeActive)
             {
                 num *= OverchargeConsumptionFactor;
@@ -100,7 +104,7 @@ public abstract class NecroGeneExtractorBase : GeneExtractorBase
         }
     }
 
-    private const float OverchargeConsumptionFactor = 3.0f;
+    private float OverchargeConsumptionFactor => TierSettings.CostMultiplierOverdriveResource;
 
     public override float SpeedMultiplier => 1;
 
@@ -112,14 +116,18 @@ public abstract class NecroGeneExtractorBase : GeneExtractorBase
             var corpseType = (selectedPawn as Corpse).GetRotStage();
             var multiplier = corpseType switch
             {
-                RotStage.Rotting => NecroSettings.Rotting.CostMultiplierTime,
-                RotStage.Dessicated => NecroSettings.Dessicated.CostMultiplierTime,
+                RotStage.Rotting => NecroSettings.CorpseRotting.CostMultiplierTime,
+                RotStage.Dessicated => NecroSettings.CorpseDesiccated.CostMultiplierTime,
                 RotStage.Fresh or _ => 1f,
             };
 
-            return Convert.ToInt32(
-        (Settings.extractionHours * 2500 / SpeedMultiplier) / (OverchargeActive ? OverchargeSpeedFactor : 1));
+            var hours = NecroSettings.CorpseFresh.CostTime * multiplier * TierSettings.CostMultiplierTime;
+            if (OverchargeActive)
+            {
+                hours *= TierSettings.CostMultiplierOverdriveTime;
+            }
 
+            return Convert.ToInt32(hours);
         }
     }
 
