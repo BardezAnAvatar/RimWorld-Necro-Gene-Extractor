@@ -21,7 +21,8 @@ internal static class WindowDrawing
     private const float INCREMENT_TIME = 0.25f;
     private const float INCREMENT_RESOURCE = 0.25f;
 
-    private const float SLIDER_LABEL_AREA_PCT = 0.25f;
+    private const float SLIDER_LABEL_AREA_PCT = 0.3f;
+    private const float SLIDER_VALUE_AREA_PCT = 0.1f;
     private const float SLIDER_LABEL_SEPARATION_PCT = 0.1f;
     private const float BUTTON_DEFAULTS_AREA_PCT = 0.2f;
 
@@ -181,34 +182,47 @@ internal static class WindowDrawing
     private static void DrawHoursAndNeutroamine(Listing_Standard subSection, ref float hours, ref float neutroamine,
         string hoursLabelKey, string hoursTooltipKey, string neutroLabelKey, string neutroTooltipKey)
     {
-        var hoursLabel = hoursLabelKey.Translate().Formatted(hours.ToString("F2"));
-        var hoursTooltip = hoursTooltipKey.Translate();
-        DrawHorizontalSlider(subSection, ref hours, hoursLabel, hoursTooltip, HOURS_MIN, HOURS_MAX, INCREMENT_TIME);
+        var multiplier = "NGET_MultiplierValue".Translate();
 
-        var neutroamineLabel = neutroLabelKey.Translate().Formatted(neutroamine.ToString("F2"));
+        var hoursLabel = hoursLabelKey.Translate();
+        var hoursTooltip = hoursTooltipKey.Translate();
+        var hoursValue = multiplier.Formatted(hours.ToString("F2"));
+        DrawHorizontalSlider(subSection, ref hours, hoursLabel, hoursTooltip, hoursValue,
+            HOURS_MIN, HOURS_MAX, INCREMENT_TIME);
+
+        var neutroamineLabel = neutroLabelKey.Translate();
         var neutroTooltip = neutroTooltipKey.Translate();
-        DrawHorizontalSlider(subSection, ref neutroamine, neutroamineLabel, neutroTooltip, NEUTROAMINE_MIN, NEUTROAMINE_MAX, INCREMENT_RESOURCE);
+        var neutroValue = multiplier.Formatted(neutroamine.ToString("F2"));
+        DrawHorizontalSlider(subSection, ref neutroamine, neutroamineLabel, neutroTooltip, neutroValue,
+            NEUTROAMINE_MIN, NEUTROAMINE_MAX, INCREMENT_RESOURCE);
     }
 
-    private static void DrawHorizontalSlider(Listing_Standard subSection, ref float variable, TaggedString label, TaggedString tooltip,
+    private static void DrawHorizontalSlider(Listing_Standard subSection, ref float variable,
+        TaggedString label, TaggedString tooltip, TaggedString value,
         float min, float max, float increment)
     {
         float y = subSection.CurHeight;
         float width = subSection.ColumnWidth;
         float labelWidth = SLIDER_LABEL_AREA_PCT;
-        float sliderWidth = 1f - SLIDER_LABEL_AREA_PCT - SLIDER_LABEL_SEPARATION_PCT;
+        float remainingWidth = 1f - SLIDER_LABEL_AREA_PCT - SLIDER_LABEL_SEPARATION_PCT;
+        float valueWidth = SLIDER_VALUE_AREA_PCT;
+        float sliderWidth = 1f - SLIDER_VALUE_AREA_PCT - SLIDER_LABEL_SEPARATION_PCT;
         float heightNeeded = Text.LineHeight * LINE_HEIGHT_MULTIPIER;
 
         var area = subSection.GetRect(heightNeeded); //reserve the area for the slider/label from the Listing_Standard
         var labelArea = area.LeftPart(labelWidth);
         labelArea.y += 8; //move it down to center vertically a bit
-        var sliderArea = area.RightPart(sliderWidth);
+        var remainingArea = area.RightPart(remainingWidth);
+        var valueArea = remainingArea.LeftPart(valueWidth);
+        valueArea.y += 8; //move it down to center vertically a bit
+        var sliderArea = remainingArea.RightPart(sliderWidth);
         sliderArea.y += 14; //it was drawing over the previous controls on screen
 
         GUIContent labelInfo = new GUIContent(label, tooltip);
         var range = new FloatRange(min, max);
 
         Widgets.Label(labelArea, labelInfo);
+        Widgets.Label(valueArea, value);
         Widgets.HorizontalSlider(sliderArea, ref variable, range, roundTo: increment);
     }
 
