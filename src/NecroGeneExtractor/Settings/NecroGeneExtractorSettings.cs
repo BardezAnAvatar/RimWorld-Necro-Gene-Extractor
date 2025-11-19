@@ -1,12 +1,17 @@
-﻿using Bardez.Biotech.NecroGeneExtractor.Settings.Tier2;
-using Bardez.Biotech.NecroGeneExtractor.Settings.Tier3;
-using Bardez.Biotech.NecroGeneExtractor.Settings.Tier4;
+﻿using Bardez.Biotech.NecroGeneExtractor.Settings.Corpses;
+using Bardez.Biotech.NecroGeneExtractor.Settings.Tiers;
 using Verse;
 
 namespace Bardez.Biotech.NecroGeneExtractor.Settings;
 
 public class NecroGeneExtractorSettings : ModSettings
 {
+    public CorpseSettingsFresh CorpseFresh;
+
+    public CorpseSettingsRotting CorpseRotting;
+
+    public CorpseSettingsDesiccated CorpseDesiccated;
+
     public Tier2Settings SettingsTier2;
 
     public Tier3Settings SettingsTier3;
@@ -17,6 +22,9 @@ public class NecroGeneExtractorSettings : ModSettings
 
     protected void Initialize()
     {
+        CorpseFresh ??= new();
+        CorpseRotting ??= new();
+        CorpseDesiccated ??= new();
         SettingsTier2 ??= new();
         SettingsTier3 ??= new();
         SettingsTier4 ??= new();
@@ -24,6 +32,9 @@ public class NecroGeneExtractorSettings : ModSettings
 
     public void SetDefaults()
     {
+        CorpseFresh.SetDefaults();
+        CorpseRotting.SetDefaults();
+        CorpseDesiccated.SetDefaults();
         SettingsTier2.SetDefaults();
         SettingsTier3.SetDefaults();
         SettingsTier4.SetDefaults();
@@ -37,6 +48,9 @@ public class NecroGeneExtractorSettings : ModSettings
     {
         Initialize();
         base.ExposeData();
+        Scribe_Deep.Look(ref CorpseFresh, nameof(CorpseFresh));
+        Scribe_Deep.Look(ref CorpseRotting, nameof(CorpseRotting));
+        Scribe_Deep.Look(ref CorpseDesiccated, nameof(CorpseDesiccated));
         Scribe_Deep.Look(ref SettingsTier2, nameof(SettingsTier2));
         Scribe_Deep.Look(ref SettingsTier3, nameof(SettingsTier3));
         Scribe_Deep.Look(ref SettingsTier4, nameof(SettingsTier4));

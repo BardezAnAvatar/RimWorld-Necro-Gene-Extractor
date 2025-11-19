@@ -5,19 +5,33 @@
 	<NGET_ExtractorTier3>Necro Gene Extractor Tier 3</NGET_ExtractorTier3>
 	<NGET_ExtractorTier4>Necro Gene Extractor Tier 4</NGET_ExtractorTier4>
 
+	<NGET_HeaderCorpses>Corpses</NGET_HeaderCorpses>
 	<NGET_CorpseType>Corpse: {0}</NGET_CorpseType>
-	<NGET_CorpseTypeEnabled>Enabled</NGET_CorpseTypeEnabled>
-	<NGET_CorpseTypeEnabledTooltip>Is the corpse type enabled for processing inside the extractor type?</NGET_CorpseTypeEnabledTooltip>
+	<NGET_CorpseTypeRottingEnabled>Rotting Enabled</NGET_CorpseTypeRottingEnabled>
+	<NGET_CorpseTypeDesiccatedEnabled>Desiccated Enabled</NGET_CorpseTypeDesiccatedEnabled>
+	<NGET_CorpseTypeRottingEnabledTooltip>Is the corpse type enabled for processing inside the extractor type?</NGET_CorpseTypeRottingEnabledTooltip>
+	<NGET_CorpseTypeDesiccatedEnabledTooltip>Is the corpse type enabled for processing inside the extractor type?</NGET_CorpseTypeDesiccatedEnabledTooltip>
 
-	<NGET_WorkHours>Hours of work: {0}</NGET_WorkHours>
-	<NGET_WorkHoursTooltip>The amount of in-game hours it should take to extract one genepack from this type of corpse</NGET_WorkHoursTooltip>
-	<NGET_WorkHoursMultiplier>Hours of work multiplier: {0}×</NGET_WorkHoursMultiplier>
+	<NGET_FlatValue>{0}</NGET_FlatValue>
+	<NGET_MultiplierValue>{0}×</NGET_MultiplierValue>
+
+	<NGET_WorkHours>Hours of work:</NGET_WorkHours>
+	<NGET_WorkHoursTooltip>The amount of in-game hours it should take to extract one genepack from a fresh corpse</NGET_WorkHoursTooltip>
+	<NGET_WorkHoursMultiplier>Hours of work multiplier:</NGET_WorkHoursMultiplier>
 	<NGET_WorkHoursMultiplierTooltip>The multiplier for length of time that it should take to extract one genepack from this type of corpse</NGET_WorkHoursMultiplierTooltip>
+	<NGET_WorkHoursEfficiencyMultiplier>Work efficiency multiplier:</NGET_WorkHoursEfficiencyMultiplier>
+	<NGET_WorkHoursEfficiencyMultiplierTooltip>The multiplier applied to the total work time to reduce (or extend) the total work time</NGET_WorkHoursEfficiencyMultiplierTooltip>
+	<NGET_WorkHoursMultiplierOverdrive>Overdrive work multiplier:</NGET_WorkHoursMultiplierOverdrive>
+	<NGET_WorkHoursMultiplierOverdriveTooltip>The multiplier for how much work is performed per tick while running this extractor in overdrive</NGET_WorkHoursMultiplierOverdriveTooltip>
 	
-	<NGET_CostNeutroamine>Neutroamine required: {0}</NGET_CostNeutroamine>
-	<NGET_CostNeutroamineTooltip>The amount of neutroamine it should cost to extract one genepack from this type of corpse</NGET_CostNeutroamineTooltip>
-	<NGET_CostNeutroamineMultiplier>Neutroamine required: {0}×</NGET_CostNeutroamineMultiplier>
+	<NGET_CostNeutroamine>Neutroamine per hour:</NGET_CostNeutroamine>
+	<NGET_CostNeutroamineTooltip>The amount of neutroamine it should cost per hour to extract one genepack from a fresh corpse</NGET_CostNeutroamineTooltip>
+	<NGET_CostNeutroamineMultiplier>Neutroamine required multiplier:</NGET_CostNeutroamineMultiplier>
 	<NGET_CostNeutroamineMultiplierTooltip>The multiplier for amount of neutroamine that it should take to extract one genepack from this type of corpse</NGET_CostNeutroamineMultiplierTooltip>
+	<NGET_CostNeutroamineEfficiencyMultiplier>Neutroamine inefficiency multiplier:</NGET_CostNeutroamineEfficiencyMultiplier>
+	<NGET_CostNeutroamineEfficiencyMultiplierTooltip>The multiplier applied to the neutroamine consumption per hour to enhance or degrade the total neutroamine consumption efficiency</NGET_CostNeutroamineEfficiencyMultiplierTooltip>
+	<NGET_CostNeutroaminMultiplierOverdrive>Overdrive neutroamine multiplier:</NGET_CostNeutroaminMultiplierOverdrive>
+	<NGET_CostNeutroaminMultiplierOverdriveTooltip>The multiplier for how much neutroamine is consumed per hour while running this extractor in overdrive</NGET_CostNeutroaminMultiplierOverdriveTooltip>
 
 	<NGET_RestoreDefaultSettings>Restore Defaults</NGET_RestoreDefaultSettings>
 	<NGET_DefaultSettingsRestored>Default settings restored.</NGET_DefaultSettingsRestored>

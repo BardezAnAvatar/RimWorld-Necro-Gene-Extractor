@@ -1,5 +1,6 @@
 ﻿using System;
 using Bardez.Biotech.NecroGeneExtractor.Settings;
+using Bardez.Biotech.NecroGeneExtractor.Settings.Tiers;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -12,25 +13,38 @@ internal static class WindowDrawing
     private const float SCROLL_BAR_WIDTH_MARGIN = 20f;
     private const float SCROLLABLE_AREA_HEIGHT = 9999f;
 
-    private const float SECTION_HEIGHT_TIER = 1000f;
-
     private const float HOURS_MIN = 1f;
-    private const float HOURS_MAX = 24f;
-    private const float NEUTROAMINE_MIN = 1f;
+    private const float HOURS_MAX = 72f;
+    private const float NEUTROAMINE_MIN = 0.25f;
     private const float NEUTROAMINE_MAX = 50f;
+    private const float INEFFICIENCY_MULTIPLIER_MIN = 1f;
+    private const float INEFFICIENCY_MULTIPLIER_MAX = 20f;
+
+    private const float EFFICIENCY_MULTIPLIER_MIN = 0.1f;
+    private const float EFFICIENCY_MULTIPLIER_MAX = 10f;
+    private const float OVERDRIVE_MULTIPLIER_MIN = 2f;
+    private const float OVERDRIVE_MULTIPLIER_MAX = 10f;
 
     private const float INCREMENT_TIME = 0.25f;
     private const float INCREMENT_RESOURCE = 0.25f;
+    private const float INCREMENT_EFFICIENCY = 0.1f;
+    private const float INCREMENT_OVERDRIVE = 0.5f;
+    private const float INCREMENT_INEFFICIENCY = 0.5f;
 
-    private const float SLIDER_LABEL_AREA_PCT = 0.25f;
-    private const float SLIDER_LABEL_SEPARATION_PCT = 0.1f;
+    private const float SLIDER_LABEL_AREA_PCT = 0.27f;
+    private const float SLIDER_VALUE_AREA_PCT = 0.085f;
+    private const float SLIDER_LABEL_SEPARATION_PCT = 0.03f;
     private const float BUTTON_DEFAULTS_AREA_PCT = 0.2f;
 
     private const float LINE_HEIGHT_MULTIPIER = 1.4f;
 
     private const float SECTION_GAP = 20f;
+    private const float SLIDER_GAP = 10f;
     private const float LINE_MARGIN_VERTICAL = 12f;
     private const float SUBSECTION_PADDING = 2f;
+
+    private const float OFFSET_LABEL = 8f;
+    private const float OFFSET_SLIDER = 16f;
 
     private static Vector2 _scrollPosition = new(0f, 0f);
     private static float _totalContentHeight = 800f;
@@ -52,11 +66,9 @@ internal static class WindowDrawing
 
             DrawSettings_DefaultButton(listing, settings.SetDefaults);
             DrawGapBetweenSections(listing);
-            DrawSettingsTier(listing, viewRect.width, "NGET_ExtractorTier2", settings.SettingsTier2);
+            DrawSettingsCorpses(listing, viewRect.width, settings);
             DrawGapBetweenSections(listing);
-            DrawSettingsTier(listing, viewRect.width, "NGET_ExtractorTier3", settings.SettingsTier3);
-            DrawGapBetweenSections(listing);
-            DrawSettingsTier(listing, viewRect.width, "NGET_ExtractorTier4", settings.SettingsTier4);
+            DrawSettingsTiers(listing, viewRect.width, settings);
 
             _totalContentHeight = listing.CurHeight;
             listing.End();
@@ -77,20 +89,19 @@ internal static class WindowDrawing
         }
     }
 
-    private static void DrawSettingsTier(Listing_Standard parent, float width, string tierName, TierSettings tierSettings)
+    private static void DrawSettingsCorpses(Listing_Standard parent, float width, NecroGeneExtractorSettings settings)
     {
-        TaggedString header = "<b><color=\"green\">" + tierName.Translate() + "</color></b>";
-        float height = GetHeightTierSubsection(tierSettings);
+        TaggedString header = "<b><color=\"green\">" + "NGET_HeaderCorpses".Translate() + "</color></b>";
+        float height = GetHeightCorpsesSection();
         Listing_Standard subSection = BeginSubSection(parent, height, width: width);
         try
         {
-            DrawTierHeader(subSection, header);
-
-            DrawSettingsFresh(subSection, width, ref tierSettings.Fresh.CostTime, ref tierSettings.Fresh.CostResource);
+            DrawHeader(subSection, header);
+            DrawSettingsFresh(subSection, width, ref settings.CorpseFresh.CostTime, ref settings.CorpseFresh.CostResource);
             DrawGapBetweenSections(subSection);
-            DrawSettingsNonFresh(subSection, width, "RotStateRotting", ref tierSettings.Rotting.Accept, ref tierSettings.Rotting.CostMultiplierTime, ref tierSettings.Rotting.CostMultiplierResource);
+            DrawSettingsNonFresh(subSection, width, "RotStateRotting", ref settings.CorpseRotting.CostMultiplierTime, ref settings.CorpseRotting.CostMultiplierResource);
             DrawGapBetweenSections(subSection);
-            DrawSettingsNonFresh(subSection, width, "RotStateDessicated", ref tierSettings.Dessicated.Accept, ref tierSettings.Dessicated.CostMultiplierTime, ref tierSettings.Dessicated.CostMultiplierResource);
+            DrawSettingsNonFresh(subSection, width, "RotStateDessicated", ref settings.CorpseDesiccated.CostMultiplierTime, ref settings.CorpseDesiccated.CostMultiplierResource);
         }
         finally
         {
@@ -98,7 +109,49 @@ internal static class WindowDrawing
         }
     }
 
-    private static void DrawTierHeader(Listing_Standard subSection, TaggedString header)
+    private static void DrawSettingsTiers(Listing_Standard parent, float width, NecroGeneExtractorSettings settings)
+    {
+        DrawSettingsTier(parent, width, "NGET_ExtractorTier2", settings.SettingsTier2);
+        DrawGapBetweenSections(parent);
+        DrawSettingsTier(parent, width, "NGET_ExtractorTier3", settings.SettingsTier3);
+        DrawGapBetweenSections(parent);
+        DrawSettingsTier(parent, width, "NGET_ExtractorTier4", settings.SettingsTier4);
+    }
+
+    private static void DrawSettingsTier(Listing_Standard parent, float width, string tierName, TierSettings tierSettings)
+    {
+        TaggedString header = "<b><color=\"green\">" + tierName.Translate() + "</color></b>";
+        float height = GetHeightTierSubsection();
+        Listing_Standard subSection = BeginSubSection(parent, height, width: width);
+        try
+        {
+            DrawHeader(subSection, header);
+            subSection.CheckboxLabeled("NGET_CorpseTypeRottingEnabled".Translate(), ref tierSettings.AcceptRotten, tooltip: "NGET_CorpseTypeRottingEnabledTooltip".Translate());
+            subSection.CheckboxLabeled("NGET_CorpseTypeDesiccatedEnabled".Translate(), ref tierSettings.AcceptDesiccated, tooltip: "NGET_CorpseTypeDesiccatedEnabledTooltip".Translate());
+
+            DrawHoursAndNeutroamine(subSection, ref tierSettings.CostMultiplierTime, ref tierSettings.CostMultiplierResource,
+                "NGET_WorkHoursEfficiencyMultiplier", "NGET_WorkHoursEfficiencyMultiplierTooltip",
+                "NGET_CostNeutroamineEfficiencyMultiplier", "NGET_CostNeutroamineEfficiencyMultiplierTooltip",
+                "NGET_MultiplierValue",
+                EFFICIENCY_MULTIPLIER_MIN, EFFICIENCY_MULTIPLIER_MAX, INCREMENT_EFFICIENCY,
+                EFFICIENCY_MULTIPLIER_MIN, EFFICIENCY_MULTIPLIER_MAX, INCREMENT_EFFICIENCY);
+
+            subSection.Gap(SLIDER_GAP);
+
+            DrawHoursAndNeutroamine(subSection, ref tierSettings.CostMultiplierOverdriveTime, ref tierSettings.CostMultiplierOverdriveResource,
+                "NGET_WorkHoursMultiplierOverdrive", "NGET_WorkHoursMultiplierOverdriveTooltip",
+                "NGET_CostNeutroaminMultiplierOverdrive", "NGET_CostNeutroaminMultiplierOverdriveTooltip",
+                "NGET_MultiplierValue",
+                OVERDRIVE_MULTIPLIER_MIN, OVERDRIVE_MULTIPLIER_MAX, INCREMENT_OVERDRIVE,
+                OVERDRIVE_MULTIPLIER_MIN, OVERDRIVE_MULTIPLIER_MAX, INCREMENT_OVERDRIVE);
+        }
+        finally
+        {
+            parent.EndSection(subSection);
+        }
+    }
+
+    private static void DrawHeader(Listing_Standard subSection, TaggedString header)
     {
         // Make section text bigger
         var previousFont = Text.Font;
@@ -109,13 +162,16 @@ internal static class WindowDrawing
 
     private static void DrawSettingsFresh(Listing_Standard parent, float width, ref float hours, ref float neutroamine)
     {
-        var height = GetHeightCorpseTypeFresh();
+        var height = GetHeightCorpseType();
         Listing_Standard subSection = BeginSubSection(parent, height, width);
         try
         {
             DrawCorpseTypeHeader(subSection, "RotStateFresh");
             DrawHoursAndNeutroamine(subSection, ref hours, ref neutroamine,
-                "NGET_WorkHours", "NGET_WorkHoursTooltip", "NGET_CostNeutroamine", "NGET_CostNeutroamineTooltip");
+                "NGET_WorkHours", "NGET_WorkHoursTooltip", "NGET_CostNeutroamine", "NGET_CostNeutroamineTooltip",
+                "NGET_FlatValue",
+                HOURS_MIN, HOURS_MAX, INCREMENT_TIME,
+                NEUTROAMINE_MIN, NEUTROAMINE_MAX, INCREMENT_RESOURCE);
         }
         finally
         {
@@ -123,22 +179,20 @@ internal static class WindowDrawing
         }
     }
 
-    private static void DrawSettingsNonFresh(Listing_Standard parent, float width, string corpseType, ref bool enabled, ref float hours, ref float neutroamine)
+    private static void DrawSettingsNonFresh(Listing_Standard parent, float width, string corpseType, ref float hours, ref float neutroamine)
     {
-        var height = GetHeightCorpseTypeNonFresh(enabled);
+        var height = GetHeightCorpseType();
         Listing_Standard subSection = BeginSubSection(parent, height, width);
 
         try
         {
             DrawCorpseTypeHeader(subSection, corpseType);
-            subSection.CheckboxLabeled("NGET_CorpseTypeEnabled".Translate(), ref enabled, tooltip: "NGET_CorpseTypeEnabledTooltip");
-
-            if (enabled)
-            {
-                DrawHoursAndNeutroamine(subSection, ref hours, ref neutroamine,
-                    "NGET_WorkHoursMultiplier", "NGET_WorkHoursMultiplierTooltip",
-                    "NGET_CostNeutroamineMultiplier", "NGET_CostNeutroamineMultiplierTooltip");
-            }
+            DrawHoursAndNeutroamine(subSection, ref hours, ref neutroamine,
+                "NGET_WorkHoursMultiplier", "NGET_WorkHoursMultiplierTooltip",
+                "NGET_CostNeutroamineMultiplier", "NGET_CostNeutroamineMultiplierTooltip",
+                "NGET_MultiplierValue",
+                INEFFICIENCY_MULTIPLIER_MIN, INEFFICIENCY_MULTIPLIER_MAX, INCREMENT_INEFFICIENCY,
+                INEFFICIENCY_MULTIPLIER_MIN, INEFFICIENCY_MULTIPLIER_MAX, INCREMENT_INEFFICIENCY);
         }
         finally
         {
@@ -155,36 +209,53 @@ internal static class WindowDrawing
     }
 
     private static void DrawHoursAndNeutroamine(Listing_Standard subSection, ref float hours, ref float neutroamine,
-        string hoursLabelKey, string hoursTooltipKey, string neutroLabelKey, string neutroTooltipKey)
+        string hoursLabelKey, string hoursTooltipKey, string neutroLabelKey, string neutroTooltipKey, string valueKey,
+        float hoursMin, float hoursMax, float hoursIncrement,
+        float neutroMin, float neutroMax, float neutroIncrement)
     {
-        var hoursLabel = hoursLabelKey.Translate().Formatted(hours.ToString("F2"));
-        var hoursTooltip = hoursTooltipKey.Translate();
-        DrawHorizontalSlider(subSection, ref hours, hoursLabel, hoursTooltip, HOURS_MIN, HOURS_MAX, INCREMENT_TIME);
+        var multiplier = valueKey.Translate();
 
-        var neutroamineLabel = neutroLabelKey.Translate().Formatted(neutroamine.ToString("F2"));
+        var hoursLabel = hoursLabelKey.Translate();
+        var hoursTooltip = hoursTooltipKey.Translate();
+        var hoursValue = "<b>" + multiplier.Formatted(hours.ToString("F2")) + "</b>";
+        DrawHorizontalSlider(subSection, ref hours, hoursLabel, hoursTooltip, hoursValue,
+            hoursMin, hoursMax, hoursIncrement);
+
+        subSection.Gap(SLIDER_GAP);
+
+        var neutroamineLabel = neutroLabelKey.Translate();
         var neutroTooltip = neutroTooltipKey.Translate();
-        DrawHorizontalSlider(subSection, ref neutroamine, neutroamineLabel, neutroTooltip, NEUTROAMINE_MIN, NEUTROAMINE_MAX, INCREMENT_RESOURCE);
+        var neutroValue = "<b>" + multiplier.Formatted(neutroamine.ToString("F2")) + "</b>";
+        DrawHorizontalSlider(subSection, ref neutroamine, neutroamineLabel, neutroTooltip, neutroValue,
+            neutroMin, neutroMax, neutroIncrement);
     }
 
-    private static void DrawHorizontalSlider(Listing_Standard subSection, ref float variable, TaggedString label, TaggedString tooltip,
+    private static void DrawHorizontalSlider(Listing_Standard subSection, ref float variable,
+        TaggedString label, TaggedString tooltip, TaggedString value,
         float min, float max, float increment)
     {
         float y = subSection.CurHeight;
         float width = subSection.ColumnWidth;
         float labelWidth = SLIDER_LABEL_AREA_PCT;
-        float sliderWidth = 1f - SLIDER_LABEL_AREA_PCT - SLIDER_LABEL_SEPARATION_PCT;
+        float remainingWidth = 1f - SLIDER_LABEL_AREA_PCT - SLIDER_LABEL_SEPARATION_PCT;
+        float valueWidth = SLIDER_VALUE_AREA_PCT;
+        float sliderWidth = 1f - SLIDER_VALUE_AREA_PCT - SLIDER_LABEL_SEPARATION_PCT;
         float heightNeeded = Text.LineHeight * LINE_HEIGHT_MULTIPIER;
 
         var area = subSection.GetRect(heightNeeded); //reserve the area for the slider/label from the Listing_Standard
         var labelArea = area.LeftPart(labelWidth);
-        labelArea.y += 8; //move it down to center vertically a bit
-        var sliderArea = area.RightPart(sliderWidth);
-        sliderArea.y += 14; //it was drawing over the previous controls on screen
+        labelArea.y += OFFSET_LABEL; //move it down to center vertically a bit
+        var remainingArea = area.RightPart(remainingWidth);
+        var valueArea = remainingArea.LeftPart(valueWidth);
+        valueArea.y += OFFSET_LABEL; //move it down to center vertically a bit
+        var sliderArea = remainingArea.RightPart(sliderWidth);
+        sliderArea.y += OFFSET_SLIDER; //it was drawing over the previous controls on screen
 
         GUIContent labelInfo = new GUIContent(label, tooltip);
         var range = new FloatRange(min, max);
 
         Widgets.Label(labelArea, labelInfo);
+        Widgets.Label(valueArea, value);
         Widgets.HorizontalSlider(sliderArea, ref variable, range, roundTo: increment);
     }
 
@@ -204,7 +275,26 @@ internal static class WindowDrawing
         listing.Gap(SECTION_GAP);
     }
 
-    private static float GetHeightTierSubsection(TierSettings tierSettings)
+    private static float GetHeightTierSubsection()
+    {
+        var previousFont = Text.Font;
+
+        Text.Font = GameFont.Medium;
+        var headerHeight = Text.LineHeight + LINE_MARGIN_VERTICAL;
+        var height = Text.LineHeight * LINE_HEIGHT_MULTIPIER * 6f;
+        Text.Font = previousFont;
+
+        return height;
+    }
+
+    private static float GetHeightCorpseType()
+    {
+        var height = (Text.LineHeight * LINE_HEIGHT_MULTIPIER * 3f) + SLIDER_GAP;
+
+        return height;
+    }
+
+    private static float GetHeightCorpsesSection()
     {
         var previousFont = Text.Font;
 
@@ -213,29 +303,9 @@ internal static class WindowDrawing
         Text.Font = previousFont;
 
         var height = headerHeight
-            + SUBSECTION_PADDING + GetHeightCorpseTypeFresh() + SUBSECTION_PADDING
-            + SECTION_GAP
-            + SUBSECTION_PADDING + GetHeightCorpseTypeNonFresh(tierSettings.Rotting.Accept) + SUBSECTION_PADDING
-            + SECTION_GAP
-            + SUBSECTION_PADDING + GetHeightCorpseTypeNonFresh(tierSettings.Dessicated.Accept) + SUBSECTION_PADDING
-            + SECTION_GAP
+            + (GetHeightCorpseType() + SECTION_GAP) * 3f
+            + SUBSECTION_PADDING * 6f
          ;
-
-        return height;
-    }
-
-    private static float GetHeightCorpseTypeFresh()
-    {
-        var textLineHeight = Text.LineHeight;
-        var height = Text.LineHeight * LINE_HEIGHT_MULTIPIER * 3f;
-
-        return height;
-    }
-
-    private static float GetHeightCorpseTypeNonFresh(bool enabled)
-    {
-        var textLineHeight = Text.LineHeight;
-        var height = Text.LineHeight * LINE_HEIGHT_MULTIPIER * (enabled ? 4f : 2f);
 
         return height;
     }
