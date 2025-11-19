@@ -257,8 +257,8 @@ internal static class WindowDrawing
         Text.Font = previousFont;
 
         var height = headerHeight
-            + (SUBSECTION_PADDING + GetHeightCorpseType() + SUBSECTION_PADDING) * 3f
-            + SECTION_GAP * 2f
+            + (GetHeightCorpseType() + SECTION_GAP) * 3f
+            + SUBSECTION_PADDING * 6f
          ;
 
         return height;
