@@ -1,17 +1,19 @@
 ﻿using System.Text;
 using Verse;
 
-namespace Bardez.Biotech.NecroGeneExtractor.Settings;
+namespace Bardez.Biotech.NecroGeneExtractor.Settings.Corpses;
 
-public abstract class CorpseSettingsFresh : IExposable
+public class CorpseSettingsFresh : IExposable
 {
     public float CostResource;
 
     public float CostTime;
 
-    protected abstract float DefaultResource { get; }
+    protected float DefaultResource => DefaultSettings.FRESH_RESOURCE;
 
-    protected abstract float DefaultTime { get; }
+    protected float DefaultTime => DefaultSettings.FRESH_TIME;
+
+    public CorpseSettingsFresh() => SetDefaults();
 
     public virtual void SetDefaults()
     {
