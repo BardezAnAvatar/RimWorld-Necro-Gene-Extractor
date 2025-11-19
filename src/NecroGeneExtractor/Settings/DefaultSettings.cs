@@ -3,7 +3,7 @@
 internal static class DefaultSettings
 {
     /// <summary>Amount of Neutroamine consumed per hour</summary>
-    public const float FRESH_RESOURCE = 5f;
+    public const float FRESH_RESOURCE = .25f;
 
     /// <summary>Processing time of a single cycle of the corpse gene extraction, in hours</summary>
     public const float FRESH_TIME = 24f;
