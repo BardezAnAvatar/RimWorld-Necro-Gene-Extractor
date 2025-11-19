@@ -15,7 +15,7 @@ namespace Bardez.Biotech.NecroGeneExtractor.Buildings;
 public abstract class NecroGeneExtractorBase : GeneExtractorBase
 //Building_Enterable, IStoreSettingsParent, IThingHolderWithDrawnPawn, IThingHolder
 {
-    protected abstract NecroGeneExtractorSettings NecroSettings { get; }
+    protected NecroGeneExtractorSettings NecroSettings => NecroGeneExtractorMod.Settings;
 
     protected abstract TierSettings TierSettings { get; }
 
