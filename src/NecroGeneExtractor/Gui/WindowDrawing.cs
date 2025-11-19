@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Reflection;
 using Bardez.Biotech.NecroGeneExtractor.Settings;
 using Bardez.Biotech.NecroGeneExtractor.Settings.Tiers;
 using RimWorld;
 using UnityEngine;
 using Verse;
-using static UnityEngine.Experimental.Rendering.RayTracingAccelerationStructure;
 
 namespace Bardez.Biotech.NecroGeneExtractor.Gui;
 
@@ -14,8 +12,6 @@ internal static class WindowDrawing
 {
     private const float SCROLL_BAR_WIDTH_MARGIN = 20f;
     private const float SCROLLABLE_AREA_HEIGHT = 9999f;
-
-    private const float SECTION_HEIGHT_TIER = 1000f;
 
     private const float HOURS_MIN = 1f;
     private const float HOURS_MAX = 24f;
@@ -81,7 +77,7 @@ internal static class WindowDrawing
     private static void DrawSettingsCorpses(Listing_Standard parent, float width, NecroGeneExtractorSettings settings)
     {
         TaggedString header = "<b><color=\"green\">" + "NGET_HeaderCorpses".Translate() + "</color></b>";
-        float height = GetHeightCorpseType();
+        float height = GetHeightCorpsesSection();
         Listing_Standard subSection = BeginSubSection(parent, height, width: width);
         try
         {
@@ -248,6 +244,22 @@ internal static class WindowDrawing
     {
         var textLineHeight = Text.LineHeight;
         var height = Text.LineHeight * LINE_HEIGHT_MULTIPIER * 3f;
+
+        return height;
+    }
+
+    private static float GetHeightCorpsesSection()
+    {
+        var previousFont = Text.Font;
+
+        Text.Font = GameFont.Medium;
+        var headerHeight = Text.LineHeight + LINE_MARGIN_VERTICAL;
+        Text.Font = previousFont;
+
+        var height = headerHeight
+            + (SUBSECTION_PADDING + GetHeightCorpseType() + SUBSECTION_PADDING) * 3f
+            + SECTION_GAP * 2f
+         ;
 
         return height;
     }
