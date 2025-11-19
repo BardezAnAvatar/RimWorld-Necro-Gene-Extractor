@@ -19,8 +19,6 @@ public abstract class NecroGeneExtractorBase : GeneExtractorBase
 
     protected abstract TierSettings TierSettings { get; }
 
-    protected abstract ProcessingCosts Costs { get; }
-
     private float containedNeutroamine;
     private int starvationTicks;
 
@@ -51,8 +49,7 @@ public abstract class NecroGeneExtractorBase : GeneExtractorBase
                 return 0f;
             }
 
-
-            return 10f - NeutroamineStored;
+            return 50f - NeutroamineStored;
         }
     }
 
@@ -87,24 +84,30 @@ public abstract class NecroGeneExtractorBase : GeneExtractorBase
     {
         get
         {
-            float num = Costs.CostResource;
+            var corpseMultiplier = TargetCorpseRotStage switch
+            {
+                RotStage.Rotting => NecroSettings.CorpseRotting.CostMultiplierResource,
+                RotStage.Dessicated => NecroSettings.CorpseDesiccated.CostMultiplierResource,
+                RotStage.Fresh or _ => 1f,
+            };
+            var multipliers = TierSettings.CostMultiplierResource * corpseMultiplier;
+
+            var neutroPerHour = NecroSettings.CorpseFresh.CostResource * multipliers;
 
             if (NeutroamineStarvationSeverity > 0f)
             {
                 //if starving, consume more to get back to normal.
-                num *= 1.1f;
+                neutroPerHour *= 1.1f;
             }
 
             if (OverchargeActive)
             {
-                num *= OverchargeConsumptionFactor;
+                neutroPerHour *= TierSettings.CostMultiplierOverdriveResource;
             }
 
-            return num;
+            return neutroPerHour;
         }
     }
-
-    private float OverchargeConsumptionFactor => TierSettings.CostMultiplierOverdriveResource;
 
     protected virtual RotStage TargetCorpseRotStage
     {
@@ -115,14 +118,12 @@ public abstract class NecroGeneExtractorBase : GeneExtractorBase
         }
     }
 
-    public override float SpeedMultiplier => 1;
-
     //TODO: figure this out based on pawn decay state
     public override int ExtractionTimeInTicks
     {
         get
         {
-            var corpseType = TargetCorpseRotStage; ;
+            var corpseType = TargetCorpseRotStage;
             var multiplier = corpseType switch
             {
                 RotStage.Rotting => NecroSettings.CorpseRotting.CostMultiplierTime,
@@ -177,6 +178,7 @@ public abstract class NecroGeneExtractorBase : GeneExtractorBase
 
         return true;
     }
+
     public static Corpse FindCorpseOfPawn(Pawn deadPawn)
     {
         // Use Linq to find the first Corpse whose InnerPawn matches the deadPawn
