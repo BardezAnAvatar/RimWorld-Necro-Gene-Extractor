@@ -17,9 +17,16 @@ internal static class WindowDrawing
     private const float HOURS_MAX = 72f;
     private const float NEUTROAMINE_MIN = 0.25f;
     private const float NEUTROAMINE_MAX = 50f;
+    private const float HOURS_MULTIPLIER_MIN = 1f;
+    private const float HOURS_MULTIPLIER_MAX = 20f;
+
+    private const float EFFICIENCY_MULTIPLIER_MIN = 1f;
+    private const float EFFICIENCY_MULTIPLIER_MAX = 10f;
 
     private const float INCREMENT_TIME = 0.25f;
     private const float INCREMENT_RESOURCE = 0.25f;
+    private const float INCREMENT_TIER = 0.1f;
+    private const float INCREMENT_OVERDRIVE = 0.5f;
 
     private const float SLIDER_LABEL_AREA_PCT = 0.27f;
     private const float SLIDER_VALUE_AREA_PCT = 0.075f;
@@ -117,10 +124,14 @@ internal static class WindowDrawing
 
             DrawHoursAndNeutroamine(subSection, ref tierSettings.CostMultiplierTime, ref tierSettings.CostMultiplierResource,
                 "NGET_WorkHoursMultiplier", "NGET_WorkHoursMultiplierTooltip",
-                "NGET_CostNeutroamineMultiplier", "NGET_CostNeutroamineMultiplierTooltip");
+                "NGET_CostNeutroamineMultiplier", "NGET_CostNeutroamineMultiplierTooltip",
+                EFFICIENCY_MULTIPLIER_MIN, EFFICIENCY_MULTIPLIER_MAX, INCREMENT_TIER,
+                EFFICIENCY_MULTIPLIER_MIN, EFFICIENCY_MULTIPLIER_MAX, INCREMENT_TIER);
             DrawHoursAndNeutroamine(subSection, ref tierSettings.CostMultiplierTime, ref tierSettings.CostMultiplierResource,
                 "NGET_WorkHoursMultiplierOverdrive", "NGET_WorkHoursMultiplierOverdriveTooltip",
-                "NGET_CostNeutroaminMultiplierOverdrive", "NGET_CostNeutroaminMultiplierOverdriveTooltip");
+                "NGET_CostNeutroaminMultiplierOverdrive", "NGET_CostNeutroaminMultiplierOverdriveTooltip",
+                EFFICIENCY_MULTIPLIER_MIN, EFFICIENCY_MULTIPLIER_MAX, INCREMENT_TIER,
+                EFFICIENCY_MULTIPLIER_MIN, EFFICIENCY_MULTIPLIER_MAX, INCREMENT_OVERDRIVE);
         }
         finally
         {
@@ -145,7 +156,9 @@ internal static class WindowDrawing
         {
             DrawCorpseTypeHeader(subSection, "RotStateFresh");
             DrawHoursAndNeutroamine(subSection, ref hours, ref neutroamine,
-                "NGET_WorkHours", "NGET_WorkHoursTooltip", "NGET_CostNeutroamine", "NGET_CostNeutroamineTooltip");
+                "NGET_WorkHours", "NGET_WorkHoursTooltip", "NGET_CostNeutroamine", "NGET_CostNeutroamineTooltip",
+                HOURS_MIN, HOURS_MAX, INCREMENT_TIME,
+                NEUTROAMINE_MIN, NEUTROAMINE_MAX, INCREMENT_RESOURCE);
         }
         finally
         {
@@ -163,7 +176,9 @@ internal static class WindowDrawing
             DrawCorpseTypeHeader(subSection, corpseType);
             DrawHoursAndNeutroamine(subSection, ref hours, ref neutroamine,
                 "NGET_WorkHoursMultiplier", "NGET_WorkHoursMultiplierTooltip",
-                "NGET_CostNeutroamineMultiplier", "NGET_CostNeutroamineMultiplierTooltip");
+                "NGET_CostNeutroamineMultiplier", "NGET_CostNeutroamineMultiplierTooltip",
+                HOURS_MULTIPLIER_MIN, HOURS_MULTIPLIER_MAX, INCREMENT_TIME,
+                NEUTROAMINE_MIN, NEUTROAMINE_MAX, INCREMENT_RESOURCE);
         }
         finally
         {
@@ -180,7 +195,9 @@ internal static class WindowDrawing
     }
 
     private static void DrawHoursAndNeutroamine(Listing_Standard subSection, ref float hours, ref float neutroamine,
-        string hoursLabelKey, string hoursTooltipKey, string neutroLabelKey, string neutroTooltipKey)
+        string hoursLabelKey, string hoursTooltipKey, string neutroLabelKey, string neutroTooltipKey,
+        float hoursMin, float hoursMax, float hoursIncrement,
+        float neutroMin, float neutroMax, float neutroIncrement)
     {
         var multiplier = "NGET_MultiplierValue".Translate();
 
@@ -188,13 +205,13 @@ internal static class WindowDrawing
         var hoursTooltip = hoursTooltipKey.Translate();
         var hoursValue = "<b>" + multiplier.Formatted(hours.ToString("F2")) + "</b>";
         DrawHorizontalSlider(subSection, ref hours, hoursLabel, hoursTooltip, hoursValue,
-            HOURS_MIN, HOURS_MAX, INCREMENT_TIME);
+            hoursMin, hoursMax, hoursIncrement);
 
         var neutroamineLabel = neutroLabelKey.Translate();
         var neutroTooltip = neutroTooltipKey.Translate();
         var neutroValue = "<b>" + multiplier.Formatted(neutroamine.ToString("F2")) + "</b>";
         DrawHorizontalSlider(subSection, ref neutroamine, neutroamineLabel, neutroTooltip, neutroValue,
-            NEUTROAMINE_MIN, NEUTROAMINE_MAX, INCREMENT_RESOURCE);
+            neutroMin, neutroMax, neutroIncrement);
     }
 
     private static void DrawHorizontalSlider(Listing_Standard subSection, ref float variable,
