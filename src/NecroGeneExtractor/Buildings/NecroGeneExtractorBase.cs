@@ -16,7 +16,7 @@ public abstract class NecroGeneExtractorBase : GeneExtractorBase
 //Building_Enterable, IStoreSettingsParent, IThingHolderWithDrawnPawn, IThingHolder
 {
     protected abstract NecroGeneExtractorSettings NecroSettings { get; }
-    
+
     protected abstract TierSettings TierSettings { get; }
 
     protected abstract ProcessingCosts Costs { get; }
@@ -106,6 +106,15 @@ public abstract class NecroGeneExtractorBase : GeneExtractorBase
 
     private float OverchargeConsumptionFactor => TierSettings.CostMultiplierOverdriveResource;
 
+    protected virtual RotStage TargetCorpseRotStage
+    {
+        get
+        {
+            var corpse = FindCorpseOfPawn(selectedPawn);
+            return corpse.GetRotStage();
+        }
+    }
+
     public override float SpeedMultiplier => 1;
 
     //TODO: figure this out based on pawn decay state
@@ -113,7 +122,7 @@ public abstract class NecroGeneExtractorBase : GeneExtractorBase
     {
         get
         {
-            var corpseType = (selectedPawn as Corpse).GetRotStage();
+            var corpseType = TargetCorpseRotStage; ;
             var multiplier = corpseType switch
             {
                 RotStage.Rotting => NecroSettings.CorpseRotting.CostMultiplierTime,
@@ -167,6 +176,15 @@ public abstract class NecroGeneExtractorBase : GeneExtractorBase
         }
 
         return true;
+    }
+    public static Corpse FindCorpseOfPawn(Pawn deadPawn)
+    {
+        // Use Linq to find the first Corpse whose InnerPawn matches the deadPawn
+        Corpse corpse = Find.CurrentMap.listerThings.AllThings
+            .OfType<Corpse>() // Filter for objects of type Corpse
+            .FirstOrDefault(c => c.InnerPawn == deadPawn); // Find the first one matching the predicate
+
+        return corpse;
     }
 
 
