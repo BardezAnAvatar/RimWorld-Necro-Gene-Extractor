@@ -14,8 +14,8 @@ internal static class WindowDrawing
     private const float SCROLLABLE_AREA_HEIGHT = 9999f;
 
     private const float HOURS_MIN = 1f;
-    private const float HOURS_MAX = 24f;
-    private const float NEUTROAMINE_MIN = 1f;
+    private const float HOURS_MAX = 72f;
+    private const float NEUTROAMINE_MIN = 0.25f;
     private const float NEUTROAMINE_MAX = 50f;
 
     private const float INCREMENT_TIME = 0.25f;
