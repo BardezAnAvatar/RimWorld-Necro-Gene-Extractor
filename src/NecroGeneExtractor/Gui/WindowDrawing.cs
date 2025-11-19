@@ -92,9 +92,9 @@ internal static class WindowDrawing
             DrawHeader(subSection, header);
             DrawSettingsFresh(subSection, width, ref settings.CorpseFresh.CostTime, ref settings.CorpseFresh.CostResource);
             DrawGapBetweenSections(subSection);
-            DrawSettingsNonFresh(subSection, width, "RotStateRotting", ref settings.CorpseFresh.CostTime, ref settings.CorpseFresh.CostResource);
+            DrawSettingsNonFresh(subSection, width, "RotStateRotting", ref settings.CorpseRotting.CostMultiplierTime, ref settings.CorpseRotting.CostMultiplierResource);
             DrawGapBetweenSections(subSection);
-            DrawSettingsNonFresh(subSection, width, "RotStateDessicated", ref settings.CorpseFresh.CostTime, ref settings.CorpseFresh.CostResource);
+            DrawSettingsNonFresh(subSection, width, "RotStateDessicated", ref settings.CorpseDesiccated.CostMultiplierTime, ref settings.CorpseDesiccated.CostMultiplierResource);
         }
         finally
         {
@@ -127,7 +127,7 @@ internal static class WindowDrawing
                 "NGET_CostNeutroamineMultiplier", "NGET_CostNeutroamineMultiplierTooltip",
                 EFFICIENCY_MULTIPLIER_MIN, EFFICIENCY_MULTIPLIER_MAX, INCREMENT_TIER,
                 EFFICIENCY_MULTIPLIER_MIN, EFFICIENCY_MULTIPLIER_MAX, INCREMENT_TIER);
-            DrawHoursAndNeutroamine(subSection, ref tierSettings.CostMultiplierTime, ref tierSettings.CostMultiplierResource,
+            DrawHoursAndNeutroamine(subSection, ref tierSettings.CostMultiplierOverdriveTime, ref tierSettings.CostMultiplierOverdriveResource,
                 "NGET_WorkHoursMultiplierOverdrive", "NGET_WorkHoursMultiplierOverdriveTooltip",
                 "NGET_CostNeutroaminMultiplierOverdrive", "NGET_CostNeutroaminMultiplierOverdriveTooltip",
                 EFFICIENCY_MULTIPLIER_MIN, EFFICIENCY_MULTIPLIER_MAX, INCREMENT_TIER,
