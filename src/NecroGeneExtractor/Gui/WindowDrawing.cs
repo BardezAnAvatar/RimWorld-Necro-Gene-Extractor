@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Reflection;
 using Bardez.Biotech.NecroGeneExtractor.Settings;
+using Bardez.Biotech.NecroGeneExtractor.Settings.Tiers;
 using RimWorld;
 using UnityEngine;
 using Verse;
+using static UnityEngine.Experimental.Rendering.RayTracingAccelerationStructure;
 
 namespace Bardez.Biotech.NecroGeneExtractor.Gui;
 
@@ -52,11 +55,9 @@ internal static class WindowDrawing
 
             DrawSettings_DefaultButton(listing, settings.SetDefaults);
             DrawGapBetweenSections(listing);
-            DrawSettingsTier(listing, viewRect.width, "NGET_ExtractorTier2", settings.SettingsTier2);
+            DrawSettingsCorpses(listing, viewRect.width, settings);
             DrawGapBetweenSections(listing);
-            DrawSettingsTier(listing, viewRect.width, "NGET_ExtractorTier3", settings.SettingsTier3);
-            DrawGapBetweenSections(listing);
-            DrawSettingsTier(listing, viewRect.width, "NGET_ExtractorTier4", settings.SettingsTier4);
+            DrawSettingsTiers(listing, viewRect.width, settings);
 
             _totalContentHeight = listing.CurHeight;
             listing.End();
@@ -77,20 +78,19 @@ internal static class WindowDrawing
         }
     }
 
-    private static void DrawSettingsTier(Listing_Standard parent, float width, string tierName, TierSettings tierSettings)
+    private static void DrawSettingsCorpses(Listing_Standard parent, float width, NecroGeneExtractorSettings settings)
     {
-        TaggedString header = "<b><color=\"green\">" + tierName.Translate() + "</color></b>";
-        float height = GetHeightTierSubsection(tierSettings);
+        TaggedString header = "<b><color=\"green\">" + "NGET_HeaderCorpses".Translate() + "</color></b>";
+        float height = GetHeightCorpseType();
         Listing_Standard subSection = BeginSubSection(parent, height, width: width);
         try
         {
-            DrawTierHeader(subSection, header);
-
-            DrawSettingsFresh(subSection, width, ref tierSettings.Fresh.CostTime, ref tierSettings.Fresh.CostResource);
+            DrawHeader(subSection, header);
+            DrawSettingsFresh(subSection, width, ref settings.CorpseFresh.CostTime, ref settings.CorpseFresh.CostResource);
             DrawGapBetweenSections(subSection);
-            DrawSettingsNonFresh(subSection, width, "RotStateRotting", ref tierSettings.Rotting.Accept, ref tierSettings.Rotting.CostMultiplierTime, ref tierSettings.Rotting.CostMultiplierResource);
+            DrawSettingsNonFresh(subSection, width, "RotStateRotting", ref settings.CorpseFresh.CostTime, ref settings.CorpseFresh.CostResource);
             DrawGapBetweenSections(subSection);
-            DrawSettingsNonFresh(subSection, width, "RotStateDessicated", ref tierSettings.Dessicated.Accept, ref tierSettings.Dessicated.CostMultiplierTime, ref tierSettings.Dessicated.CostMultiplierResource);
+            DrawSettingsNonFresh(subSection, width, "RotStateDessicated", ref settings.CorpseFresh.CostTime, ref settings.CorpseFresh.CostResource);
         }
         finally
         {
@@ -98,7 +98,40 @@ internal static class WindowDrawing
         }
     }
 
-    private static void DrawTierHeader(Listing_Standard subSection, TaggedString header)
+    private static void DrawSettingsTiers(Listing_Standard parent, float width, NecroGeneExtractorSettings settings)
+    {
+        DrawSettingsTier(parent, width, "NGET_ExtractorTier2", settings.SettingsTier2);
+        DrawGapBetweenSections(parent);
+        DrawSettingsTier(parent, width, "NGET_ExtractorTier3", settings.SettingsTier3);
+        DrawGapBetweenSections(parent);
+        DrawSettingsTier(parent, width, "NGET_ExtractorTier4", settings.SettingsTier4);
+    }
+
+    private static void DrawSettingsTier(Listing_Standard parent, float width, string tierName, TierSettings tierSettings)
+    {
+        TaggedString header = "<b><color=\"green\">" + tierName.Translate() + "</color></b>";
+        float height = GetHeightTierSubsection();
+        Listing_Standard subSection = BeginSubSection(parent, height, width: width);
+        try
+        {
+            DrawHeader(subSection, header);
+            subSection.CheckboxLabeled("NGET_CorpseTypeRottingEnabled".Translate(), ref tierSettings.AcceptRotten, tooltip: "NGET_CorpseTypeRottingEnabledTooltip".Translate());
+            subSection.CheckboxLabeled("NGET_CorpseTypeDesiccatedEnabled".Translate(), ref tierSettings.AcceptDesiccated, tooltip: "NGET_CorpseTypeDesiccatedEnabledTooltip".Translate());
+
+            DrawHoursAndNeutroamine(subSection, ref tierSettings.CostMultiplierTime, ref tierSettings.CostMultiplierResource,
+                "NGET_WorkHoursMultiplier", "NGET_WorkHoursMultiplierTooltip",
+                "NGET_CostNeutroamineMultiplier", "NGET_CostNeutroamineMultiplierTooltip");
+            DrawHoursAndNeutroamine(subSection, ref tierSettings.CostMultiplierTime, ref tierSettings.CostMultiplierResource,
+                "NGET_WorkHoursMultiplierOverdrive", "NGET_WorkHoursMultiplierOverdriveTooltip",
+                "NGET_CostNeutroaminMultiplierOverdrive", "NGET_CostNeutroaminMultiplierOverdriveTooltip");
+        }
+        finally
+        {
+            parent.EndSection(subSection);
+        }
+    }
+
+    private static void DrawHeader(Listing_Standard subSection, TaggedString header)
     {
         // Make section text bigger
         var previousFont = Text.Font;
@@ -109,7 +142,7 @@ internal static class WindowDrawing
 
     private static void DrawSettingsFresh(Listing_Standard parent, float width, ref float hours, ref float neutroamine)
     {
-        var height = GetHeightCorpseTypeFresh();
+        var height = GetHeightCorpseType();
         Listing_Standard subSection = BeginSubSection(parent, height, width);
         try
         {
@@ -123,22 +156,17 @@ internal static class WindowDrawing
         }
     }
 
-    private static void DrawSettingsNonFresh(Listing_Standard parent, float width, string corpseType, ref bool enabled, ref float hours, ref float neutroamine)
+    private static void DrawSettingsNonFresh(Listing_Standard parent, float width, string corpseType, ref float hours, ref float neutroamine)
     {
-        var height = GetHeightCorpseTypeNonFresh(enabled);
+        var height = GetHeightCorpseType();
         Listing_Standard subSection = BeginSubSection(parent, height, width);
 
         try
         {
             DrawCorpseTypeHeader(subSection, corpseType);
-            subSection.CheckboxLabeled("NGET_CorpseTypeEnabled".Translate(), ref enabled, tooltip: "NGET_CorpseTypeEnabledTooltip");
-
-            if (enabled)
-            {
-                DrawHoursAndNeutroamine(subSection, ref hours, ref neutroamine,
-                    "NGET_WorkHoursMultiplier", "NGET_WorkHoursMultiplierTooltip",
-                    "NGET_CostNeutroamineMultiplier", "NGET_CostNeutroamineMultiplierTooltip");
-            }
+            DrawHoursAndNeutroamine(subSection, ref hours, ref neutroamine,
+                "NGET_WorkHoursMultiplier", "NGET_WorkHoursMultiplierTooltip",
+                "NGET_CostNeutroamineMultiplier", "NGET_CostNeutroamineMultiplierTooltip");
         }
         finally
         {
@@ -204,38 +232,22 @@ internal static class WindowDrawing
         listing.Gap(SECTION_GAP);
     }
 
-    private static float GetHeightTierSubsection(TierSettings tierSettings)
+    private static float GetHeightTierSubsection()
     {
         var previousFont = Text.Font;
 
         Text.Font = GameFont.Medium;
         var headerHeight = Text.LineHeight + LINE_MARGIN_VERTICAL;
+        var height = Text.LineHeight * LINE_HEIGHT_MULTIPIER * 6f;
         Text.Font = previousFont;
-
-        var height = headerHeight
-            + SUBSECTION_PADDING + GetHeightCorpseTypeFresh() + SUBSECTION_PADDING
-            + SECTION_GAP
-            + SUBSECTION_PADDING + GetHeightCorpseTypeNonFresh(tierSettings.Rotting.Accept) + SUBSECTION_PADDING
-            + SECTION_GAP
-            + SUBSECTION_PADDING + GetHeightCorpseTypeNonFresh(tierSettings.Dessicated.Accept) + SUBSECTION_PADDING
-            + SECTION_GAP
-         ;
 
         return height;
     }
 
-    private static float GetHeightCorpseTypeFresh()
+    private static float GetHeightCorpseType()
     {
         var textLineHeight = Text.LineHeight;
         var height = Text.LineHeight * LINE_HEIGHT_MULTIPIER * 3f;
-
-        return height;
-    }
-
-    private static float GetHeightCorpseTypeNonFresh(bool enabled)
-    {
-        var textLineHeight = Text.LineHeight;
-        var height = Text.LineHeight * LINE_HEIGHT_MULTIPIER * (enabled ? 4f : 2f);
 
         return height;
     }
