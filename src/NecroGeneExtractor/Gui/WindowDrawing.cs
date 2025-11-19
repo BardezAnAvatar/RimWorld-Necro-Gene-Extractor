@@ -39,8 +39,12 @@ internal static class WindowDrawing
     private const float LINE_HEIGHT_MULTIPIER = 1.4f;
 
     private const float SECTION_GAP = 20f;
+    private const float SLIDER_GAP = 10f;
     private const float LINE_MARGIN_VERTICAL = 12f;
     private const float SUBSECTION_PADDING = 2f;
+
+    private const float OFFSET_LABEL = 8f;
+    private const float OFFSET_SLIDER = 16f;
 
     private static Vector2 _scrollPosition = new(0f, 0f);
     private static float _totalContentHeight = 800f;
@@ -131,6 +135,9 @@ internal static class WindowDrawing
                 "NGET_MultiplierValue",
                 EFFICIENCY_MULTIPLIER_MIN, EFFICIENCY_MULTIPLIER_MAX, INCREMENT_EFFICIENCY,
                 EFFICIENCY_MULTIPLIER_MIN, EFFICIENCY_MULTIPLIER_MAX, INCREMENT_EFFICIENCY);
+
+            subSection.Gap(SLIDER_GAP);
+
             DrawHoursAndNeutroamine(subSection, ref tierSettings.CostMultiplierOverdriveTime, ref tierSettings.CostMultiplierOverdriveResource,
                 "NGET_WorkHoursMultiplierOverdrive", "NGET_WorkHoursMultiplierOverdriveTooltip",
                 "NGET_CostNeutroaminMultiplierOverdrive", "NGET_CostNeutroaminMultiplierOverdriveTooltip",
@@ -214,6 +221,8 @@ internal static class WindowDrawing
         DrawHorizontalSlider(subSection, ref hours, hoursLabel, hoursTooltip, hoursValue,
             hoursMin, hoursMax, hoursIncrement);
 
+        subSection.Gap(SLIDER_GAP);
+
         var neutroamineLabel = neutroLabelKey.Translate();
         var neutroTooltip = neutroTooltipKey.Translate();
         var neutroValue = "<b>" + multiplier.Formatted(neutroamine.ToString("F2")) + "</b>";
@@ -235,12 +244,12 @@ internal static class WindowDrawing
 
         var area = subSection.GetRect(heightNeeded); //reserve the area for the slider/label from the Listing_Standard
         var labelArea = area.LeftPart(labelWidth);
-        labelArea.y += 8; //move it down to center vertically a bit
+        labelArea.y += OFFSET_LABEL; //move it down to center vertically a bit
         var remainingArea = area.RightPart(remainingWidth);
         var valueArea = remainingArea.LeftPart(valueWidth);
-        valueArea.y += 8; //move it down to center vertically a bit
+        valueArea.y += OFFSET_LABEL; //move it down to center vertically a bit
         var sliderArea = remainingArea.RightPart(sliderWidth);
-        sliderArea.y += 14; //it was drawing over the previous controls on screen
+        sliderArea.y += OFFSET_SLIDER; //it was drawing over the previous controls on screen
 
         GUIContent labelInfo = new GUIContent(label, tooltip);
         var range = new FloatRange(min, max);
@@ -280,8 +289,7 @@ internal static class WindowDrawing
 
     private static float GetHeightCorpseType()
     {
-        var textLineHeight = Text.LineHeight;
-        var height = Text.LineHeight * LINE_HEIGHT_MULTIPIER * 3f;
+        var height = (Text.LineHeight * LINE_HEIGHT_MULTIPIER * 3f) + SLIDER_GAP;
 
         return height;
     }
