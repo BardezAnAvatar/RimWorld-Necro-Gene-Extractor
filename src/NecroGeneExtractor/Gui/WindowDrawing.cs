@@ -21,9 +21,9 @@ internal static class WindowDrawing
     private const float INCREMENT_TIME = 0.25f;
     private const float INCREMENT_RESOURCE = 0.25f;
 
-    private const float SLIDER_LABEL_AREA_PCT = 0.3f;
-    private const float SLIDER_VALUE_AREA_PCT = 0.1f;
-    private const float SLIDER_LABEL_SEPARATION_PCT = 0.1f;
+    private const float SLIDER_LABEL_AREA_PCT = 0.27f;
+    private const float SLIDER_VALUE_AREA_PCT = 0.075f;
+    private const float SLIDER_LABEL_SEPARATION_PCT = 0.03f;
     private const float BUTTON_DEFAULTS_AREA_PCT = 0.2f;
 
     private const float LINE_HEIGHT_MULTIPIER = 1.4f;
@@ -186,13 +186,13 @@ internal static class WindowDrawing
 
         var hoursLabel = hoursLabelKey.Translate();
         var hoursTooltip = hoursTooltipKey.Translate();
-        var hoursValue = multiplier.Formatted(hours.ToString("F2"));
+        var hoursValue = "<b>" + multiplier.Formatted(hours.ToString("F2")) + "</b>";
         DrawHorizontalSlider(subSection, ref hours, hoursLabel, hoursTooltip, hoursValue,
             HOURS_MIN, HOURS_MAX, INCREMENT_TIME);
 
         var neutroamineLabel = neutroLabelKey.Translate();
         var neutroTooltip = neutroTooltipKey.Translate();
-        var neutroValue = multiplier.Formatted(neutroamine.ToString("F2"));
+        var neutroValue = "<b>" + multiplier.Formatted(neutroamine.ToString("F2")) + "</b>";
         DrawHorizontalSlider(subSection, ref neutroamine, neutroamineLabel, neutroTooltip, neutroValue,
             NEUTROAMINE_MIN, NEUTROAMINE_MAX, INCREMENT_RESOURCE);
     }
