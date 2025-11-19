@@ -1,0 +1,251 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Bardez.Biotech.NecroGeneExtractor.Settings;
+using GeneExtractorTiers.Extractors;
+using RimWorld;
+using UnityEngine;
+using Verse;
+using Verse.AI;
+
+namespace Bardez.Biotech.NecroGeneExtractor.Buildings;
+
+public abstract class NecroGeneExtractorBase : GeneExtractorBase
+//Building_Enterable, IStoreSettingsParent, IThingHolderWithDrawnPawn, IThingHolder
+{
+    protected abstract TierSettings NecroSettings { get; }
+
+    protected abstract ProcessingCosts Costs { get; }
+
+    private float containedNeutroamine;
+    private int starvationTicks;
+
+    public float NeutroamineStored
+    {
+        get
+        {
+            float num = containedNeutroamine;
+            for (int i = 0; i < innerContainer.Count; i++)
+            {
+                Thing thing = innerContainer[i];
+                if (thing.def.defName == "neutroamine")
+                {
+                    num += thing.stackCount;
+                }
+            }
+
+            return num;
+        }
+    }
+
+    public float NeutroamineNeeded
+    {
+        get
+        {
+            if (selectedPawn == null)
+            {
+                return 0f;
+            }
+
+
+            return 10f - NeutroamineStored;
+        }
+    }
+
+    public float NeutroamineStarvationSeverity
+    {
+        get
+        {
+            //presume that 4 hours is starvation period
+            return (2500 * 4f) / starvationTicks;
+        }
+    }
+
+    public float NeutroamineStarvationPerHourOffset
+    {
+        get
+        {
+            if (!base.Working)
+            {
+                return 0f;
+            }
+
+            if (!PowerOn || containedNeutroamine <= 0f)
+            {
+                return 0.5f;
+            }
+
+            return -0.1f;
+        }
+    }
+
+    public float NeutroConsumedPerHour
+    {
+        get
+        {
+            float num = Costs.CostResource;
+
+            if (NeutroamineStarvationSeverity > 0f)
+            {
+                //if starving, consume more to get back to normal.
+                num *= 1.1f;
+            }
+            if (OverchargeActive)
+            {
+                num *= OverchargeConsumptionFactor;
+            }
+
+            return num;
+        }
+    }
+
+    private const float OverchargeConsumptionFactor = 3.0f;
+
+    public override float SpeedMultiplier => 1;
+
+    //TODO: figure this out based on pawn decay state
+    public override int ExtractionTimeInTicks
+    {
+        get
+        {
+            var corpseType = (selectedPawn as Corpse).GetRotStage();
+            var multiplier = corpseType switch
+            {
+                RotStage.Rotting => NecroSettings.Rotting.CostMultiplierTime,
+                RotStage.Dessicated => NecroSettings.Dessicated.CostMultiplierTime,
+                RotStage.Fresh or _ => 1f,
+            };
+
+            return Convert.ToInt32(
+        (Settings.extractionHours * 2500 / SpeedMultiplier) / (OverchargeActive ? OverchargeSpeedFactor : 1));
+
+        }
+    }
+
+
+
+    //Accept Pawn
+    public override AcceptanceReport CanAcceptPawn(Pawn pawn)
+    {
+        if (selectedPawn != null && selectedPawn != pawn) //don't accept new pawns if already selected
+        {
+            return false;
+        }
+
+        if (innerContainer.Any(x => x is Pawn)) //already occupied
+        {
+            return "Occupied".Translate();
+        }
+
+        if (!pawn.RaceProps.Humanlike)  //has to be a human-like pawn
+        {
+            return false;
+        }
+
+        if (!pawn.Dead) //only want dead bodies for Necro
+        {
+            return false;
+        }
+
+        if (!PowerOn)
+        {
+            return "NoPower".Translate().CapitalizeFirst();
+        }
+
+        if (pawn?.genes?.GenesListForReading?.Any(x => x.def.defName == "VREA_Power") == true)
+        {
+            return "VREA.CannotUseAndroid".Translate().CapitalizeFirst();
+        }
+
+        return true;
+    }
+
+
+
+    // Float Menu
+    public override IEnumerable<FloatMenuOption> GetFloatMenuOptions(Pawn selPawn)
+    {
+        foreach (FloatMenuOption floatMenuOption in base.GetFloatMenuOptions(selPawn))
+        {
+            yield return floatMenuOption;
+        }
+
+        //TODO: is this reasonable? Maybe if another pawn can haul the corpse?
+        if (!selPawn.CanReach(this, PathEndMode.InteractionCell, Danger.Deadly))
+        {
+            yield return new FloatMenuOption("CannotEnterBuilding".Translate(this) + ": " + "NoPath".Translate().CapitalizeFirst(), null);
+            yield break;
+        }
+
+        AcceptanceReport acceptanceReport = CanAcceptPawn(selPawn);
+        if (acceptanceReport.Accepted)
+        {
+            yield return FloatMenuUtility.DecoratePrioritizedTask(new FloatMenuOption("EnterBuilding".Translate(this), delegate
+            {
+                SelectPawn(selPawn);
+            }), selPawn, this);
+        }
+        else if (!acceptanceReport.Reason.NullOrEmpty())
+        {
+            yield return new FloatMenuOption("CannotEnterBuilding".Translate(this) + ": " + acceptanceReport.Reason.CapitalizeFirst(), null);
+        }
+    }
+
+
+
+    //Inspect String
+    protected override void InspectStringAddResourceStarvation(StringBuilder stringBuilder)
+    {
+        float starvationSeverityPercent = NeutroamineStarvationSeverity;
+        if (starvationSeverityPercent > 0f)
+        {
+            var deficiency = "NGET_NeutroamineDeficiency".Translate();
+            string text = ((NeutroamineStarvationSeverity >= 0f) ? "+" : "-");
+            var perHour = "PerHour".Translate(text + NeutroamineStarvationPerHourOffset.ToStringPercent());
+            var starvationPct = starvationSeverityPercent.ToStringPercent();
+            stringBuilder
+                .AppendLineIfNotEmpty()
+                .Append($"{deficiency}: {starvationPct} ({perHour})");
+        }
+    }
+
+    protected override void InspectStringAddResourceConsumption(StringBuilder stringBuilder)
+    {
+        stringBuilder.AppendLineIfNotEmpty().Append("Nutrition".Translate()).Append(": ")
+            .Append(NeutroamineStored.ToStringByStyle(ToStringStyle.FloatMaxOne));
+
+        if (base.Working)
+        {
+            stringBuilder.Append(" (-").Append("PerHour".Translate((NeutroConsumedPerHour * Settings.nutritionMultiplier).ToString("F2"))).Append(")");
+        }
+    }
+
+    protected override bool Tick_ResourceStarvation()
+    {
+        //TODO: consume X neutroamine per day. If we are empty, count ticks
+        if (NeutroamineStarvationSeverity >= 1f)
+        {
+            Fail();
+            return true;
+        }
+
+        return false;
+    }
+
+    protected override void Tick_ConsumeResources()
+    {
+        //how much - per hour * multiplier / 1 hour of ticks
+        var value = containedNeutroamine - NeutroConsumedPerHour * Settings.nutritionMultiplier / 2500f;
+        containedNeutroamine = Mathf.Clamp(value, 0f, 2.1474836E+09f); //yuge
+
+        if (containedNeutroamine <= 0f)
+        {
+            starvationTicks++;
+        }
+        else if (starvationTicks > 0)
+        {
+            starvationTicks--;
+        }
+    }
+}
