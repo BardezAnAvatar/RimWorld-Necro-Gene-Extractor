@@ -29,6 +29,8 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
 
     public Corpse TargetedCorpse => this.selectedCorpse;
 
+    public override bool ContainsTarget => innerContainer.Contains(selectedCorpse);
+
     public override bool TargetSelected => selectedCorpse != null;
 
     protected override void UnsetTarget() => selectedCorpse = null;
