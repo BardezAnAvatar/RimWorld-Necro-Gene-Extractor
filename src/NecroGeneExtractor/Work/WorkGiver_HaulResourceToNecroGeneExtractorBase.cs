@@ -10,34 +10,11 @@ namespace Bardez.Biotech.NecroGeneExtractor.Work;
 
 public abstract class WorkGiver_HaulResourceToNecroGeneExtractorBase : WorkGiver_Scanner
 {
+    public override PathEndMode PathEndMode => PathEndMode.InteractionCell;
+
     public override bool ShouldSkip(Pawn pawn, bool forced = false)
     {
         return !ModsConfig.BiotechActive;
-    }
-
-    public override PathEndMode PathEndMode => PathEndMode.InteractionCell;
-
-    public override Job JobOnThing(Pawn pawn, Thing t, bool forced = false)
-    {
-        if (t is not NecroGeneExtractorBase geneVat)
-        {
-            return null;
-        }
-
-        //Building_GeneExtractorTier geneVat = (Building_GeneExtractorTier)t;
-        if (geneVat.NeutroamineNeeded > 0f)
-        {
-            Thing thing = FindHelper.FindNeutroamine(pawn);
-            if (thing != null)
-            {
-                var fetch = Mathf.Min(geneVat.NeutroamineNeeded, thing.stackCount);
-                int insert = Mathf.CeilToInt(fetch);
-                Job job = JobMaker.MakeJob(JobDefOf.HaulToContainer, thing, t);
-                job.count = insert;
-                return job;
-            }
-        }
-        return null;
     }
 
     public override bool HasJobOnThing(Pawn pawn, Thing t, bool forced = false)
@@ -74,5 +51,28 @@ public abstract class WorkGiver_HaulResourceToNecroGeneExtractorBase : WorkGiver
         }
 
         return false;
+    }
+
+    public override Job JobOnThing(Pawn pawn, Thing t, bool forced = false)
+    {
+        if (t is not NecroGeneExtractorBase geneVat)
+        {
+            return null;
+        }
+
+        //Building_GeneExtractorTier geneVat = (Building_GeneExtractorTier)t;
+        if (geneVat.NeutroamineNeeded > 0f)
+        {
+            Thing thing = FindHelper.FindNeutroamine(pawn);
+            if (thing != null)
+            {
+                var fetch = Mathf.Min(geneVat.NeutroamineNeeded, thing.stackCount);
+                int insert = Mathf.CeilToInt(fetch);
+                Job job = JobMaker.MakeJob(JobDefOf.HaulToContainer, thing, t);
+                job.count = insert;
+                return job;
+            }
+        }
+        return null;
     }
 }
