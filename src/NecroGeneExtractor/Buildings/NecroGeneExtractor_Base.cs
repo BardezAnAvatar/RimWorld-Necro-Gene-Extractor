@@ -16,6 +16,8 @@ namespace Bardez.Biotech.NecroGeneExtractor.Buildings;
 public abstract class NecroGeneExtractor_Base : GeneExtractorBase
 //Building_Enterable, IStoreSettingsParent, IThingHolderWithDrawnPawn, IThingHolder
 {
+    private const int TICKS_PER_HOUR = 2500;
+
     protected NecroGeneExtractorSettings NecroSettings => NecroGeneExtractorMod.Settings;
 
     protected abstract TierSettings TierSettings { get; }
@@ -87,7 +89,7 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
             if (starvationTicks > 0)
             {
                 //presume that 4 hours is starvation period
-                starvation = (2500 * 4f) / starvationTicks;
+                starvation = (TICKS_PER_HOUR * 4f) / starvationTicks;
             }
 
             return starvation;
@@ -161,7 +163,7 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
                 hours *= TierSettings.CostMultiplierOverdriveTime;
             }
 
-            return Convert.ToInt32(hours);
+            return Convert.ToInt32(hours) * TICKS_PER_HOUR;
         }
     }
 
