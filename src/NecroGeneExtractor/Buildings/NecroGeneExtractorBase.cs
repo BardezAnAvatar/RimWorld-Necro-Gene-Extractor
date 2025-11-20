@@ -296,6 +296,11 @@ public abstract class NecroGeneExtractorBase : GeneExtractorBase
         }
     }
 
+    protected override NamedArgument GetTargetName()
+    {
+        return selectedCorpse.InnerPawn.Named("PAWN");
+    }
+
 
 
     // Ticks
@@ -325,5 +330,31 @@ public abstract class NecroGeneExtractorBase : GeneExtractorBase
         {
             starvationTicks--;
         }
+    }
+
+    // Operations
+    protected override void CancelEnterBuilding()
+    {
+        // No job to cancel ...?
+
+        //if (selectedPawn.CurJobDef == JobDefOf.EnterBuilding)
+        //{
+        //    selectedPawn.jobs.EndCurrentJob(JobCondition.InterruptForced);
+        //}
+    }
+
+    protected override void KillPawnFromStarvation()
+    {
+        // Corpse is dead, no need to kill it
+
+        //Hediff firstHediffOfDef = selectedPawn.health.hediffSet.GetFirstHediffOfDef(HediffDefOf.BioStarvation);
+        //selectedPawn.Kill(null, firstHediffOfDef);
+    }
+
+    protected override Pawn GetContainedPawn() => containedCorpse?.InnerPawn;
+
+    protected override void SetPawnHediffXenogermReplicating(Pawn containedPawn)
+    {
+        //Don't need to add a Hediff to a corpse
     }
 }
