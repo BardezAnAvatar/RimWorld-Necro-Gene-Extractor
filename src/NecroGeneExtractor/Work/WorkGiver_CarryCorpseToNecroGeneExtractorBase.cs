@@ -1,4 +1,5 @@
 ﻿using Bardez.Biotech.NecroGeneExtractor.Buildings;
+using Bardez.Biotech.NecroGeneExtractor.Defs;
 using Bardez.Biotech.NecroGeneExtractor.Utilities;
 using RimWorld;
 using Verse;
@@ -8,6 +9,8 @@ namespace Bardez.Biotech.NecroGeneExtractor.Work;
 
 public abstract class WorkGiver_CarryCorpseToNecroGeneExtractorBase : WorkGiver_Scanner
 {
+    protected abstract JobDef ExtractorCorpseJob { get; }
+
     public override PathEndMode PathEndMode => PathEndMode.InteractionCell;
 
     public override bool ShouldSkip(Pawn pawn, bool forced = false)
@@ -91,8 +94,8 @@ public abstract class WorkGiver_CarryCorpseToNecroGeneExtractorBase : WorkGiver_
         {
             return null;
         }
-
-        Job job = JobMaker.MakeJob(JobDefOf.HaulToContainer, geneVat, geneVat.TargetedCorpse);
+        
+        Job job = JobMaker.MakeJob(ExtractorCorpseJob, geneVat, t /*geneVat.TargetedCorpse*/);
         job.count = 1;
         return job;
     }

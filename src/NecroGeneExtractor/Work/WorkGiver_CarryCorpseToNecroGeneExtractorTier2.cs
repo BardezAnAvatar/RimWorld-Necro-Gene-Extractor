@@ -7,4 +7,7 @@ public class WorkGiver_CarryCorpseToNecroGeneExtractorTier2 : WorkGiver_CarryCor
 {
     public override ThingRequest PotentialWorkThingRequest
         => ThingRequest.ForDef(NecroGeneExtractor_DefsOf.NGET_NecroGeneExtractorII);
+
+    protected override JobDef ExtractorCorpseJob
+        => NecroGeneExtractor_DefsOf.Jobs.CarryCorpseToNecroGeneExtractor_TierII;
 }
