@@ -267,6 +267,10 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
         return selectedCorpse.InnerPawn.Named("PAWN");
     }
 
+    protected override string GetContainedNameColorized() => Corpse.InnerPawn.NameShortColored.Resolve();
+
+    protected override int GetContainedAge() => Corpse.InnerPawn.ageTracker.AgeBiologicalYears;
+
 
 
     // Ticks
