@@ -12,7 +12,7 @@ public static class FindHelper
         return GenClosest.ClosestThingReachable(
             pawn.Position,
             pawn.Map,
-            ThingRequest.ForDef(NecroGeneExtractor_DefsOf.Neutroamine),
+            ThingRequest.ForDef(NecroGeneExtractor_DefsOf.Resources.Neutroamine),
             PathEndMode.InteractionCell,
             TraverseParms.For(pawn),
             9999f,

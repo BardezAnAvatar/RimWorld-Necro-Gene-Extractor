@@ -42,7 +42,7 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
             for (int i = 0; i < innerContainer.Count; i++)
             {
                 Thing thing = innerContainer[i];
-                if (thing.def == NecroGeneExtractor_DefsOf.Neutroamine)
+                if (thing.def == NecroGeneExtractor_DefsOf.Resources.Neutroamine)
                 {
                     num += thing.stackCount;
                 }

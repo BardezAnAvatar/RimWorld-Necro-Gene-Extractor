@@ -43,7 +43,7 @@ public abstract class WorkGiver_HaulResourceToNecroGeneExtractor_Base : WorkGive
         {
             if (FindHelper.FindNeutroamine(pawn) == null)
             {
-                JobFailReason.Is("NoIngredient".Translate(NecroGeneExtractor_DefsOf.Neutroamine));
+                JobFailReason.Is("NoIngredient".Translate(NecroGeneExtractor_DefsOf.Resources.Neutroamine));
                 return false;
             }
 
