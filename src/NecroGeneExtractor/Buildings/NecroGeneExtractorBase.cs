@@ -264,7 +264,7 @@ public abstract class NecroGeneExtractorBase : GeneExtractorBase
 
 
     // Gizmos
-    protected override Gizmo BuildInsertGizmo() 
+    protected override Gizmo BuildInsertGizmo()
         => GizmoHelper.BuildGizmoInsertCorpse(BuildFloatMenuAvailableCorpses, PowerOn);
 
 
@@ -306,7 +306,6 @@ public abstract class NecroGeneExtractorBase : GeneExtractorBase
     // Ticks
     protected override bool Tick_ResourceStarvation()
     {
-        //TODO: consume X neutroamine per day. If we are empty, count ticks
         if (NeutroamineStarvationSeverity >= 1f)
         {
             Fail();
@@ -356,5 +355,16 @@ public abstract class NecroGeneExtractorBase : GeneExtractorBase
     protected override void SetPawnHediffXenogermReplicating(Pawn containedPawn)
     {
         //Don't need to add a Hediff to a corpse
+    }
+
+    protected override void DrawPawn()
+    {
+        if (innerContainer.Contains(containedCorpse))
+        {
+            GetContainedPawn()
+                .Drawer
+                .renderer
+                .RenderPawnAt(DrawPos + PawnDrawOffset, null, neverAimWeapon: true);
+        }
     }
 }
