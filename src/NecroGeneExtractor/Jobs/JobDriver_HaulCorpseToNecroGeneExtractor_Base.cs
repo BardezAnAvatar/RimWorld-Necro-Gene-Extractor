@@ -6,16 +6,17 @@ using Verse.AI;
 
 namespace Bardez.Biotech.NecroGeneExtractor.Jobs;
 
-public abstract class JobDriver_HaulCorpseToNecroGeneExtractor_Base : JobDriver
+public abstract class JobDriver_HaulCorpseToNecroGeneExtractor_Base<TGeneVat> : JobDriver
+    where TGeneVat : NecroGeneExtractorBase
 {
     private int FillDuration => 300;
 
-    protected virtual NecroGeneExtractorBase GeneVat
+    protected virtual TGeneVat GeneVat
     {
         get
         {
             LocalTargetInfo target = job.GetTarget(TargetIndex.A);
-            return target.Thing as NecroGeneExtractorBase;
+            return target.Thing as TGeneVat;
         }
     }
 
@@ -34,9 +35,8 @@ public abstract class JobDriver_HaulCorpseToNecroGeneExtractor_Base : JobDriver
 
     protected override IEnumerable<Toil> MakeNewToils()
     {
-        JobDriver_HaulCorpseToNecroGeneExtractor_Base necroGeneExtractorJob = this;
-        ToilFailConditions.FailOnDespawnedNullOrForbidden<JobDriver_HaulCorpseToNecroGeneExtractor_Base>(this, TargetIndex.A);
-        necroGeneExtractorJob.AddEndCondition(GetJobStatus);
+        ToilFailConditions.FailOnDespawnedNullOrForbidden(this, TargetIndex.A);
+        AddEndCondition(GetJobStatus);
 
         yield return ToilFailConditions.FailOnSomeonePhysicallyInteracting(
             ToilFailConditions.FailOnDespawnedNullOrForbidden(
@@ -53,7 +53,7 @@ public abstract class JobDriver_HaulCorpseToNecroGeneExtractor_Base : JobDriver
             ToilFailConditions.FailOnCannotTouch(
                 ToilFailConditions.FailOnDestroyedNullOrForbidden(
                     ToilFailConditions.FailOnDestroyedNullOrForbidden(
-                        Toils_General.Wait(necroGeneExtractorJob.FillDuration, TargetIndex.None),
+                        Toils_General.Wait(this.FillDuration, TargetIndex.None),
                         TargetIndex.B),
                     TargetIndex.A),
                 TargetIndex.A, PathEndMode.Touch),
