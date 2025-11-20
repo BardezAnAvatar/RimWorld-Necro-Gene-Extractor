@@ -28,6 +28,8 @@ public abstract class NecroGeneExtractorBase : GeneExtractorBase
 
     public Corpse Corpse => this.containedCorpse;
 
+    public Corpse TargetedCorpse => this.selectedCorpse;
+
     public override bool TargetSelected => selectedCorpse != null;
 
     protected override void UnsetTarget() => selectedCorpse = null;
