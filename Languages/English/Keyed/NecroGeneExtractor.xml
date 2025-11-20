@@ -38,5 +38,11 @@
 
 	<NGET_NeutroamineDeficiency>Neutroamine deficiency</NGET_NeutroamineDeficiency>
 
+	<NGET_CorpseAlreadyTargeted>Corpse already targeted</NGET_CorpseAlreadyTargeted>
+	<NGET_CorpseMustBeHumanlike>Corpse must be humanlike</NGET_CorpseMustBeHumanlike>
+	<NGET_InsertCorpse>Insert corpse</NGET_InsertCorpse>
+	<NGET_InsertCorpseTooltip>Insert a corpse into the gene extractor. Its genetic material will be extracted and used to create a genepack containing a random selection of their genes.</NGET_InsertCorpseTooltip>
+	<NGET_CannotProcessCorpseRotting>Cannot process rotting corpse</NGET_CannotProcessCorpseRotting>
+	<NGET_CannotProcessCorpseDessicated>Cannot process dessicated corpse</NGET_CannotProcessCorpseDessicated>
 
 </LanguageData>
