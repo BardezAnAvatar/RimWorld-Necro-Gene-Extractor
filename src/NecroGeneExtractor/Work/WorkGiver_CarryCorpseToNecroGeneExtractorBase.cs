@@ -74,7 +74,7 @@ public abstract class WorkGiver_CarryCorpseToNecroGeneExtractorBase : WorkGiver_
 
 
         //the actual job
-        if (def.workType != null && pawn.WorkTypeIsDisabled(def.workType))
+        if (def.workType != null && !pawn.WorkTypeIsDisabled(def.workType))
         {
             DebugMessaging.DebugMessage($"Pawn can do work type.");
 
