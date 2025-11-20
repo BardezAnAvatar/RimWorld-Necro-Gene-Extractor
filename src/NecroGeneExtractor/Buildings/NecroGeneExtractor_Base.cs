@@ -123,7 +123,6 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
 
     protected virtual RotStage TargetCorpseRotStage => selectedCorpse.GetRotStage();
 
-    //TODO: figure this out based on pawn decay state
     public override int ExtractionTimeInTicks
     {
         get
@@ -167,11 +166,6 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
         {
             return "NGET_CorpseMustBeHumanlike".Translate();
         }
-
-        //if (!corpse.InnerPawn.Dead) //only want dead bodies for Necro
-        //{
-        //    return false;
-        //}
 
         if (!PowerOn)
         {
@@ -258,10 +252,6 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
     protected virtual void SelectCorpse(Corpse corpse)
     {
         selectedCorpse = corpse;
-        //if (!pawn.IsPrisonerOfColony && !pawn.Downed)
-        //{
-        //    pawn.jobs.TryTakeOrderedJob(JobMaker.MakeJob(JobDefOf.EnterBuilding, this), JobTag.Misc);
-        //}
     }
 
 
