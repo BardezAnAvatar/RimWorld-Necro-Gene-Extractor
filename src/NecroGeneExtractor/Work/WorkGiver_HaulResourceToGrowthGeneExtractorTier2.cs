@@ -5,5 +5,5 @@ namespace Bardez.Biotech.NecroGeneExtractor.Work;
 
 public class WorkGiver_HaulResourceToGrowthGeneExtractorTier2 : WorkGiver_HaulResourceToGrowthGeneExtractorBase
 {
-    public override ThingRequest PotentialWorkThingRequest => ThingRequest.ForDef(NecroGeneExtractor_DefsOf.NecroGeneExtractorTier2);
+    public override ThingRequest PotentialWorkThingRequest => ThingRequest.ForDef(NecroGeneExtractor_DefsOf.NGET_NecroGeneExtractorII);
 }

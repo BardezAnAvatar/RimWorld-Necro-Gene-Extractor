@@ -6,6 +6,6 @@ namespace Bardez.Biotech.NecroGeneExtractor.Defs;
 [DefOf]
 public static class NecroGeneExtractor_DefsOf
 {
-    public static ThingDef NecroGeneExtractorTier2;
+    public static ThingDef NGET_NecroGeneExtractorII;
     public static ThingDef Neutroamine;
 }
