@@ -27,6 +27,8 @@ public abstract class NecroGeneExtractorBase : GeneExtractorBase
 
     public Corpse Corpse => this.containedCorpse;
 
+    protected override bool TargetSelected => selectedCorpse != null;
+
     public float NeutroamineStored
     {
         get
