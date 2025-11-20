@@ -14,4 +14,17 @@
 		</requiredCapacities>
 	</WorkGiverDef>
 
+	<WorkGiverDef>
+		<defName>CarryCorpseToNecroGeneExtractorTierII</defName>
+		<label>carry to building</label>
+		<giverClass>Bardez.Biotech.NecroGeneExtractor.Work.WorkGiver_CarryCorpseToNecroGeneExtractorTier2</giverClass>
+		<workType>Hauling</workType>
+		<verb>extract genes</verb>
+		<gerund>extracting genes from</gerund>
+		<priorityInType>90</priorityInType>
+		<requiredCapacities>
+			<li>Manipulation</li>
+		</requiredCapacities>
+	</WorkGiverDef>
+
 </Defs>
