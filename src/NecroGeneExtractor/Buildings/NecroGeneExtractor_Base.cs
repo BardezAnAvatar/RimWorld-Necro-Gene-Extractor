@@ -20,6 +20,18 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
 
     protected abstract TierSettings TierSettings { get; }
 
+    protected override Graphic TopGraphic
+    {
+        get
+        {
+            if (cachedTopGraphic == null)
+            {
+                cachedTopGraphic = GraphicDatabase.Get<Graphic_Multi>("NextroGeneExtractorTiers/NecroGeneExtractor_Top", ShaderDatabase.Transparent, def.graphicData.drawSize, Color.white);
+            }
+            return cachedTopGraphic;
+        }
+    }
+
     private float containedNeutroamine;
     private int starvationTicks;
     private Corpse containedCorpse;
