@@ -7,7 +7,7 @@ using Verse.AI;
 
 namespace Bardez.Biotech.NecroGeneExtractor.Work;
 
-public abstract class WorkGiver_CarryCorpseToNecroGeneExtractorBase : WorkGiver_CarryToBuilding
+public abstract class WorkGiver_CarryCorpseToNecroGeneExtractorBase : WorkGiver_Scanner
 {
     public override bool ShouldSkip(Pawn pawn, bool forced = false)
     {
@@ -91,7 +91,7 @@ public abstract class WorkGiver_CarryCorpseToNecroGeneExtractorBase : WorkGiver_
             return null;
         }
 
-        Job job = JobMaker.MakeJob(JobDefOf.CarryToBuilding, geneVat, geneVat.TargetedCorpse);
+        Job job = JobMaker.MakeJob(JobDefOf.HaulToContainer, geneVat, geneVat.TargetedCorpse);
         job.count = 1;
         return job;
     }
