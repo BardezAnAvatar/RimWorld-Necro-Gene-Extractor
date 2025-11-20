@@ -71,7 +71,7 @@ public abstract class WorkGiver_CarryCorpseToNecroGeneExtractorBase : WorkGiver_
         {
             DebugMessaging.DebugMessage($"Pawn can do work type.");
 
-            return pawn.CanReserveAndReach(selectedCorpse, PathEndMode.OnCell, Danger.Deadly, 1, -1, null, forced);
+            return pawn.CanReserveAndReach(selectedCorpse, PathEndMode.InteractionCell, Danger.Deadly, 1, -1, null, forced);
         }
 
         return false;
