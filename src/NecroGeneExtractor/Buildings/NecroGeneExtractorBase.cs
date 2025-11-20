@@ -222,7 +222,7 @@ public abstract class NecroGeneExtractorBase : GeneExtractorBase
 
 
 
-    //Inspect String
+    // Inspect String
     protected override void InspectStringAddResourceStarvation(StringBuilder stringBuilder)
     {
         float starvationSeverityPercent = NeutroamineStarvationSeverity;
@@ -249,6 +249,9 @@ public abstract class NecroGeneExtractorBase : GeneExtractorBase
         }
     }
 
+
+
+    // Ticks
     protected override bool Tick_ResourceStarvation()
     {
         //TODO: consume X neutroamine per day. If we are empty, count ticks
