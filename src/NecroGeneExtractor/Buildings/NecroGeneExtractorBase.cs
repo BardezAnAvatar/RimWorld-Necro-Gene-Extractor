@@ -53,7 +53,7 @@ public abstract class NecroGeneExtractorBase : GeneExtractorBase
     {
         get
         {
-            if (selectedPawn == null)
+            if (selectedCorpse == null)
             {
                 return 0f;
             }
