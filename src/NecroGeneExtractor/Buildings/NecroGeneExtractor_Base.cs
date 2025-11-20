@@ -5,6 +5,7 @@ using Bardez.Biotech.NecroGeneExtractor.Defs;
 using Bardez.Biotech.NecroGeneExtractor.Gui;
 using Bardez.Biotech.NecroGeneExtractor.Settings;
 using Bardez.Biotech.NecroGeneExtractor.Settings.Tiers;
+using Bardez.Biotech.NecroGeneExtractor.Utilities;
 using GeneExtractorTiers.Extractors;
 using RimWorld;
 using UnityEngine;
@@ -67,8 +68,15 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
     {
         get
         {
-            //presume that 4 hours is starvation period
-            return (2500 * 4f) / starvationTicks;
+            float starvation = 0f;
+
+            if (starvationTicks > 0)
+            {
+                //presume that 4 hours is starvation period
+                starvation = (2500 * 4f) / starvationTicks;
+            }
+
+            return starvation;
         }
     }
 
@@ -227,6 +235,8 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
     protected override void InspectStringAddResourceStarvation(StringBuilder stringBuilder)
     {
         float starvationSeverityPercent = NeutroamineStarvationSeverity;
+        DebugMessaging.DebugMessage($"{nameof(NeutroamineStarvationSeverity)}: {NeutroamineStarvationSeverity}");
+
         if (starvationSeverityPercent > 0f)
         {
             var deficiency = "NGET_NeutroamineDeficiency".Translate();
