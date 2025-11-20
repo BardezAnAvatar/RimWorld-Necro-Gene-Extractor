@@ -14,7 +14,7 @@ using Verse.AI;
 
 namespace Bardez.Biotech.NecroGeneExtractor.Buildings;
 
-public abstract class NecroGeneExtractorBase : GeneExtractorBase
+public abstract class NecroGeneExtractor_Base : GeneExtractorBase
 //Building_Enterable, IStoreSettingsParent, IThingHolderWithDrawnPawn, IThingHolder
 {
     protected NecroGeneExtractorSettings NecroSettings => NecroGeneExtractorMod.Settings;

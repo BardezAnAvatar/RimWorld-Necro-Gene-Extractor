@@ -7,7 +7,7 @@ using Verse.AI;
 
 namespace Bardez.Biotech.NecroGeneExtractor.Work;
 
-public abstract class WorkGiver_CarryCorpseToNecroGeneExtractorBase : WorkGiver_Scanner
+public abstract class WorkGiver_CarryCorpseToNecroGeneExtractor_Base : WorkGiver_Scanner
 {
     protected abstract JobDef ExtractorCorpseJob { get; }
 
@@ -39,7 +39,7 @@ public abstract class WorkGiver_CarryCorpseToNecroGeneExtractorBase : WorkGiver_
 
         DebugMessaging.DebugMessage("Not deconstructing.");
 
-        if (t is not NecroGeneExtractorBase geneVat)
+        if (t is not NecroGeneExtractor_Base geneVat)
         {
             return false;
         }
@@ -90,7 +90,7 @@ public abstract class WorkGiver_CarryCorpseToNecroGeneExtractorBase : WorkGiver_
 
     public override Job JobOnThing(Pawn pawn, Thing t, bool forced = false)
     {
-        if (t is not NecroGeneExtractorBase geneVat)
+        if (t is not NecroGeneExtractor_Base geneVat)
         {
             return null;
         }

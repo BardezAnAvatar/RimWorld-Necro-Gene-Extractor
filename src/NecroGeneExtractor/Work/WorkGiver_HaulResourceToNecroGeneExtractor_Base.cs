@@ -8,7 +8,7 @@ using Verse.AI;
 
 namespace Bardez.Biotech.NecroGeneExtractor.Work;
 
-public abstract class WorkGiver_HaulResourceToNecroGeneExtractorBase : WorkGiver_Scanner
+public abstract class WorkGiver_HaulResourceToNecroGeneExtractor_Base : WorkGiver_Scanner
 {
     public override PathEndMode PathEndMode => PathEndMode.InteractionCell;
 
@@ -34,7 +34,7 @@ public abstract class WorkGiver_HaulResourceToNecroGeneExtractorBase : WorkGiver
             return false;
         }
 
-        if (t is not NecroGeneExtractorBase geneVat)
+        if (t is not NecroGeneExtractor_Base geneVat)
         {
             return false;
         }
@@ -55,7 +55,7 @@ public abstract class WorkGiver_HaulResourceToNecroGeneExtractorBase : WorkGiver
 
     public override Job JobOnThing(Pawn pawn, Thing t, bool forced = false)
     {
-        if (t is not NecroGeneExtractorBase geneVat)
+        if (t is not NecroGeneExtractor_Base geneVat)
         {
             return null;
         }

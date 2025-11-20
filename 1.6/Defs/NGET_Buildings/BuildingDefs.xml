@@ -4,7 +4,7 @@
 		<defName>NGET_NecroGeneExtractorII</defName>
 		<label>corpse gene extraction vat</label>
 		<description>An automated surgery machine that can extract a corpse's genes and create a genepack from them. The machine will slowly extract genes from the corpse in it, preferring genes not already stored nearby.\n\nA large amount of neutroamine will be consumed while in use.\n\nThese more advanced machines are capable of extracting genes from Baseliners, such as "Regular Sleeper" or "Human Hands".\n\n(The speed of the extraction can be changed in the mod settings).</description>
-		<thingClass>Bardez.Biotech.NecroGeneExtractor.Buildings.NecroGeneExtractorTier2</thingClass>
+		<thingClass>Bardez.Biotech.NecroGeneExtractor.Buildings.NecroGeneExtractor_Tier2</thingClass>
 		<containedPawnsSelectable>true</containedPawnsSelectable>
 		<passability>PassThroughOnly</passability>
 		<fillPercent>0.5</fillPercent>

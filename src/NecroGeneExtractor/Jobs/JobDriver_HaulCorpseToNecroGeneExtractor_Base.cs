@@ -7,7 +7,7 @@ using Verse.AI;
 namespace Bardez.Biotech.NecroGeneExtractor.Jobs;
 
 public abstract class JobDriver_HaulCorpseToNecroGeneExtractor_Base<TGeneVat> : JobDriver
-    where TGeneVat : NecroGeneExtractorBase
+    where TGeneVat : NecroGeneExtractor_Base
 {
     private int FillDuration => 300;
 

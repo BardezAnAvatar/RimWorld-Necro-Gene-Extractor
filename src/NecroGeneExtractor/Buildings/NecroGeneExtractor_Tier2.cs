@@ -4,7 +4,7 @@ using Verse;
 namespace Bardez.Biotech.NecroGeneExtractor.Buildings;
 
 [StaticConstructorOnStartup]
-public class NecroGeneExtractorTier2 : NecroGeneExtractorBase
+public class NecroGeneExtractor_Tier2 : NecroGeneExtractor_Base
 {
     protected override TierSettings TierSettings => NecroSettings.SettingsTier2;
 }

@@ -3,7 +3,7 @@ using Verse;
 
 namespace Bardez.Biotech.NecroGeneExtractor.Work;
 
-public class WorkGiver_CarryCorpseToNecroGeneExtractorTier2 : WorkGiver_CarryCorpseToNecroGeneExtractorBase
+public class WorkGiver_CarryCorpseToNecroGeneExtractor_Tier2 : WorkGiver_CarryCorpseToNecroGeneExtractor_Base
 {
     public override ThingRequest PotentialWorkThingRequest
         => ThingRequest.ForDef(NecroGeneExtractor_DefsOf.NGET_NecroGeneExtractorII);
