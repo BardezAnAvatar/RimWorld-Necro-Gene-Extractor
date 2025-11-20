@@ -14,7 +14,7 @@ public abstract class WorkGiver_HaulResourceToNecroGeneExtractorBase : WorkGiver
         return !ModsConfig.BiotechActive;
     }
 
-    public override PathEndMode PathEndMode => PathEndMode.Touch;
+    public override PathEndMode PathEndMode => PathEndMode.InteractionCell;
 
     public override Job JobOnThing(Pawn pawn, Thing t, bool forced = false)
     {
@@ -81,7 +81,7 @@ public abstract class WorkGiver_HaulResourceToNecroGeneExtractorBase : WorkGiver
             pawn.Position,
             pawn.Map,
             ThingRequest.ForDef(NecroGeneExtractor_DefsOf.Neutroamine),
-            PathEndMode.ClosestTouch,
+            PathEndMode.InteractionCell,
             TraverseParms.For(pawn),
             9999f,
             (Thing x) => !x.IsForbidden(pawn) && pawn.CanReserve(x));
