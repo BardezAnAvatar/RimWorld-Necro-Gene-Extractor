@@ -2,9 +2,9 @@
 <Defs>
 
 	<WorkGiverDef>
-		<defName>HaulResourceToGrowthGeneExtractorTier2</defName>
+		<defName>HaulResourceToNecroGeneExtractorTierII</defName>
 		<label>carry to gene extraction vat</label>
-		<giverClass>Bardez.Biotech.NecroGeneExtractor.Work.WorkGiver_HaulResourceToGrowthGeneExtractorTier2</giverClass>
+		<giverClass>Bardez.Biotech.NecroGeneExtractor.Work.WorkGiver_HaulResourceToNecroGeneExtractorTier2</giverClass>
 		<workType>Hauling</workType>
 		<verb>fill</verb>
 		<gerund>filling</gerund>
