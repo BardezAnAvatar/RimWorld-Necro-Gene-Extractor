@@ -207,43 +207,6 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
 
 
     // Float Menu
-    /// <summary>
-    ///     Returns the list of interaction options that <paramref name="selPawn" /> would have when
-    ///     right-clicking this building with <paramref name="selPawn" /> selected.
-    /// </summary>
-    /// <param name="selPawn"><see cref="Pawn" /> that is currently selected</param>
-    /// <returns>The collection of interaction options that <paramref name="selPawn" /> has</returns>
-    public override IEnumerable<FloatMenuOption> GetFloatMenuOptions(Pawn selPawn)
-    {
-        foreach (FloatMenuOption floatMenuOption in base.GetFloatMenuOptions(selPawn))
-        {
-            yield return floatMenuOption;
-        }
-
-        //Fill with Neutroamine
-        //Haul selected corpse to this building
-
-        //TODO: is this reasonable? Maybe if another pawn can haul the corpse?
-        if (!selPawn.CanReach(this, PathEndMode.InteractionCell, Danger.Deadly))
-        {
-            yield return new FloatMenuOption("NoPath".Translate().CapitalizeFirst(), null);
-            yield break;
-        }
-
-        AcceptanceReport acceptanceReport = CanAcceptPawn(selPawn);
-        if (acceptanceReport.Accepted)
-        {
-            yield return FloatMenuUtility.DecoratePrioritizedTask(new FloatMenuOption("EnterBuilding".Translate(this), delegate
-            {
-                SelectPawn(selPawn);
-            }), selPawn, this);
-        }
-        else if (!acceptanceReport.Reason.NullOrEmpty())
-        {
-            yield return new FloatMenuOption("CannotEnterBuilding".Translate(this) + ": " + acceptanceReport.Reason.CapitalizeFirst(), null);
-        }
-    }
-
     protected virtual void BuildFloatMenuAvailableCorpses()
     {
         FloatMenuHelper.BuildFloatMenuAvailableCorpses(Map, CanAcceptCorpse, SelectCorpse);
