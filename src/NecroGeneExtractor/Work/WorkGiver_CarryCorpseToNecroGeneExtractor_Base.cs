@@ -68,12 +68,13 @@ public abstract class WorkGiver_CarryCorpseToNecroGeneExtractor_Base : WorkGiver
             DebugMessaging.DebugMessage($"Pawn {pawn.Name} can do work type.");
 
             //TODO: inline these. Potentially expensive
+            var corpseForbidden = selectedCorpse.IsForbidden(pawn);
             var canReserveCorpse = pawn.CanReserveAndReach(selectedCorpse, PathEndMode.InteractionCell, Danger.Deadly, 1, -1, null, forced);
             var canReserveGeneVat = pawn.CanReserveAndReach(geneVat, PathEndMode.InteractionCell, Danger.Deadly, 1, -1, null, forced);
             DebugMessaging.DebugMessage($"Pawn {pawn.Name} {(canReserveCorpse ? "can" : "cannot")} reserve corpse {selectedCorpse.InnerPawn.Name}.");
             DebugMessaging.DebugMessage($"Pawn {pawn.Name} {(canReserveCorpse ? "can" : "cannot")} reserve the gene vat.");
 
-            return canReserveCorpse && canReserveGeneVat;
+            return !corpseForbidden && canReserveCorpse && canReserveGeneVat;
         }
 
         return false;
@@ -86,7 +87,7 @@ public abstract class WorkGiver_CarryCorpseToNecroGeneExtractor_Base : WorkGiver
             return null;
         }
         
-        Job job = JobMaker.MakeJob(ExtractorCorpseJob, geneVat, t /*geneVat.TargetedCorpse*/);
+        Job job = JobMaker.MakeJob(ExtractorCorpseJob, geneVat, geneVat.TargetedCorpse);
         job.count = 1;
         return job;
     }
