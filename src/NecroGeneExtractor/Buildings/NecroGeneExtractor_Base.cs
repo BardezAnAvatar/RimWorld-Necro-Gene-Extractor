@@ -240,7 +240,7 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
         if (starvationSeverityPercent > 0f)
         {
             var deficiency = "NGET_NeutroamineDeficiency".Translate();
-            string text = ((NeutroamineStarvationSeverity >= 0f) ? "+" : "-");
+            string text = ((NeutroamineStarvationSeverity > 0f) ? "+" : "-");
             var perHour = "PerHour".Translate(text + NeutroamineStarvationPerHourOffset.ToStringPercent());
             var starvationPct = starvationSeverityPercent.ToStringPercent();
             stringBuilder
