@@ -6,7 +6,7 @@ using Verse.AI;
 
 namespace Bardez.Biotech.NecroGeneExtractor.Jobs;
 
-public abstract class JobDriver_HaulCorpseToNecroGeneExtractor : JobDriver
+public abstract class JobDriver_HaulCorpseToNecroGeneExtractor_Base : JobDriver
 {
     private int FillDuration => 300;
 
@@ -34,8 +34,8 @@ public abstract class JobDriver_HaulCorpseToNecroGeneExtractor : JobDriver
 
     protected override IEnumerable<Toil> MakeNewToils()
     {
-        JobDriver_HaulCorpseToNecroGeneExtractor necroGeneExtractorJob = this;
-        ToilFailConditions.FailOnDespawnedNullOrForbidden<JobDriver_HaulCorpseToNecroGeneExtractor>(this, TargetIndex.A);
+        JobDriver_HaulCorpseToNecroGeneExtractor_Base necroGeneExtractorJob = this;
+        ToilFailConditions.FailOnDespawnedNullOrForbidden<JobDriver_HaulCorpseToNecroGeneExtractor_Base>(this, TargetIndex.A);
         necroGeneExtractorJob.AddEndCondition(GetJobStatus);
 
         yield return ToilFailConditions.FailOnSomeonePhysicallyInteracting(
