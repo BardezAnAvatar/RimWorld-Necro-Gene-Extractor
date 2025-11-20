@@ -28,6 +28,13 @@ public abstract class WorkGiver_CarryCorpseToNecroGeneExtractorBase : WorkGiver_
 
         DebugMessaging.DebugMessage("Not burning.");
 
+        if (pawn.Map.designationManager.DesignationOn(t, DesignationDefOf.Deconstruct) != null)
+        {
+            return false;
+        }
+
+        DebugMessaging.DebugMessage("Not deconstructing.");
+
         if (t is not NecroGeneExtractorBase geneVat)
         {
             return false;
