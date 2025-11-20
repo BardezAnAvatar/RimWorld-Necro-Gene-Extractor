@@ -22,6 +22,10 @@ public abstract class NecroGeneExtractorBase : GeneExtractorBase
 
     private float containedNeutroamine;
     private int starvationTicks;
+    private Corpse containedCorpse;
+    private Corpse selectedCorpse;
+
+    public Corpse Corpse => this.containedCorpse;
 
     public float NeutroamineStored
     {
