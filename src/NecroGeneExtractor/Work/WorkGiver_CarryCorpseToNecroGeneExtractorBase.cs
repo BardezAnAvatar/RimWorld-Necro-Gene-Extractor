@@ -9,6 +9,8 @@ namespace Bardez.Biotech.NecroGeneExtractor.Work;
 
 public abstract class WorkGiver_CarryCorpseToNecroGeneExtractorBase : WorkGiver_Scanner
 {
+    public override PathEndMode PathEndMode => PathEndMode.InteractionCell;
+
     public override bool ShouldSkip(Pawn pawn, bool forced = false)
     {
         if (!base.ShouldSkip(pawn, forced))
