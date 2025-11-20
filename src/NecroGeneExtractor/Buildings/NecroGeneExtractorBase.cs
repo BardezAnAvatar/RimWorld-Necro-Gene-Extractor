@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Bardez.Biotech.NecroGeneExtractor.Gui;
 using Bardez.Biotech.NecroGeneExtractor.Settings;
 using Bardez.Biotech.NecroGeneExtractor.Settings.Tiers;
 using GeneExtractorTiers.Extractors;
@@ -254,6 +255,26 @@ public abstract class NecroGeneExtractorBase : GeneExtractorBase
             yield return new FloatMenuOption("CannotEnterBuilding".Translate(this) + ": " + acceptanceReport.Reason.CapitalizeFirst(), null);
         }
     }
+
+    protected virtual void BuildFloatMenuAvailableCorpses()
+    {
+        FloatMenuHelper.BuildFloatMenuAvailableCorpses(Map, CanAcceptCorpse, SelectCorpse);
+    }
+
+    protected virtual void SelectCorpse(Corpse corpse)
+    {
+        selectedCorpse = corpse;
+        //if (!pawn.IsPrisonerOfColony && !pawn.Downed)
+        //{
+        //    pawn.jobs.TryTakeOrderedJob(JobMaker.MakeJob(JobDefOf.EnterBuilding, this), JobTag.Misc);
+        //}
+    }
+
+
+
+    // Gizmos
+    protected override Gizmo BuildInsertGizmo() 
+        => GizmoHelper.BuildGizmoInsertCorpse(BuildFloatMenuAvailableCorpses, PowerOn);
 
 
 
