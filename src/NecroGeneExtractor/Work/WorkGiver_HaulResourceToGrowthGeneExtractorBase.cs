@@ -77,7 +77,8 @@ public abstract class WorkGiver_HaulResourceToGrowthGeneExtractorBase : WorkGive
 
     private Thing FindNeutroamine(Pawn pawn)
     {
-        return GenClosest.ClosestThingReachable(pawn.Position,
+        return GenClosest.ClosestThingReachable(
+            pawn.Position,
             pawn.Map,
             ThingRequest.ForDef(NecroGeneExtractor_DefsOf.Neutroamine),
             PathEndMode.ClosestTouch,
