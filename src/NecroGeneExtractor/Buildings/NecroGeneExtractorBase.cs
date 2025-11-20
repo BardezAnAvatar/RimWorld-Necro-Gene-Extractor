@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Bardez.Biotech.NecroGeneExtractor.Defs;
 using Bardez.Biotech.NecroGeneExtractor.Gui;
 using Bardez.Biotech.NecroGeneExtractor.Settings;
 using Bardez.Biotech.NecroGeneExtractor.Settings.Tiers;
@@ -35,11 +36,11 @@ public abstract class NecroGeneExtractorBase : GeneExtractorBase
     {
         get
         {
-            float num = containedNeutroamine;
+            float num = 0;
             for (int i = 0; i < innerContainer.Count; i++)
             {
                 Thing thing = innerContainer[i];
-                if (thing.def.defName == "neutroamine")
+                if (thing.def == NecroGeneExtractor_DefsOf.Neutroamine)
                 {
                     num += thing.stackCount;
                 }
