@@ -7,7 +7,7 @@ using Verse.AI;
 
 namespace Bardez.Biotech.NecroGeneExtractor.Work;
 
-public abstract class WorkGiver_HaulResourceToGrowthGeneExtractorBase : WorkGiver_Scanner
+public abstract class WorkGiver_HaulResourceToNecroGeneExtractorBase : WorkGiver_Scanner
 {
     public override bool ShouldSkip(Pawn pawn, bool forced = false)
     {
