@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+	<WorkGiverDef>
+		<defName>HaulResourceToGrowthGeneExtractorTier2</defName>
+		<label>carry to gene extraction vat</label>
+		<giverClass>Bardez.Biotech.NecroGeneExtractor.Work.WorkGiver_HaulResourceToGrowthGeneExtractorTier2</giverClass>
+		<workType>Hauling</workType>
+		<verb>fill</verb>
+		<gerund>filling</gerund>
+		<priorityInType>109</priorityInType>
+		<requiredCapacities>
+			<li>Manipulation</li>
+		</requiredCapacities>
+	</WorkGiverDef>
+
+</Defs>
