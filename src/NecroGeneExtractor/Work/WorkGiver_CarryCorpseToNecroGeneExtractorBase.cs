@@ -1,5 +1,4 @@
 ﻿using Bardez.Biotech.NecroGeneExtractor.Buildings;
-using Bardez.Biotech.NecroGeneExtractor.Defs;
 using Bardez.Biotech.NecroGeneExtractor.Utilities;
 using RimWorld;
 using Verse;
