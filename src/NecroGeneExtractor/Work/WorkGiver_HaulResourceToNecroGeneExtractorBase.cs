@@ -1,5 +1,6 @@
 ﻿using Bardez.Biotech.NecroGeneExtractor.Buildings;
 using Bardez.Biotech.NecroGeneExtractor.Defs;
+using Bardez.Biotech.NecroGeneExtractor.Work.Helpers;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -26,7 +27,7 @@ public abstract class WorkGiver_HaulResourceToNecroGeneExtractorBase : WorkGiver
         //Building_GeneExtractorTier geneVat = (Building_GeneExtractorTier)t;
         if (geneVat.NeutroamineNeeded > 0f)
         {
-            Thing thing = FindNeutroamine(pawn);
+            Thing thing = FindHelper.FindNeutroamine(pawn);
             if (thing != null)
             {
                 var fetch = Mathf.Min(geneVat.NeutroamineNeeded, thing.stackCount);
@@ -63,7 +64,7 @@ public abstract class WorkGiver_HaulResourceToNecroGeneExtractorBase : WorkGiver
 
         if (geneVat.NeutroamineNeeded >= 1f)
         {
-            if (FindNeutroamine(pawn) == null)
+            if (FindHelper.FindNeutroamine(pawn) == null)
             {
                 JobFailReason.Is("NoIngredient".Translate(NecroGeneExtractor_DefsOf.Neutroamine));
                 return false;
@@ -73,17 +74,5 @@ public abstract class WorkGiver_HaulResourceToNecroGeneExtractorBase : WorkGiver
         }
 
         return false;
-    }
-
-    private Thing FindNeutroamine(Pawn pawn)
-    {
-        return GenClosest.ClosestThingReachable(
-            pawn.Position,
-            pawn.Map,
-            ThingRequest.ForDef(NecroGeneExtractor_DefsOf.Neutroamine),
-            PathEndMode.InteractionCell,
-            TraverseParms.For(pawn),
-            9999f,
-            (Thing x) => !x.IsForbidden(pawn) && pawn.CanReserve(x));
     }
 }
