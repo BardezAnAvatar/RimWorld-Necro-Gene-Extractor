@@ -231,10 +231,13 @@ public abstract class NecroGeneExtractorBase : GeneExtractorBase
             yield return floatMenuOption;
         }
 
+        //Fill with Neutroamine
+        //Haul selected corpse to this building
+
         //TODO: is this reasonable? Maybe if another pawn can haul the corpse?
         if (!selPawn.CanReach(this, PathEndMode.InteractionCell, Danger.Deadly))
         {
-            yield return new FloatMenuOption("CannotEnterBuilding".Translate(this) + ": " + "NoPath".Translate().CapitalizeFirst(), null);
+            yield return new FloatMenuOption("NoPath".Translate().CapitalizeFirst(), null);
             yield break;
         }
 
