@@ -29,9 +29,9 @@ public abstract class WorkGiver_HaulResourceToNecroGeneExtractorBase : WorkGiver
             Thing thing = FindNeutroamine(pawn);
             if (thing != null)
             {
-                Job job = JobMaker.MakeJob(JobDefOf.HaulToContainer, thing, t);
                 var fetch = Mathf.Min(geneVat.NeutroamineNeeded, thing.stackCount);
                 int insert = Mathf.CeilToInt(fetch);
+                Job job = JobMaker.MakeJob(JobDefOf.HaulToContainer, thing, t);
                 job.count = insert;
                 return job;
             }
