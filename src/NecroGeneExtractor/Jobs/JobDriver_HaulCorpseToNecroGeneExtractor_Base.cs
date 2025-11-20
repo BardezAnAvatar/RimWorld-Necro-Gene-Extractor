@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Bardez.Biotech.NecroGeneExtractor.Buildings;
+using Bardez.Biotech.NecroGeneExtractor.Utilities;
 using Verse;
 using Verse.AI;
 
@@ -29,9 +30,16 @@ public abstract class JobDriver_HaulCorpseToNecroGeneExtractor_Base<TGeneVat> : 
         }
     }
 
-    public override bool TryMakePreToilReservations(bool errorOnFailed) 
-        => ReservationUtility.Reserve(this.pawn, this.GeneVat, this.job, 1, -1, null, errorOnFailed, false)
-        && ReservationUtility.Reserve(this.pawn, this.TargetCorpse, this.job, 1, -1, null, errorOnFailed, false);
+    public override bool TryMakePreToilReservations(bool errorOnFailed)
+    {
+        var reserveGeneVat = ReservationUtility.Reserve(this.pawn, this.GeneVat, this.job, 1, -1, null, errorOnFailed, false);
+        var reserveCorpse = ReservationUtility.Reserve(this.pawn, this.TargetCorpse, this.job, 1, -1, null, errorOnFailed, false);
+
+        DebugMessaging.DebugMessage($"Pawn {pawn.Name} {(reserveCorpse ? "did" : "did not")} reserve corpse {TargetCorpse.InnerPawn.Name}.");
+        DebugMessaging.DebugMessage($"Pawn {pawn.Name} {(reserveGeneVat ? "did" : "did not")} reserve the gene vat.");
+
+        return reserveCorpse && reserveGeneVat;
+    }
 
     protected override IEnumerable<Toil> MakeNewToils()
     {
