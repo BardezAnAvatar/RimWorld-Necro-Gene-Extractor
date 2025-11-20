@@ -116,14 +116,7 @@ public abstract class NecroGeneExtractorBase : GeneExtractorBase
         }
     }
 
-    protected virtual RotStage TargetCorpseRotStage
-    {
-        get
-        {
-            var corpse = FindCorpseOfPawn(selectedPawn);
-            return corpse.GetRotStage();
-        }
-    }
+    protected virtual RotStage TargetCorpseRotStage => selectedCorpse.GetRotStage();
 
     //TODO: figure this out based on pawn decay state
     public override int ExtractionTimeInTicks
