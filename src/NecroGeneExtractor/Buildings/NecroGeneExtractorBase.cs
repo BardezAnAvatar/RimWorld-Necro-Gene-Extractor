@@ -150,7 +150,7 @@ public abstract class NecroGeneExtractorBase : GeneExtractorBase
 
     public AcceptanceReport CanAcceptCorpse(Corpse corpse)
     {
-        if (selectedCorpse != null && selectedCorpse != corpse) //don't accept new corpse if already selected
+        if (TargetSelected && selectedCorpse != corpse) //don't accept new corpse if already selected
         {
             return "NGET_CorpseAlreadyTargeted".Translate();
         }
