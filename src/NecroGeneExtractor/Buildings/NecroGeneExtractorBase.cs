@@ -29,6 +29,8 @@ public abstract class NecroGeneExtractorBase : GeneExtractorBase
 
     protected override bool TargetSelected => selectedCorpse != null;
 
+    protected override void UnsetTarget() => selectedCorpse = null;
+
     public float NeutroamineStored
     {
         get
@@ -195,7 +197,7 @@ public abstract class NecroGeneExtractorBase : GeneExtractorBase
 
             if (innerContainer.TryAddOrTransfer(corpse))
             {
-                startTick = Find.TickManager.TicksGame;
+                SetStartTick();
                 TicksRemaining = ExtractionTimeInTicks;
             }
             if (deselect)
