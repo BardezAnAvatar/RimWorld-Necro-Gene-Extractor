@@ -144,39 +144,65 @@ public abstract class NecroGeneExtractorBase : GeneExtractorBase
 
 
     //Accept Pawn
-    public override AcceptanceReport CanAcceptPawn(Pawn pawn)
+    public override AcceptanceReport CanAcceptPawn(Pawn pawn) => false;
+
+    public AcceptanceReport CanAcceptCorpse(Corpse corpse)
     {
-        if (selectedPawn != null && selectedPawn != pawn) //don't accept new pawns if already selected
+        if (selectedCorpse != null && selectedCorpse != corpse) //don't accept new corpse if already selected
         {
-            return false;
+            return "NGET_CorpseAlreadyTargeted".Translate();
         }
 
-        if (innerContainer.Any(x => x is Pawn)) //already occupied
+        if (innerContainer.Any(x => x is Corpse)) //already occupied
         {
             return "Occupied".Translate();
         }
 
-        if (!pawn.RaceProps.Humanlike)  //has to be a human-like pawn
+        if (!corpse.InnerPawn.RaceProps.Humanlike)  //has to be a human-like pawn
         {
-            return false;
+            return "NGET_CorpseMustBeHumanlike".Translate();
         }
 
-        if (!pawn.Dead) //only want dead bodies for Necro
-        {
-            return false;
-        }
+        //if (!corpse.InnerPawn.Dead) //only want dead bodies for Necro
+        //{
+        //    return false;
+        //}
 
         if (!PowerOn)
         {
             return "NoPower".Translate().CapitalizeFirst();
         }
 
-        if (pawn?.genes?.GenesListForReading?.Any(x => x.def.defName == "VREA_Power") == true)
+        if (corpse?.InnerPawn?.genes?.GenesListForReading?.Any(x => x.def.defName == "VREA_Power") == true)
         {
             return "VREA.CannotUseAndroid".Translate().CapitalizeFirst();
         }
 
+        // consider:
+        //       corpse.InnerPawn.genes != null
+        //       && corpse.InnerPawn.genes.GenesListForReading.Any(x => (x.def).passOnDirectly)
+        //       && corpse.InnerPawn.genes.GenesListForReading.Any(x => (x.def).biostatArc == 0);
+
         return true;
+    }
+
+    public void TryAcceptCorpse(Corpse corpse)
+    {
+        if (CanAcceptCorpse(corpse))
+        {
+            selectedCorpse = containedCorpse = corpse;
+            bool deselect = corpse.DeSpawnOrDeselect();
+
+            if (innerContainer.TryAddOrTransfer(corpse))
+            {
+                startTick = Find.TickManager.TicksGame;
+                TicksRemaining = ExtractionTimeInTicks;
+            }
+            if (deselect)
+            {
+                Find.Selector.Select(corpse, playSound: false, forceDesignatorDeselect: false);
+            }
+        }
     }
 
     public static Corpse FindCorpseOfPawn(Pawn deadPawn)
