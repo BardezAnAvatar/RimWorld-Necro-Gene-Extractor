@@ -8,4 +8,10 @@ public static class NecroGeneExtractor_DefsOf
 {
     public static ThingDef NGET_NecroGeneExtractorII;
     public static ThingDef Neutroamine;
+
+    [DefOf]
+    public static class Jobs
+    {
+        public static JobDef CarryCorpseToNecroGeneExtractor_TierII;
+    }
 }
