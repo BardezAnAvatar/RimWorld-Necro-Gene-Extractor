@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Bardez.Biotech.NecroGeneExtractor.Defs;
@@ -10,7 +9,6 @@ using GeneExtractorTiers.Extractors;
 using RimWorld;
 using UnityEngine;
 using Verse;
-using Verse.AI;
 
 namespace Bardez.Biotech.NecroGeneExtractor.Buildings;
 
