@@ -205,16 +205,6 @@ public abstract class NecroGeneExtractorBase : GeneExtractorBase
         }
     }
 
-    public static Corpse FindCorpseOfPawn(Pawn deadPawn)
-    {
-        // Use Linq to find the first Corpse whose InnerPawn matches the deadPawn
-        Corpse corpse = Find.CurrentMap.listerThings.AllThings
-            .OfType<Corpse>() // Filter for objects of type Corpse
-            .FirstOrDefault(c => c.InnerPawn == deadPawn); // Find the first one matching the predicate
-
-        return corpse;
-    }
-
 
 
     // Float Menu
