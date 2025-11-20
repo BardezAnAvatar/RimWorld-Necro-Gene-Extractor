@@ -218,6 +218,12 @@ public abstract class NecroGeneExtractorBase : GeneExtractorBase
 
 
     // Float Menu
+    /// <summary>
+    ///     Returns the list of interaction options that <paramref name="selPawn" /> would have when
+    ///     right-clicking this building with <paramref name="selPawn" /> selected.
+    /// </summary>
+    /// <param name="selPawn"><see cref="Pawn" /> that is currently selected</param>
+    /// <returns>The collection of interaction options that <paramref name="selPawn" /> has</returns>
     public override IEnumerable<FloatMenuOption> GetFloatMenuOptions(Pawn selPawn)
     {
         foreach (FloatMenuOption floatMenuOption in base.GetFloatMenuOptions(selPawn))
