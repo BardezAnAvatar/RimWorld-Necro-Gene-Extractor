@@ -30,21 +30,15 @@ public abstract class WorkGiver_CarryCorpseToNecroGeneExtractor_Base : WorkGiver
             return false;
         }
 
-        DebugMessaging.DebugMessage("Not burning.");
-
         if (pawn.Map.designationManager.DesignationOn(t, DesignationDefOf.Deconstruct) != null)
         {
             return false;
         }
 
-        DebugMessaging.DebugMessage("Not deconstructing.");
-
         if (t is not NecroGeneExtractor_Base geneVat)
         {
             return false;
         }
-
-        DebugMessaging.DebugMessage("Is a gene vat.");
 
         // filled already -- no way to fill this
         if (geneVat.Corpse != null)
@@ -52,37 +46,34 @@ public abstract class WorkGiver_CarryCorpseToNecroGeneExtractor_Base : WorkGiver
             return false;
         }
 
-        DebugMessaging.DebugMessage("gene vat is not filled.");
-
         Corpse selectedCorpse = geneVat.TargetedCorpse;
         if (selectedCorpse == null)
         {
             return false;
         }
 
-        DebugMessaging.DebugMessage($"Targeted Corpse is not null; name is `{selectedCorpse.InnerPawn.Name}`.");
-
         if (selectedCorpse.Map != pawn.Map)
         {
             return false;
         }
-        DebugMessaging.DebugMessage("Corpse is on the same map.");
 
         if (!geneVat.CanAcceptCorpse(selectedCorpse))
         {
             return false;
         }
-        DebugMessaging.DebugMessage($"Gene vat can accept `{selectedCorpse.InnerPawn.Name}`.");
-
-        DebugMessaging.DebugMessage($"Work Type: `{def?.workType}`.");
-
 
         //the actual job
         if (def.workType != null && !pawn.WorkTypeIsDisabled(def.workType))
         {
-            DebugMessaging.DebugMessage($"Pawn can do work type.");
+            DebugMessaging.DebugMessage($"Pawn {pawn.Name} can do work type.");
 
-            return pawn.CanReserveAndReach(selectedCorpse, PathEndMode.InteractionCell, Danger.Deadly, 1, -1, null, forced);
+            //TODO: inline these. Potentially expensive
+            var canReserveCorpse = pawn.CanReserveAndReach(selectedCorpse, PathEndMode.InteractionCell, Danger.Deadly, 1, -1, null, forced);
+            var canReserveGeneVat = pawn.CanReserveAndReach(geneVat, PathEndMode.InteractionCell, Danger.Deadly, 1, -1, null, forced);
+            DebugMessaging.DebugMessage($"Pawn {pawn.Name} {(canReserveCorpse ? "can" : "cannot")} reserve corpse {selectedCorpse.InnerPawn.Name}.");
+            DebugMessaging.DebugMessage($"Pawn {pawn.Name} {(canReserveCorpse ? "can" : "cannot")} reserve the gene vat.");
+
+            return canReserveCorpse && canReserveGeneVat;
         }
 
         return false;
