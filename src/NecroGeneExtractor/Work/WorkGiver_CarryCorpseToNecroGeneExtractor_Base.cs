@@ -52,6 +52,11 @@ public abstract class WorkGiver_CarryCorpseToNecroGeneExtractor_Base : WorkGiver
             return false;
         }
 
+        if (selectedCorpse.IsForbidden(pawn) || !pawn.CanReserve(selectedCorpse, 1, -1, null, forced))
+        {
+            return false;
+        }
+
         if (selectedCorpse.Map != pawn.Map)
         {
             return false;
@@ -68,13 +73,12 @@ public abstract class WorkGiver_CarryCorpseToNecroGeneExtractor_Base : WorkGiver
             DebugMessaging.DebugMessage($"Pawn {pawn.Name} can do work type.");
 
             //TODO: inline these. Potentially expensive
-            var corpseForbidden = selectedCorpse.IsForbidden(pawn);
             var canReserveCorpse = pawn.CanReserveAndReach(selectedCorpse, PathEndMode.InteractionCell, Danger.Deadly, 1, -1, null, forced);
             var canReserveGeneVat = pawn.CanReserveAndReach(geneVat, PathEndMode.InteractionCell, Danger.Deadly, 1, -1, null, forced);
             DebugMessaging.DebugMessage($"Pawn {pawn.Name} {(canReserveCorpse ? "can" : "cannot")} reserve corpse {selectedCorpse.InnerPawn.Name}.");
             DebugMessaging.DebugMessage($"Pawn {pawn.Name} {(canReserveCorpse ? "can" : "cannot")} reserve the gene vat.");
 
-            return !corpseForbidden && canReserveCorpse && canReserveGeneVat;
+            return canReserveCorpse && canReserveGeneVat;
         }
 
         return false;
