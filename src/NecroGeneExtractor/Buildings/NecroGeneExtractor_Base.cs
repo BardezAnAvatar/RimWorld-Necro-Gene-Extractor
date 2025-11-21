@@ -89,7 +89,7 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
             if (starvationTicks > 0)
             {
                 //presume that 4 hours is starvation period
-                starvation = (TICKS_PER_HOUR * 4f) / starvationTicks;
+                starvation = starvationTicks / (TICKS_PER_HOUR * 4f);
             }
 
             return starvation;
