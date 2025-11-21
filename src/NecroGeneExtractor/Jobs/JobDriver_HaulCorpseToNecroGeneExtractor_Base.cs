@@ -44,7 +44,7 @@ public abstract class JobDriver_HaulCorpseToNecroGeneExtractor_Base<TGeneVat> : 
 
         yield return ToilFailConditions.FailOnSomeonePhysicallyInteracting(
             ToilFailConditions.FailOnDespawnedNullOrForbidden(
-                Toils_Goto.GotoThing(TargetIndex.B, PathEndMode.InteractionCell, false), TargetIndex.B),
+                Toils_Goto.GotoThing(TargetIndex.B, PathEndMode.Touch, false), TargetIndex.B),
             TargetIndex.B);
 
         yield return ToilFailConditions.FailOnDestroyedNullOrForbidden(
