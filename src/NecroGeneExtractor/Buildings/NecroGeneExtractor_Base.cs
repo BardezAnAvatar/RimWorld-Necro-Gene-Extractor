@@ -285,7 +285,7 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
 
         if (base.Working)
         {
-            stringBuilder.Append(" (-").Append("PerHour".Translate((NeutroConsumedPerHour * Settings.nutritionMultiplier).ToString("F2"))).Append(")");
+            stringBuilder.Append(" (-").Append("PerHour".Translate((NeutroConsumedPerHour).ToString("F2"))).Append(")");
         }
     }
 
