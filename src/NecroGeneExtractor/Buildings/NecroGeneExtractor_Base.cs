@@ -326,12 +326,13 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
         //}
     }
 
-    protected override void KillPawnFromStarvation()
+    protected override void Fail()
     {
-        // Corpse is dead, no need to kill it
-
-        //Hediff firstHediffOfDef = selectedPawn.health.hediffSet.GetFirstHediffOfDef(HediffDefOf.BioStarvation);
-        //selectedPawn.Kill(null, firstHediffOfDef);
+        if (ContainsTarget)
+    {
+            innerContainer.TryDrop(Corpse, InteractionCell, base.Map, ThingPlaceMode.Near, 1, out var _);
+        }
+        OnStop();
     }
 
     protected override Pawn GetContainedPawn() => containedCorpse?.InnerPawn;
