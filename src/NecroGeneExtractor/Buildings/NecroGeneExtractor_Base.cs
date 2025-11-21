@@ -315,8 +315,10 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
     protected override void Tick_ConsumeResources()
     {
         //how much - per hour * multiplier / 1 hour of ticks
-        var value = NeutroamineStored - (NeutroConsumedPerHour / TICKS_PER_HOUR);
-        neutroaminePartiallyConsumed = Mathf.Clamp(value, 0f, 2.1474836E+09f); //yuge
+        var value = NeutroamineStored;
+        var consumedPerTick = (NeutroConsumedPerHour / TICKS_PER_HOUR);
+        var clamped = Mathf.Clamp(consumedPerTick, 0f, 2.1474836E+09f); //yuge
+        neutroaminePartiallyConsumed += clamped;
 
         if (NeutroamineStored <= 0f)
         {
@@ -327,9 +329,8 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
             starvationTicks--;
         }
 
-        //TODO: consider consuming immediately and letting partially consumed be negative, tick up to when > 0
         //we have exceeded a single unit; consume it.
-        if (neutroaminePartiallyConsumed > 1f)
+        if (neutroaminePartiallyConsumed > 0f)
         {
             TryAbsorbNeutroamine();
         }
@@ -338,6 +339,12 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
 
 
     // Operations
+    protected override void OnStop()
+    {
+        base.OnStop();
+        neutroaminePartiallyConsumed = 0f;
+    }
+
     protected override void CancelEnterBuilding()
     {
         // No job to cancel ...?
