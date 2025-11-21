@@ -302,7 +302,7 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
     protected override void Tick_ConsumeResources()
     {
         //how much - per hour * multiplier / 1 hour of ticks
-        var value = containedNeutroamine - NeutroConsumedPerHour * Settings.nutritionMultiplier / 2500f;
+        var value = containedNeutroamine - (NeutroConsumedPerHour * Settings.nutritionMultiplier / TICKS_PER_HOUR);
         containedNeutroamine = Mathf.Clamp(value, 0f, 2.1474836E+09f); //yuge
 
         if (containedNeutroamine <= 0f)
