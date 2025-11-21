@@ -105,7 +105,7 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
                 return 0f;
             }
 
-            if (!PowerOn || containedNeutroamine <= 0f)
+            if (!PowerOn || NeutroamineStored <= 0f)
             {
                 return 0.5f;
             }
@@ -302,10 +302,10 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
     protected override void Tick_ConsumeResources()
     {
         //how much - per hour * multiplier / 1 hour of ticks
-        var value = containedNeutroamine - (NeutroConsumedPerHour * Settings.nutritionMultiplier / TICKS_PER_HOUR);
+        var value = NeutroamineStored - (NeutroConsumedPerHour / TICKS_PER_HOUR);
         containedNeutroamine = Mathf.Clamp(value, 0f, 2.1474836E+09f); //yuge
 
-        if (containedNeutroamine <= 0f)
+        if (NeutroamineStored <= 0f)
         {
             starvationTicks++;
         }
