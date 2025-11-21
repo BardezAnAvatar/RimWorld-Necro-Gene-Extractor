@@ -335,6 +335,8 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
         }
     }
 
+
+
     // Operations
     protected override void CancelEnterBuilding()
     {
