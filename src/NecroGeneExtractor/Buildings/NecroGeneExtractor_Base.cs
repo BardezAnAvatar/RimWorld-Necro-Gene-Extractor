@@ -343,6 +343,7 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
     {
         base.OnStop();
         neutroaminePartiallyConsumed = 0f;
+        containedCorpse = null;
     }
 
     protected override void CancelEnterBuilding()
