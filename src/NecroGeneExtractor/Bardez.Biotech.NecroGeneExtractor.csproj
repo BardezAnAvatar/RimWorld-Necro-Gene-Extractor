@@ -13,13 +13,13 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Lib.Harmony" Version="2.3.6" ExcludeAssets="runtime" />
-		<PackageReference Include="Krafs.Rimworld.Ref" Version="1.5.4409" />
+		<PackageReference Include="Lib.Harmony" Version="2.4.2" ExcludeAssets="runtime" />
+		<PackageReference Include="Krafs.Rimworld.Ref" Version="1.6.4633" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <Reference Include="GeneExtractorTiers">
-	    <HintPath>\Program Files (x86)\Steam\steamapps\workshop\content\294100\3016454783\1.6\Assemblies\GeneExtractorTiers.dll</HintPath>
+	    <HintPath>\Projects\Game Mods\Rimworld\Gene-Extractor\1.6\Assemblies\GeneExtractorTiers.dll</HintPath>
 	  </Reference>
 	</ItemGroup>
 

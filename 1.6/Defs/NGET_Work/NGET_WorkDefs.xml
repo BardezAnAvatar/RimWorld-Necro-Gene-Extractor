@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+	<WorkGiverDef>
+		<defName>HaulResourceToNecroGeneExtractor_TierII</defName>
+		<label>carry to gene extraction vat</label>
+		<giverClass>Bardez.Biotech.NecroGeneExtractor.Work.WorkGiver_HaulResourceToNecroGeneExtractor_Tier2</giverClass>
+		<workType>Hauling</workType>
+		<verb>fill</verb>
+		<gerund>filling</gerund>
+		<priorityInType>109</priorityInType>
+		<requiredCapacities>
+			<li>Manipulation</li>
+		</requiredCapacities>
+	</WorkGiverDef>
+
+	<WorkGiverDef>
+		<defName>CarryCorpseToNecroGeneExtractor_TierII</defName>
+		<label>carry to building</label>
+		<giverClass>Bardez.Biotech.NecroGeneExtractor.Work.WorkGiver_CarryCorpseToNecroGeneExtractor_Tier2</giverClass>
+		<workType>Hauling</workType>
+		<verb>extract genes</verb>
+		<gerund>extracting genes from</gerund>
+		<priorityInType>90</priorityInType>
+		<requiredCapacities>
+			<li>Manipulation</li>
+		</requiredCapacities>
+	</WorkGiverDef>
+
+</Defs>

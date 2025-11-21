@@ -1,0 +1,69 @@
+<Defs>
+
+	<ThingDef ParentName="BuildingBase" Name="NGET_NecroGeneExtractorII">
+		<defName>NGET_NecroGeneExtractorII</defName>
+		<label>corpse gene extraction vat</label>
+		<description>An automated surgery machine that can extract a corpse's genes and create a genepack from them. The machine will slowly extract genes from the corpse in it, preferring genes not already stored nearby.\n\nA large amount of neutroamine will be consumed while in use.\n\nThese more advanced machines are capable of extracting genes from Baseliners, such as "Regular Sleeper" or "Human Hands".\n\n(The speed of the extraction can be changed in the mod settings).</description>
+		<thingClass>Bardez.Biotech.NecroGeneExtractor.Buildings.NecroGeneExtractor_Tier2</thingClass>
+		<containedPawnsSelectable>true</containedPawnsSelectable>
+		<passability>PassThroughOnly</passability>
+		<fillPercent>0.5</fillPercent>
+		<castEdgeShadows>true</castEdgeShadows>
+		<minifiedDef>MinifiedThing</minifiedDef>
+		<drawerType>MapMeshAndRealTime</drawerType>
+		<tickerType>Normal</tickerType>
+		<thingCategories>
+			<li>BuildingsFurniture</li>
+		</thingCategories>
+		<graphicData>
+			<texPath>NextroGeneExtractorTiers/NecroGeneExtractor_Tier2</texPath>
+			<graphicClass>Graphic_Multi</graphicClass>
+			<drawSize>(3, 2)</drawSize>
+			<shadowData>
+				<volume>(1.7, 0.8, 1.7)</volume>
+			</shadowData>
+		</graphicData>
+		<size>(3, 2)</size>
+		<rotatable>true</rotatable>
+		<canOverlapZones>false</canOverlapZones>
+		<hasInteractionCell>true</hasInteractionCell>
+		<interactionCellOffset>(0, 0, -1)</interactionCellOffset>
+		<defaultPlacingRot>North</defaultPlacingRot>
+		<designationCategory>Biotech</designationCategory>
+		<uiOrder>2120</uiOrder>
+		<inspectorTabs>
+			<li>ITab_Genes</li>
+		</inspectorTabs>
+		<researchPrerequisites>
+			<li>Xenogermination</li>
+		</researchPrerequisites>
+		<building>
+			<buildingTags>
+				<li>Biotech</li>
+			</buildingTags>
+			<ai_chillDestination>false</ai_chillDestination>
+			<haulToContainerDuration>120</haulToContainerDuration>
+		</building>
+		<statBases>
+			<MaxHitPoints>600</MaxHitPoints>
+			<WorkToBuild>12000</WorkToBuild>
+			<Mass>90</Mass>
+			<Flammability>0.1</Flammability>
+		</statBases>
+		<costList>
+			<Steel>200</Steel>
+			<ComponentIndustrial>6</ComponentIndustrial>
+			<ComponentSpacer>2</ComponentSpacer>
+		</costList>
+		<constructionSkillPrerequisite>4</constructionSkillPrerequisite>
+		<comps>
+			<li Class="CompProperties_Power">
+				<compClass>CompPowerTrader</compClass>
+				<basePowerConsumption>300</basePowerConsumption>
+				<idlePowerDraw>80</idlePowerDraw>
+			</li>
+			<li Class="CompProperties_Flickable" />
+		</comps>
+	</ThingDef>
+
+</Defs>
