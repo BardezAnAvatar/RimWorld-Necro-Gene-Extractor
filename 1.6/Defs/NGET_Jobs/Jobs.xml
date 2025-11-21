@@ -4,7 +4,7 @@
 	<JobDef>
 		<defName>CarryCorpseToNecroGeneExtractor_TierII</defName>
 		<driverClass>Bardez.Biotech.NecroGeneExtractor.Jobs.JobDriver_HaulCorpseToNecroGeneExtractor_Tier2</driverClass>
-		<reportString>hauls corpse to necro gene extractor</reportString>
+		<reportString>hauling corpse to necro gene extractor</reportString>
 		<suspendable>false</suspendable>
 		<allowOpportunisticPrefix>true</allowOpportunisticPrefix>
 	</JobDef>
