@@ -34,7 +34,7 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
         }
     }
 
-    private float containedNeutroamine;
+    private float neutroaminePartiallyConsumed;
     private int starvationTicks;
     private Corpse containedCorpse;
     private Corpse selectedCorpse;
@@ -226,6 +226,19 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
         }
     }
 
+    private void TryAbsorbNeutroamine()
+    {
+        for (int i = 0; i < innerContainer.Count; i++)
+        {
+            if (innerContainer[i] != Corpse && innerContainer[i].def == NecroGeneExtractor_DefsOf.Resources.Neutroamine)
+            {
+                neutroaminePartiallyConsumed -= 1;
+                innerContainer[i].SplitOff(1).Destroy();
+                break;
+            }
+        }
+    }
+
 
 
     // Float Menu
@@ -303,7 +316,7 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
     {
         //how much - per hour * multiplier / 1 hour of ticks
         var value = NeutroamineStored - (NeutroConsumedPerHour / TICKS_PER_HOUR);
-        containedNeutroamine = Mathf.Clamp(value, 0f, 2.1474836E+09f); //yuge
+        neutroaminePartiallyConsumed = Mathf.Clamp(value, 0f, 2.1474836E+09f); //yuge
 
         if (NeutroamineStored <= 0f)
         {
@@ -312,6 +325,13 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
         else if (starvationTicks > 0)
         {
             starvationTicks--;
+        }
+
+        //TODO: consider consuming immediately and letting partially consumed be negative, tick up to when > 0
+        //we have exceeded a single unit; consume it.
+        if (neutroaminePartiallyConsumed > 1f)
+        {
+            TryAbsorbNeutroamine();
         }
     }
 
