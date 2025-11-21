@@ -230,7 +230,7 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
     {
         for (int i = 0; i < innerContainer.Count; i++)
         {
-            if (innerContainer[i] != Corpse && innerContainer[i].def == NecroGeneExtractor_DefsOf.Resources.Neutroamine)
+            if (innerContainer[i].def == NecroGeneExtractor_DefsOf.Resources.Neutroamine)
             {
                 neutroaminePartiallyConsumed -= 1;
                 innerContainer[i].SplitOff(1).Destroy();
