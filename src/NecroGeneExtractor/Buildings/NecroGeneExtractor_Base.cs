@@ -382,4 +382,16 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
                 .RenderPawnAt(DrawPos + PawnDrawOffset, null, neverAimWeapon: true);
         }
     }
+
+
+
+    //Expose data
+    public override void ExposeData()
+    {
+        base.ExposeData();
+        Scribe_Values.Look(ref neutroaminePartiallyConsumed, nameof(neutroaminePartiallyConsumed), 0f);
+        Scribe_Values.Look(ref starvationTicks, nameof(starvationTicks), -1);
+        Scribe_References.Look(ref selectedCorpse, nameof(selectedCorpse));
+        Scribe_References.Look(ref containedCorpse, nameof(containedCorpse));
+    }
 }
