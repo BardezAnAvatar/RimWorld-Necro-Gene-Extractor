@@ -5,7 +5,6 @@ using Bardez.Biotech.NecroGeneExtractor.Defs;
 using Bardez.Biotech.NecroGeneExtractor.Gui;
 using Bardez.Biotech.NecroGeneExtractor.Settings;
 using Bardez.Biotech.NecroGeneExtractor.Settings.Tiers;
-using Bardez.Biotech.NecroGeneExtractor.Utilities;
 using GeneExtractorTiers.Extractors;
 using RimWorld;
 using UnityEngine;
@@ -121,7 +120,7 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
             var corpseMultiplier = TargetCorpseRotStage switch
             {
                 RotStage.Rotting => NecroSettings.CorpseRotting.CostMultiplierResource,
-                RotStage.Dessicated => NecroSettings.CorpseDesiccated.CostMultiplierResource,
+                RotStage.Dessicated => NecroSettings.CorpseDessicated.CostMultiplierResource,
                 RotStage.Fresh or _ => 1f,
             };
             var multipliers = TierSettings.CostMultiplierResource * corpseMultiplier;
@@ -153,7 +152,7 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
             var multiplier = corpseType switch
             {
                 RotStage.Rotting => NecroSettings.CorpseRotting.CostMultiplierTime,
-                RotStage.Dessicated => NecroSettings.CorpseDesiccated.CostMultiplierTime,
+                RotStage.Dessicated => NecroSettings.CorpseDessicated.CostMultiplierTime,
                 RotStage.Fresh or _ => 1f,
             };
 
@@ -197,6 +196,16 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
         if (corpse?.InnerPawn?.genes?.GenesListForReading?.Any(x => x.def.defName == "VREA_Power") == true)
         {
             return "VREA.CannotUseAndroid".Translate().CapitalizeFirst();
+        }
+
+        if (corpse.GetRotStage() == RotStage.Rotting && !TierSettings.AcceptRotten)
+        {
+            return "NGET_CannotProcessCorpseRotting".Translate();
+        }
+
+        if (corpse.GetRotStage() == RotStage.Dessicated && !TierSettings.AcceptDessicated)
+        {
+            return "NGET_CannotProcessCorpseDessicated".Translate();
         }
 
         // consider:
@@ -264,7 +273,6 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
     protected override void InspectStringAddResourceStarvation(StringBuilder stringBuilder)
     {
         float starvationSeverityPercent = NeutroamineStarvationSeverity;
-        DebugMessaging.DebugMessage($"{nameof(NeutroamineStarvationSeverity)}: {NeutroamineStarvationSeverity}");
 
         if (starvationSeverityPercent > 0f)
         {

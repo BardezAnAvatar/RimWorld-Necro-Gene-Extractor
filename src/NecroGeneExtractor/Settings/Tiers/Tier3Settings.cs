@@ -4,7 +4,7 @@ public class Tier3Settings : TierSettings
 {
     protected override bool DefaultAcceptRotten => DefaultSettings.Tier3.ACCEPT_ROTTING;
 
-    protected override bool DefaultAcceptDesiccated => DefaultSettings.Tier3.ACCEPT_DESSICATED;
+    protected override bool DefaultAcceptDessicated => DefaultSettings.Tier3.ACCEPT_DESSICATED;
 
     protected override float DefaultMultiplierResource => DefaultSettings.Tier3.MULTIPLIER_RESOURCE;
 

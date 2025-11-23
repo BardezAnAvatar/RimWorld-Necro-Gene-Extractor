@@ -20,7 +20,11 @@ public static class FloatMenuHelper
             if (corpse.InnerPawn.genes != null)
             {
                 AcceptanceReport acceptanceReport = canAcceptCorpse(corpse);
-                string text = corpse.LabelShortCap + ", " + corpse.InnerPawn.genes.XenotypeLabelCap;
+                var rotStage = corpse.GetRotStage();
+                string text = corpse.LabelShortCap
+                    + $", ({rotStage.ToString()}), "
+                    + corpse.InnerPawn.genes.XenotypeLabelCap;
+
                 if (!acceptanceReport.Accepted)
                 {
                     if (!acceptanceReport.Reason.NullOrEmpty())
