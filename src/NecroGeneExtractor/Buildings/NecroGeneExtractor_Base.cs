@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Bardez.Biotech.NecroGeneExtractor.Defs;
@@ -264,9 +265,24 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
 
 
     // Gizmos
+    public override IEnumerable<Gizmo> GetGizmos()
+    {
+        foreach (var gizmo in base.GetGizmos())
+        {
+            yield return gizmo;
+        }
+
+        if (this.Corpse != null)
+        {
+            yield return BuildCorpseSelectGizmo();
+        }
+    }
+
     protected override Gizmo BuildInsertGizmo()
         => GizmoHelper.BuildGizmoInsertCorpse(BuildFloatMenuAvailableCorpses, PowerOn);
 
+    protected virtual Gizmo BuildCorpseSelectGizmo()
+        => GizmoHelper.BuildCorpseSelectGizmo(this, Corpse);
 
 
     // Inspect String
