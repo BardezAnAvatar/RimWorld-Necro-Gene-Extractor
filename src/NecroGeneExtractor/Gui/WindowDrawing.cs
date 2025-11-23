@@ -127,7 +127,7 @@ internal static class WindowDrawing
         {
             DrawHeader(subSection, header);
             subSection.CheckboxLabeled("NGET_CorpseTypeRottingEnabled".Translate(), ref tierSettings.AcceptRotten, tooltip: "NGET_CorpseTypeRottingEnabledTooltip".Translate());
-            subSection.CheckboxLabeled("NGET_CorpseTypeDesiccatedEnabled".Translate(), ref tierSettings.AcceptDesiccated, tooltip: "NGET_CorpseTypeDesiccatedEnabledTooltip".Translate());
+            subSection.CheckboxLabeled("NGET_CorpseTypeDesiccatedEnabled".Translate(), ref tierSettings.AcceptDessicated, tooltip: "NGET_CorpseTypeDesiccatedEnabledTooltip".Translate());
 
             DrawHoursAndNeutroamine(subSection, ref tierSettings.CostMultiplierTime, ref tierSettings.CostMultiplierResource,
                 "NGET_WorkHoursEfficiencyMultiplier", "NGET_WorkHoursEfficiencyMultiplierTooltip",
