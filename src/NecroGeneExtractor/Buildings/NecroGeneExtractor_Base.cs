@@ -199,6 +199,16 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
             return "VREA.CannotUseAndroid".Translate().CapitalizeFirst();
         }
 
+        if (TargetCorpseRotStage == RotStage.Rotting && !TierSettings.AcceptRotten)
+        {
+            return "NGET_CannotProcessCorpseRotting".Translate();
+        }
+
+        if (TargetCorpseRotStage == RotStage.Dessicated && !TierSettings.AcceptDessicated)
+        {
+            return "NGET_CannotProcessCorpseDessicated".Translate();
+        }
+
         // consider:
         //       corpse.InnerPawn.genes != null
         //       && corpse.InnerPawn.genes.GenesListForReading.Any(x => (x.def).passOnDirectly)
