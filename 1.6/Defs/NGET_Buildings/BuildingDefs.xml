@@ -84,6 +84,7 @@
 			<ComponentSpacer>6</ComponentSpacer>
 			<ArchiteCapsule>1</ArchiteCapsule>
 		</costList>
+		<containedItemsSelectable>true</containedItemsSelectable> <!-- does not inherit -->
 	</ThingDef>
 
 </Defs>
