@@ -8,7 +8,7 @@
 	<NGET_HeaderCorpses>Corpses</NGET_HeaderCorpses>
 	<NGET_CorpseType>Corpse: {0}</NGET_CorpseType>
 	<NGET_CorpseTypeRottingEnabled>Rotting Enabled</NGET_CorpseTypeRottingEnabled>
-	<NGET_CorpseTypeDesiccatedEnabled>Desiccated Enabled</NGET_CorpseTypeDesiccatedEnabled>
+	<NGET_CorpseTypeDessicatedEnabled>Desiccated Enabled</NGET_CorpseTypeDessicatedEnabled>
 	<NGET_CorpseTypeRottingEnabledTooltip>Is the corpse type enabled for processing inside the extractor type?</NGET_CorpseTypeRottingEnabledTooltip>
 	<NGET_CorpseTypeDesiccatedEnabledTooltip>Is the corpse type enabled for processing inside the extractor type?</NGET_CorpseTypeDesiccatedEnabledTooltip>
 

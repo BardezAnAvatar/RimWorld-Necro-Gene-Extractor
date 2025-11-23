@@ -10,7 +10,7 @@ public class NecroGeneExtractorSettings : ModSettings
 
     public CorpseSettingsRotting CorpseRotting;
 
-    public CorpseSettingsDesiccated CorpseDesiccated;
+    public CorpseSettingsDessicated CorpseDessicated;
 
     public Tier2Settings SettingsTier2;
 
@@ -24,7 +24,7 @@ public class NecroGeneExtractorSettings : ModSettings
     {
         CorpseFresh ??= new();
         CorpseRotting ??= new();
-        CorpseDesiccated ??= new();
+        CorpseDessicated ??= new();
         SettingsTier2 ??= new();
         SettingsTier3 ??= new();
         SettingsTier4 ??= new();
@@ -34,7 +34,7 @@ public class NecroGeneExtractorSettings : ModSettings
     {
         CorpseFresh.SetDefaults();
         CorpseRotting.SetDefaults();
-        CorpseDesiccated.SetDefaults();
+        CorpseDessicated.SetDefaults();
         SettingsTier2.SetDefaults();
         SettingsTier3.SetDefaults();
         SettingsTier4.SetDefaults();
@@ -50,7 +50,7 @@ public class NecroGeneExtractorSettings : ModSettings
         base.ExposeData();
         Scribe_Deep.Look(ref CorpseFresh, nameof(CorpseFresh));
         Scribe_Deep.Look(ref CorpseRotting, nameof(CorpseRotting));
-        Scribe_Deep.Look(ref CorpseDesiccated, nameof(CorpseDesiccated));
+        Scribe_Deep.Look(ref CorpseDessicated, nameof(CorpseDessicated));
         Scribe_Deep.Look(ref SettingsTier2, nameof(SettingsTier2));
         Scribe_Deep.Look(ref SettingsTier3, nameof(SettingsTier3));
         Scribe_Deep.Look(ref SettingsTier4, nameof(SettingsTier4));

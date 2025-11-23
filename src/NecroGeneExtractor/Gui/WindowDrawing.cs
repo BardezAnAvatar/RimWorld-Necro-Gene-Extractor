@@ -101,7 +101,7 @@ internal static class WindowDrawing
             DrawGapBetweenSections(subSection);
             DrawSettingsNonFresh(subSection, width, "RotStateRotting", ref settings.CorpseRotting.CostMultiplierTime, ref settings.CorpseRotting.CostMultiplierResource);
             DrawGapBetweenSections(subSection);
-            DrawSettingsNonFresh(subSection, width, "RotStateDessicated", ref settings.CorpseDesiccated.CostMultiplierTime, ref settings.CorpseDesiccated.CostMultiplierResource);
+            DrawSettingsNonFresh(subSection, width, "RotStateDessicated", ref settings.CorpseDessicated.CostMultiplierTime, ref settings.CorpseDessicated.CostMultiplierResource);
         }
         finally
         {
@@ -127,7 +127,7 @@ internal static class WindowDrawing
         {
             DrawHeader(subSection, header);
             subSection.CheckboxLabeled("NGET_CorpseTypeRottingEnabled".Translate(), ref tierSettings.AcceptRotten, tooltip: "NGET_CorpseTypeRottingEnabledTooltip".Translate());
-            subSection.CheckboxLabeled("NGET_CorpseTypeDesiccatedEnabled".Translate(), ref tierSettings.AcceptDessicated, tooltip: "NGET_CorpseTypeDesiccatedEnabledTooltip".Translate());
+            subSection.CheckboxLabeled("NGET_CorpseTypeDessicatedEnabled".Translate(), ref tierSettings.AcceptDessicated, tooltip: "NGET_CorpseTypeDesiccatedEnabledTooltip".Translate());
 
             DrawHoursAndNeutroamine(subSection, ref tierSettings.CostMultiplierTime, ref tierSettings.CostMultiplierResource,
                 "NGET_WorkHoursEfficiencyMultiplier", "NGET_WorkHoursEfficiencyMultiplierTooltip",

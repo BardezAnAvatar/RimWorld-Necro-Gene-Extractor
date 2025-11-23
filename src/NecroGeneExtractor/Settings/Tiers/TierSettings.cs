@@ -19,7 +19,7 @@ public abstract class TierSettings : IExposable
 
     protected abstract bool DefaultAcceptRotten { get; }
 
-    protected abstract bool DefaultAcceptDesiccated { get; }
+    protected abstract bool DefaultAcceptDessicated { get; }
 
     protected abstract float DefaultMultiplierResource { get; }
 
@@ -32,7 +32,7 @@ public abstract class TierSettings : IExposable
     public virtual void ExposeData()
     {
         Scribe_Values.Look(ref AcceptRotten, nameof(AcceptRotten), DefaultAcceptRotten);
-        Scribe_Values.Look(ref AcceptDessicated, nameof(AcceptDessicated), DefaultAcceptDesiccated);
+        Scribe_Values.Look(ref AcceptDessicated, nameof(AcceptDessicated), DefaultAcceptDessicated);
         Scribe_Values.Look(ref CostMultiplierResource, nameof(CostMultiplierResource), DefaultMultiplierResource);
         Scribe_Values.Look(ref CostMultiplierTime, nameof(CostMultiplierTime), DefaultMultiplierTime);
         Scribe_Values.Look(ref CostMultiplierOverdriveResource, nameof(CostMultiplierOverdriveResource), DefaultMultiplierOverdriveResource);
@@ -71,9 +71,9 @@ public abstract class TierSettings : IExposable
         builder.Append(": ");
         builder.Append(DefaultAcceptRotten);
         builder.Append(", ");
-        builder.Append(nameof(DefaultAcceptDesiccated));
+        builder.Append(nameof(DefaultAcceptDessicated));
         builder.Append(": ");
-        builder.Append(DefaultAcceptDesiccated);
+        builder.Append(DefaultAcceptDessicated);
         builder.Append(", ");
         builder.Append(nameof(DefaultMultiplierResource));
         builder.Append(": ");
@@ -97,7 +97,7 @@ public abstract class TierSettings : IExposable
     public virtual void SetDefaults()
     {
         AcceptRotten = DefaultAcceptRotten;
-        AcceptDessicated = DefaultAcceptDesiccated;
+        AcceptDessicated = DefaultAcceptDessicated;
         CostMultiplierResource = DefaultMultiplierResource;
         CostMultiplierTime = DefaultMultiplierTime;
         CostMultiplierOverdriveResource = DefaultMultiplierOverdriveResource;

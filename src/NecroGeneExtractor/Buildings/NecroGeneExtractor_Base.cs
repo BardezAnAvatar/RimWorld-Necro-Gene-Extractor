@@ -121,7 +121,7 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
             var corpseMultiplier = TargetCorpseRotStage switch
             {
                 RotStage.Rotting => NecroSettings.CorpseRotting.CostMultiplierResource,
-                RotStage.Dessicated => NecroSettings.CorpseDesiccated.CostMultiplierResource,
+                RotStage.Dessicated => NecroSettings.CorpseDessicated.CostMultiplierResource,
                 RotStage.Fresh or _ => 1f,
             };
             var multipliers = TierSettings.CostMultiplierResource * corpseMultiplier;
@@ -153,7 +153,7 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
             var multiplier = corpseType switch
             {
                 RotStage.Rotting => NecroSettings.CorpseRotting.CostMultiplierTime,
-                RotStage.Dessicated => NecroSettings.CorpseDesiccated.CostMultiplierTime,
+                RotStage.Dessicated => NecroSettings.CorpseDessicated.CostMultiplierTime,
                 RotStage.Fresh or _ => 1f,
             };
 
