@@ -5,7 +5,6 @@ using Bardez.Biotech.NecroGeneExtractor.Defs;
 using Bardez.Biotech.NecroGeneExtractor.Gui;
 using Bardez.Biotech.NecroGeneExtractor.Settings;
 using Bardez.Biotech.NecroGeneExtractor.Settings.Tiers;
-using Bardez.Biotech.NecroGeneExtractor.Utilities;
 using GeneExtractorTiers.Extractors;
 using RimWorld;
 using UnityEngine;
@@ -199,12 +198,12 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
             return "VREA.CannotUseAndroid".Translate().CapitalizeFirst();
         }
 
-        if (TargetCorpseRotStage == RotStage.Rotting && !TierSettings.AcceptRotten)
+        if (corpse.GetRotStage() == RotStage.Rotting && !TierSettings.AcceptRotten)
         {
             return "NGET_CannotProcessCorpseRotting".Translate();
         }
 
-        if (TargetCorpseRotStage == RotStage.Dessicated && !TierSettings.AcceptDessicated)
+        if (corpse.GetRotStage() == RotStage.Dessicated && !TierSettings.AcceptDessicated)
         {
             return "NGET_CannotProcessCorpseDessicated".Translate();
         }
@@ -274,7 +273,6 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
     protected override void InspectStringAddResourceStarvation(StringBuilder stringBuilder)
     {
         float starvationSeverityPercent = NeutroamineStarvationSeverity;
-        DebugMessaging.DebugMessage($"{nameof(NeutroamineStarvationSeverity)}: {NeutroamineStarvationSeverity}");
 
         if (starvationSeverityPercent > 0f)
         {
