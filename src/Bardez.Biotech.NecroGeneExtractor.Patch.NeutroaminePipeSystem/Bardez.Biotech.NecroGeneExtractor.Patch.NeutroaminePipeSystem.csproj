@@ -13,7 +13,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\NecroGeneExtractor\Bardez.Biotech.NecroGeneExtractor.csproj" />
+	  <ProjectReference Include="../NecroGeneExtractor/Bardez.Biotech.NecroGeneExtractor.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -25,7 +25,7 @@
 	<!-- Output -->
 	<PropertyGroup>
 		<DebugType>none</DebugType>
-		<OutputPath>..\..\1.6\Assemblies\</OutputPath>
+		<OutputPath>../../1.6/Assemblies/</OutputPath>
 		<Optimize>true</Optimize>
 		<DefineConstants>TRACE</DefineConstants>
 	</PropertyGroup>
