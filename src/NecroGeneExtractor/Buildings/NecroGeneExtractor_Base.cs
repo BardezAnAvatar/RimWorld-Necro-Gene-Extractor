@@ -226,6 +226,8 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
 
             if (innerContainer.TryAddOrTransfer(corpse))
             {
+                var comp = corpse.GetComp<CompRottable>();
+                comp.disabled = true;
                 SetStartTick();
                 TicksRemaining = ExtractionTimeInTicks;
             }
@@ -405,6 +407,19 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
                 .renderer
                 .RenderPawnAt(DrawPos + PawnDrawOffset, null, neverAimWeapon: true);
         }
+    }
+
+    protected override void DropContents()
+    {
+        foreach (var thing in innerContainer)
+        {
+            if (thing is Corpse c)
+            {
+                var comp = c.GetComp<CompRottable>();
+                comp.disabled = false;
+            }
+        }
+        base.DropContents();
     }
 
 

@@ -7,4 +7,8 @@ namespace Bardez.Biotech.NecroGeneExtractor.Buildings;
 public class NecroGeneExtractor_Tier2 : NecroGeneExtractor_Base
 {
     protected override TierSettings TierSettings => NecroSettings.SettingsTier2;
+
+    public override bool CanExtractArchite => false;
+
+    public override bool CanTargetExtraction => false;
 }
