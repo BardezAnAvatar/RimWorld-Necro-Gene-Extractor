@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<TargetFramework>net48</TargetFramework>
-		<AssemblyName>NecroGeneExtractor</AssemblyName>
+		<AssemblyName>NecroGeneExtractor.Patch.NeutroPipes</AssemblyName>
 		<OutputType>Library</OutputType>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<LangVersion>latest</LangVersion>
@@ -13,20 +13,22 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Lib.Harmony" Version="2.4.2" ExcludeAssets="runtime" />
-		<PackageReference Include="Krafs.Rimworld.Ref" Version="1.6.4633" />
+	  <ProjectReference Include="../NecroGeneExtractor/Bardez.Biotech.NecroGeneExtractor.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Reference Include="GeneExtractorTiers">
-	    <HintPath>/Projects/Game Mods/Rimworld/Gene-Extractor/1.6/Assemblies/GeneExtractorTiers.dll</HintPath>
-	  </Reference>
+		<Reference Include="PipeSystem">
+			<HintPath>/Program Files (x86)/Steam/steamapps/workshop/content/294100/2023507013/1.6/Assemblies/PipeSystem.dll</HintPath>
+		</Reference>
+		<Reference Include="GeneExtractorTiers">
+			<HintPath>/Projects/Game Mods/Rimworld/Gene-Extractor/1.6/Assemblies/GeneExtractorTiers.dll</HintPath>
+		</Reference>
 	</ItemGroup>
 
 	<!-- Output -->
 	<PropertyGroup>
 		<DebugType>none</DebugType>
-		<OutputPath>../../1.6/Assemblies/</OutputPath>
+		<OutputPath>../../1.6/Mods/VRE_Androids/Assemblies/</OutputPath>
 		<Optimize>true</Optimize>
 		<DefineConstants>TRACE</DefineConstants>
 	</PropertyGroup>
