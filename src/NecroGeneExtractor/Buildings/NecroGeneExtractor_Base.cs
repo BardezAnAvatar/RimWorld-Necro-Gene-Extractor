@@ -251,6 +251,57 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
         }
     }
 
+    public void TryAddNeutroamine(int count)
+    {
+        //how many stacks are we adding?
+        var fullStacks = count / NecroGeneExtractor_DefsOf.Resources.Neutroamine.stackLimit;
+        var remainder = count % NecroGeneExtractor_DefsOf.Resources.Neutroamine.stackLimit;
+
+        //see if we can combine with any existing stacks inside
+        if (remainder > 0)
+        {
+            var partialIndex = -1;
+
+            for (int i = 0; i < innerContainer.Count; i++)
+            {
+                var thing = innerContainer[i];
+
+                if (thing.def == NecroGeneExtractor_DefsOf.Resources.Neutroamine
+                    && (thing.stackCount + remainder) < NecroGeneExtractor_DefsOf.Resources.Neutroamine.stackLimit)
+                {
+                    partialIndex = i;
+                    break;
+                }
+            }
+
+            //add remainder
+            if (partialIndex > -1)
+            {
+                innerContainer[partialIndex].stackCount += remainder;
+            }
+            else
+            {
+                var neutro = new Thing
+                {
+                    def = NecroGeneExtractor_DefsOf.Resources.Neutroamine,
+                    stackCount = remainder,
+                };
+                innerContainer.TryAdd(neutro);
+            }
+        }
+
+        //add in full stacks
+        for (int i = 0; i < fullStacks; i++)
+        {
+            var neutro = new Thing
+            {
+                def = NecroGeneExtractor_DefsOf.Resources.Neutroamine,
+                stackCount = NecroGeneExtractor_DefsOf.Resources.Neutroamine.stackLimit,
+            };
+            innerContainer.TryAdd(neutro);
+        }
+    }
+
 
 
     // Float Menu
@@ -385,7 +436,7 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
     protected override void Fail()
     {
         if (ContainsTarget)
-    {
+        {
             innerContainer.TryDrop(Corpse, InteractionCell, base.Map, ThingPlaceMode.Near, 1, out var _);
         }
         OnStop();
