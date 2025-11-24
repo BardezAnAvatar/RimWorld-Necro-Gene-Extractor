@@ -11,6 +11,8 @@ public class NecroGeneExtractor_Tier3 : NecroGeneExtractor_Base
 
     public override bool CanExtractArchite => true;
 
+    public override bool CanTargetExtraction => false;
+
     protected override Graphic TopGraphic
     {
         get
