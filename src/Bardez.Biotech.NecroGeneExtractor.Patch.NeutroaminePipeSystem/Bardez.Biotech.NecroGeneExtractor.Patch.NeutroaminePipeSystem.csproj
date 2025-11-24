@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net48</TargetFramework>
+		<AssemblyName>NecroGeneExtractor.Patch.NeutroPipes</AssemblyName>
+		<OutputType>Library</OutputType>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<LangVersion>latest</LangVersion>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+		<Configurations>Release;Debug</Configurations>
+		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\NecroGeneExtractor\Bardez.Biotech.NecroGeneExtractor.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Reference Include="GeneExtractorTiers">
+			<HintPath>/Program Files (x86)/Steam/steamapps/workshop/content/294100/2975771801/1.6/Assemblies/VREAndroids.dll</HintPath>
+		</Reference>
+	</ItemGroup>
+
+	<!-- Output -->
+	<PropertyGroup>
+		<DebugType>none</DebugType>
+		<OutputPath>..\..\1.6\Assemblies\</OutputPath>
+		<Optimize>true</Optimize>
+		<DefineConstants>TRACE</DefineConstants>
+	</PropertyGroup>
+
+</Project>
