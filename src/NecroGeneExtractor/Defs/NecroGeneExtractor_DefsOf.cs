@@ -10,6 +10,7 @@ public static class NecroGeneExtractor_DefsOf
     {
         public static ThingDef NGET_NecroGeneExtractorII;
         public static ThingDef NGET_NecroGeneExtractorIII;
+        public static ThingDef NGET_NecroGeneExtractorIV;
     }
 
     [DefOf]
@@ -23,5 +24,6 @@ public static class NecroGeneExtractor_DefsOf
     {
         public static JobDef CarryCorpseToNecroGeneExtractor_TierII;
         public static JobDef CarryCorpseToNecroGeneExtractor_TierIII;
+        public static JobDef CarryCorpseToNecroGeneExtractor_TierIV;
     }
 }
