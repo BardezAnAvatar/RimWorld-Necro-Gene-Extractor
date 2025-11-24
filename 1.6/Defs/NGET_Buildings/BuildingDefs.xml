@@ -65,12 +65,11 @@
 		</comps>
 	</ThingDef>
 
-	<ThingDef ParentName="GET_GeneExtractor_II">
+	<ThingDef ParentName="NGET_NecroGeneExtractorII">
 		<defName>NGET_NecroGeneExtractorIII</defName>
-		<thingClass>GeneExtractorTiers.Build_GeneExtractorTier_III</thingClass>
-		<label>archite corpse gene extraction vat</label>
-		<description>An automated surgery machine that can extract a corpse's genes and create a genepack from them. The machine will slowly extract genes from the corpse in it, preferring genes not already stored nearby.\n\nA large amount of neutroamine will be consumed while in use.\n\nThese more advanced machines are capable of extracting genes from Baseliners, such as "Regular Sleeper" or "Human Hands".\n\nThis version can extract archite genes and extracts slightly faster.\n\nThese more advanced machines are capable of extracting genes from Baseliners, such as "Regular Sleeper" or "Human Hands".\n\n(The speed of the extraction can be changed in the mod settings).</description>
 		<thingClass>Bardez.Biotech.NecroGeneExtractor.Buildings.NecroGeneExtractor_Tier3</thingClass>
+		<label>archite corpse gene extraction vat</label>
+		<description>An automated surgery machine that can extract a corpse's genes and create a genepack from them. This version operates at 125% of the speed a regular extractor vat. The machine will slowly extract genes from the corpse in it, preferring genes not already stored nearby.\n\nA large amount of neutroamine will be consumed while in use.\n\nThis version can extract archite genes.\n\nThese more advanced machines are capable of extracting genes from Baseliners, such as "Regular Sleeper" or "Human Hands".\n\n(The speed of the extraction can be changed in the mod settings).</description>
 		<graphicData>
 			<texPath>NextroGeneExtractorTiers/NecroGeneExtractor_Tier3</texPath>
 		</graphicData>
@@ -81,6 +80,27 @@
 			<Steel>220</Steel>
 			<ComponentSpacer>6</ComponentSpacer>
 			<ArchiteCapsule>1</ArchiteCapsule>
+		</costList>
+	</ThingDef>
+
+	<ThingDef ParentName="NGET_NecroGeneExtractorII">
+		<defName>NGET_NecroGeneExtractorIV</defName>
+		<thingClass>Bardez.Biotech.NecroGeneExtractor.Buildings.NecroGeneExtractor_Tier4</thingClass>
+		<label>archite corpse gene extraction vat II</label>
+		<description>An automated surgery machine that can extract a corpse's genes and create a genepack from them. This version permits targeting specific genes and also operates at 250% of the speed a regular extractor vat, but requires an AI persona core. The machine will slowly extract genes from the corpse in it, preferring genes not already stored nearby.\n\nA large amount of neutroamine will be consumed while in use.\n\nThis version can extract archite genes.\n\nThese more advanced machines are capable of extracting genes from Baseliners, such as "Regular Sleeper" or "Human Hands".\n\n(The speed of the extraction can be changed in the mod settings).</description>
+
+		<graphicData>
+			<texPath>NextroGeneExtractorTiers/NecroGeneExtractor_Tier4</texPath>
+		</graphicData>
+
+		<researchPrerequisites Inherit="False">
+			<li>Archogenetics</li>
+		</researchPrerequisites>
+		<costList Inherit="False">
+			<Steel>220</Steel>
+			<ComponentSpacer>10</ComponentSpacer>
+			<ArchiteCapsule>2</ArchiteCapsule>
+			<AIPersonaCore>1</AIPersonaCore>
 		</costList>
 	</ThingDef>
 

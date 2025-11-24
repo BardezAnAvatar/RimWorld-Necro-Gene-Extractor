@@ -16,5 +16,13 @@
 		<suspendable>false</suspendable>
 		<allowOpportunisticPrefix>true</allowOpportunisticPrefix>
 	</JobDef>
+
+	<JobDef>
+		<defName>CarryCorpseToNecroGeneExtractor_TierIV</defName>
+		<driverClass>Bardez.Biotech.NecroGeneExtractor.Jobs.JobDriver_HaulCorpseToNecroGeneExtractor_Tier4</driverClass>
+		<reportString>hauling corpse to necro gene extractor</reportString>
+		<suspendable>false</suspendable>
+		<allowOpportunisticPrefix>true</allowOpportunisticPrefix>
+	</JobDef>
 	
 </Defs>
