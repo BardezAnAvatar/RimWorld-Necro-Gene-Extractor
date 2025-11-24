@@ -21,7 +21,7 @@
 			<HintPath>/Program Files (x86)/Steam/steamapps/workshop/content/294100/2023507013/1.6/Assemblies/PipeSystem.dll</HintPath>
 		</Reference>
 		<Reference Include="GeneExtractorTiers">
-			<HintPath>/Program Files (x86)/Steam/steamapps/workshop/content/294100/2975771801/1.6/Assemblies/VREAndroids.dll</HintPath>
+			<HintPath>/Projects/Game Mods/Rimworld/Gene-Extractor/1.6/Assemblies/GeneExtractorTiers.dll</HintPath>
 		</Reference>
 	</ItemGroup>
 
