@@ -136,7 +136,7 @@ public static class GeneHelper
             .Single();
         MethodInfo specificGenericMethod = tryGetCompGeneric.MakeGenericMethod(geneNodeType);
 
-        var gnComp = specificGenericMethod.Invoke(thing, null);
+        var gnComp = specificGenericMethod.Invoke(null, [thing]);
         bool result = gnComp.GetType() == geneNodeType;
 
         if (result)
