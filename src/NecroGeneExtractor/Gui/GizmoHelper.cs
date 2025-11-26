@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Bardez.Biotech.NecroGeneExtractor.Utilities;
-using GeneExtractorTiers.Extractors;
+using Bardez.GeneExtractorTiers.Gui;
 using RimWorld;
 using UnityEngine;
 using Verse;
