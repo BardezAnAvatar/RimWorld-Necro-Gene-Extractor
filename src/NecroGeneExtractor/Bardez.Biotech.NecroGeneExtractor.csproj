@@ -18,9 +18,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Reference Include="GeneExtractorTiers">
-	    <HintPath>/Projects/Game Mods/Rimworld/Gene-Extractor/1.6/Assemblies/GeneExtractorTiers.dll</HintPath>
-	  </Reference>
+	  <ProjectReference Include="..\GeneExtractorTiers\Bardez.GeneExtractorTiers.csproj" />
 	</ItemGroup>
 
 	<!-- Output -->
