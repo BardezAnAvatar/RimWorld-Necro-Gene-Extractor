@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using GeneExtractorTiers;
 using RimWorld;
 using Verse;
@@ -84,13 +86,19 @@ public static class GeneHelper
                 }
             }
 
-            if (thing.TryGetComp<Comp_GeneNode>() is Comp_GeneNode gnComp)
+            //HACK: Reflection madness to get the comp type and to reference internal classes
+            var geneNodeType = GetGeneNodeType();
+            var gnComp = thing.TryGetComp(GetGeneNodeProperties(geneNodeType));
+            if (gnComp.GetType() == geneNodeType)
             {
-                foreach (var geneDef in gnComp.Props.geneList)
+                var props = gnComp.props as CompProperties_GeneNode;
+
+                foreach (var geneDef in props.geneList)
                 {
                     geneLookup[geneDef] = GeneState.SinglePack;
                 }
-                foreach (var geneSet in gnComp.Props.geneSetList)
+
+                foreach (var geneSet in props.geneSetList)
                 {
                     foreach (var geneDef in geneSet.geneList)
                     {
@@ -104,6 +112,21 @@ public static class GeneHelper
         }
 
         return geneLookup;
+    }
+
+    private static Type GetGeneNodeType()
+    {
+        Assembly targetAssembly = typeof(ExtractorTierSettings).Assembly;
+        string fullyQualifiedClassName = "GeneExtractorTiers.Comp_GeneNode";
+        Type geneExtractorMain = targetAssembly.GetType(fullyQualifiedClassName);
+
+        return geneExtractorMain;
+    }
+
+    private static CompProperties GetGeneNodeProperties(Type geneNode)
+    {
+        CompProperties properties = new CompProperties(geneNode);
+        return properties;
     }
 
     public static List<GeneDef> BuildGeneListFromPawn(Pawn containedPawn,
