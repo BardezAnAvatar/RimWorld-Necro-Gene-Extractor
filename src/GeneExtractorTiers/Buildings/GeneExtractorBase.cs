@@ -45,7 +45,7 @@ public abstract class GeneExtractorBase : Building_Enterable, IThingHolderWithDr
     private static ExtractorTierSettings GetSettings()
     {
         //Nasty Reflection Hack needed to get the internal type GeneExtractorMain at present
-        Assembly targetAssembly = Assembly.LoadFrom("GeneExtractorTiers.dll");
+        Assembly targetAssembly = typeof(ExtractorTierSettings).Assembly;
         string fullyQualifiedClassName = "GeneExtractorTiers.GeneExtractorMain";
         Type geneExtractorMain = targetAssembly.GetType(fullyQualifiedClassName);
 
