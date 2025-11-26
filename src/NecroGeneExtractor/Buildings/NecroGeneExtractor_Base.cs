@@ -6,7 +6,7 @@ using Bardez.Biotech.NecroGeneExtractor.Defs;
 using Bardez.Biotech.NecroGeneExtractor.Gui;
 using Bardez.Biotech.NecroGeneExtractor.Settings;
 using Bardez.Biotech.NecroGeneExtractor.Settings.Tiers;
-using GeneExtractorTiers.Extractors;
+using Bardez.GeneExtractorTiers.Buildings;
 using RimWorld;
 using UnityEngine;
 using Verse;

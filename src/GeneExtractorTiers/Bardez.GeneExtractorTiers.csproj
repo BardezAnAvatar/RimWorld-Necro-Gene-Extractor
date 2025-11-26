@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<TargetFramework>net48</TargetFramework>
-		<AssemblyName>NecroGeneExtractor</AssemblyName>
+		<AssemblyName>Bardez.GeneExtractorTiers</AssemblyName>
 		<OutputType>Library</OutputType>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<LangVersion>latest</LangVersion>
@@ -18,15 +18,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\GeneExtractorTiers\Bardez.GeneExtractorTiers.csproj" />
+		<Reference Include="GeneExtractorTiers">
+			<HintPath>/Program Files (x86)/Steam/steamapps/workshop/content/294100/3016454783/1.6/Assemblies/GeneExtractorTiers.dll</HintPath>
+		</Reference>
 	</ItemGroup>
-
-	<!-- Output -->
-	<PropertyGroup>
-		<DebugType>none</DebugType>
-		<OutputPath>../../1.6/Assemblies/</OutputPath>
-		<Optimize>true</Optimize>
-		<DefineConstants>TRACE</DefineConstants>
-	</PropertyGroup>
 
 </Project>
