@@ -17,4 +17,10 @@
 		<PackageReference Include="Krafs.Rimworld.Ref" Version="1.6.4633" />
 	</ItemGroup>
 
+	<ItemGroup>
+		<Reference Include="GeneExtractorTiers">
+			<HintPath>/Projects/Game Mods/Rimworld/Gene-Extractor/1.6/Assemblies/GeneExtractorTiers.dll</HintPath>
+		</Reference>
+	</ItemGroup>
+
 </Project>
