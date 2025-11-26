@@ -2,7 +2,7 @@
 using RimWorld;
 using Verse;
 
-namespace Bardez.GeneExtractorTiers.Utility;
+namespace Bardez.GeneExtractorTiers.Gui;
 
 public static class GizmoHelper
 {
