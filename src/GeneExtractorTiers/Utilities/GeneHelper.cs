@@ -5,6 +5,8 @@ using System.Reflection;
 using GeneExtractorTiers;
 using RimWorld;
 using Verse;
+using static HarmonyLib.Code;
+using static UnityEngine.Networking.UnityWebRequest;
 
 namespace Bardez.GeneExtractorTiers.Utilities;
 
@@ -18,7 +20,7 @@ public static class GeneHelper
                     x =>
                         x.defName.ToLower().Contains("skin")
                         || x.defName.ToLower().Contains("hair")
-                        //TODO: (LFS) Genes Expanded: Eyes support
+                    //TODO: (LFS) Genes Expanded: Eyes support
                     );
     }
 
@@ -87,12 +89,11 @@ public static class GeneHelper
             }
 
             //HACK: Reflection madness to get the comp type and to reference internal classes
-            var geneNodeType = GetGeneNodeType();
-            var gnComp = thing.TryGetComp(GetGeneNodeProperties(geneNodeType));
-            if (gnComp.GetType() == geneNodeType)
-            {
-                var props = gnComp.props as CompProperties_GeneNode;
+            var buildingHasGeneNodeComp = BuildingHasGeneNodeComp(thing, out var props);
 
+            //if (thing.TryGetComp<Comp_GeneNode>() is Comp_GeneNode gnComp)
+            if (buildingHasGeneNodeComp)
+            {
                 foreach (var geneDef in props.geneList)
                 {
                     geneLookup[geneDef] = GeneState.SinglePack;
@@ -112,6 +113,28 @@ public static class GeneHelper
         }
 
         return geneLookup;
+    }
+
+    private static bool BuildingHasGeneNodeComp(Thing thing, out CompProperties_GeneNode props)
+    {
+        props = null;
+
+        var geneNodeType = GetGeneNodeType();
+
+        //targeting `thing.TryGetComp<CompType>();`
+        var tryGetComp = thing.GetType().GetMethods().Where(x => x.Name == "TryGetComp");
+        var tryGetCompGeneric = tryGetComp.Where(x => x.IsGenericMethod && !x.ContainsGenericParameters).Single();
+        MethodInfo specificGenericMethod = tryGetCompGeneric.MakeGenericMethod(geneNodeType);
+
+        var gnComp = specificGenericMethod.Invoke(thing, null);
+        bool result = gnComp.GetType() == geneNodeType;
+
+        if (result)
+        {
+            props = (gnComp as ThingComp).props as CompProperties_GeneNode;
+        }
+
+        return result;
     }
 
     private static Type GetGeneNodeType()
