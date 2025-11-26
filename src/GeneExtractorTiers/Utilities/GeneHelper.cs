@@ -123,7 +123,12 @@ public static class GeneHelper
 
         //targeting `thing.TryGetComp<CompType>();`
         var tryGetComp = thing.GetType().GetMethods().Where(x => x.Name == "TryGetComp");
-        var tryGetCompGeneric = tryGetComp.Where(x => x.IsGenericMethod && !x.ContainsGenericParameters).Single();
+        var tryGetCompGeneric = tryGetComp
+            .Where(m =>
+                m.IsGenericMethodDefinition             // Ensure it's a generic method definition
+                && m.GetGenericArguments().Length == 1  // One generic parameter
+                && m.GetParameters().Length == 0)       // No regular parameters
+            .Single();
         MethodInfo specificGenericMethod = tryGetCompGeneric.MakeGenericMethod(geneNodeType);
 
         var gnComp = specificGenericMethod.Invoke(thing, null);
