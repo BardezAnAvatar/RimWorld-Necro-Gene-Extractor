@@ -1,6 +1,4 @@
 ﻿using Bardez.Biotech.NecroGeneExtractor.Buildings;
-using Bardez.Biotech.NecroGeneExtractor.Defs;
-using Bardez.Biotech.NecroGeneExtractor.Utilities;
 using RimWorld;
 using Verse;
 using Verse.AI;
@@ -25,17 +23,22 @@ public abstract class WorkGiver_CarryCorpseToNecroGeneExtractor_Base : WorkGiver
 
     public override bool HasJobOnThing(Pawn pawn, Thing t, bool forced = false)
     {
-        if (t.IsBurning())
-        {
-            return false;
-        }
-
-        if (pawn.Map.designationManager.DesignationOn(t, DesignationDefOf.Deconstruct) != null)
+        if (t is null || pawn is null)
         {
             return false;
         }
 
         if (t is not NecroGeneExtractor_Base geneVat)
+        {
+            return false;
+        }
+
+        if (t.IsBurning())
+        {
+            return false;
+        }
+
+        if (pawn.Map?.designationManager?.DesignationOn(t, DesignationDefOf.Deconstruct) != null)
         {
             return false;
         }
@@ -47,7 +50,7 @@ public abstract class WorkGiver_CarryCorpseToNecroGeneExtractor_Base : WorkGiver
         }
 
         Corpse selectedCorpse = geneVat.TargetedCorpse;
-        if (selectedCorpse == null)
+        if (selectedCorpse is null)
         {
             return false;
         }
@@ -68,13 +71,16 @@ public abstract class WorkGiver_CarryCorpseToNecroGeneExtractor_Base : WorkGiver
         }
 
         //the actual job
-        if (def.workType != null && !pawn.WorkTypeIsDisabled(def.workType))
+        if (def?.workType != null && !pawn.WorkTypeIsDisabled(def.workType))
         {
-            //TODO: inline these. Potentially expensive
-            var canReserveCorpse = pawn.CanReserveAndReach(selectedCorpse, PathEndMode.InteractionCell, Danger.Deadly, 1, -1, null, forced);
-            var canReserveGeneVat = pawn.CanReserveAndReach(geneVat, PathEndMode.InteractionCell, Danger.Deadly, 1, -1, null, forced);
+            return 
+            //var canReserveCorpse = 
+                pawn.CanReserveAndReach(selectedCorpse, PathEndMode.InteractionCell, Danger.Deadly, 1, -1, null, forced)
+                &&
+            //var canReserveGeneVat = 
+                pawn.CanReserveAndReach(geneVat, PathEndMode.InteractionCell, Danger.Deadly, 1, -1, null, forced);
 
-            return canReserveCorpse && canReserveGeneVat;
+            //return canReserveCorpse && canReserveGeneVat;
         }
 
         return false;
