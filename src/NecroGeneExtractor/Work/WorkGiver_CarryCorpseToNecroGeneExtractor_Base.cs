@@ -68,11 +68,14 @@ public abstract class WorkGiver_CarryCorpseToNecroGeneExtractor_Base : WorkGiver
         //the actual job
         if (def.workType != null && !pawn.WorkTypeIsDisabled(def.workType))
         {
-            //TODO: inline these. Potentially expensive
-            var canReserveCorpse = pawn.CanReserveAndReach(selectedCorpse, PathEndMode.InteractionCell, Danger.Deadly, 1, -1, null, forced);
-            var canReserveGeneVat = pawn.CanReserveAndReach(geneVat, PathEndMode.InteractionCell, Danger.Deadly, 1, -1, null, forced);
+            return 
+            //var canReserveCorpse = 
+                pawn.CanReserveAndReach(selectedCorpse, PathEndMode.InteractionCell, Danger.Deadly, 1, -1, null, forced)
+                &&
+            //var canReserveGeneVat = 
+                pawn.CanReserveAndReach(geneVat, PathEndMode.InteractionCell, Danger.Deadly, 1, -1, null, forced);
 
-            return canReserveCorpse && canReserveGeneVat;
+            //return canReserveCorpse && canReserveGeneVat;
         }
 
         return false;
