@@ -45,7 +45,7 @@ public abstract class WorkGiver_CarryCorpseToNecroGeneExtractor_Base : WorkGiver
         }
 
         Corpse selectedCorpse = geneVat.TargetedCorpse;
-        if (selectedCorpse == null)
+        if (selectedCorpse is null)
         {
             return false;
         }
