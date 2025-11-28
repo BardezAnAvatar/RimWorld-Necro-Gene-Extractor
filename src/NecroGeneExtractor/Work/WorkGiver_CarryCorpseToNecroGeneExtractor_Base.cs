@@ -23,17 +23,22 @@ public abstract class WorkGiver_CarryCorpseToNecroGeneExtractor_Base : WorkGiver
 
     public override bool HasJobOnThing(Pawn pawn, Thing t, bool forced = false)
     {
-        if (t.IsBurning())
-        {
-            return false;
-        }
-
-        if (pawn.Map.designationManager.DesignationOn(t, DesignationDefOf.Deconstruct) != null)
+        if (t is null || pawn is null)
         {
             return false;
         }
 
         if (t is not NecroGeneExtractor_Base geneVat)
+        {
+            return false;
+        }
+
+        if (t.IsBurning())
+        {
+            return false;
+        }
+
+        if (pawn.Map?.designationManager?.DesignationOn(t, DesignationDefOf.Deconstruct) != null)
         {
             return false;
         }
