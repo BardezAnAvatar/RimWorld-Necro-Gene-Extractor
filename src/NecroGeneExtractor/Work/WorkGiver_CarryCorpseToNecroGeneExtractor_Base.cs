@@ -71,7 +71,7 @@ public abstract class WorkGiver_CarryCorpseToNecroGeneExtractor_Base : WorkGiver
         }
 
         //the actual job
-        if (def.workType != null && !pawn.WorkTypeIsDisabled(def.workType))
+        if (def?.workType != null && !pawn.WorkTypeIsDisabled(def.workType))
         {
             return 
             //var canReserveCorpse = 
