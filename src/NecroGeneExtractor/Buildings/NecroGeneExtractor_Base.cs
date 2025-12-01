@@ -16,8 +16,6 @@ namespace Bardez.Biotech.NecroGeneExtractor.Buildings;
 public abstract class NecroGeneExtractor_Base : GeneExtractorBase
 //Building_Enterable, IStoreSettingsParent, IThingHolderWithDrawnPawn, IThingHolder
 {
-    private const int TICKS_PER_HOUR = 2500;
-
     protected NecroGeneExtractorSettings NecroSettings => NecroGeneExtractorMod.Settings;
 
     protected abstract TierSettings TierSettings { get; }
