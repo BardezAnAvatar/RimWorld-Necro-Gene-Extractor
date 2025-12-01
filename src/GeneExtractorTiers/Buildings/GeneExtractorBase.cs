@@ -34,7 +34,7 @@ public abstract class GeneExtractorBase : Building_Enterable, IThingHolderWithDr
 
     protected virtual float OverchargePowerFactor => 4f;
 
-    protected virtual int OverchargeSpeedFactor => 2;
+    protected virtual float OverchargeSpeedFactor => 2;
 
 
     // Settings
@@ -67,11 +67,11 @@ public abstract class GeneExtractorBase : Building_Enterable, IThingHolderWithDr
 
     protected bool OverchargeActive = false;
 
-    public virtual int ExtractionTimeInTicks => (int)(Settings.extractionHours * GenDate.TicksPerHour / SpeedMultiplier);
+    public virtual float ExtractionTimeInTicks => (Settings.extractionHours * GenDate.TicksPerHour / SpeedMultiplier);
 
 
     // Work
-    protected int TicksRemaining = 0;
+    protected float TicksRemaining = 0;
     protected int ProgressBarTicks = 0;
 
 
@@ -626,7 +626,7 @@ public abstract class GeneExtractorBase : Building_Enterable, IThingHolderWithDr
         else
             sustainerWorking.Maintain();
 
-        // For whatever reason the progress bar yeets itself after awhile, so we'll just recreate it every 100000 ticks
+        // For whatever reason the progress bar yeets itself after awhile, so we'll just recreate it every 10000 ticks
         if (ProgressBarTicks > 10000)
         {
             ClearProgressBar();
@@ -637,13 +637,9 @@ public abstract class GeneExtractorBase : Building_Enterable, IThingHolderWithDr
 
         progressBar.EffectTick(new TargetInfo(Position + IntVec3.North.RotatedBy(Rotation), Map), TargetInfo.Invalid);
         var mote = ((SubEffecter_ProgressBar)progressBar.children[0]).mote;
-        mote.progress = 1f - ((float)TicksRemaining / ExtractionTimeInTicks);
+        mote.progress = 1f - (TicksRemaining / ExtractionTimeInTicks);
         mote.offsetZ = ProgressBarOffsetZ;
         mote.solidTimeOverride = ExtractionTimeInTicks;
         ProgressBarTicks++;
-        //if (mote != null)
-        //{
-
-        //}
     }
 }
