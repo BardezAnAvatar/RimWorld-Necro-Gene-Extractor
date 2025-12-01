@@ -146,7 +146,7 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
 
     protected virtual RotStage TargetCorpseRotStage => selectedCorpse.GetRotStage();
 
-    public override int ExtractionTimeInTicks
+    public override float ExtractionTimeInTicks
     {
         get
         {
@@ -160,7 +160,7 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
 
             var hours = NecroSettings.CorpseFresh.CostTime * corpseMultiplier * TierSettings.CostMultiplierTime;
 
-            return Convert.ToInt32(hours) * GenDate.TicksPerHour;
+            return hours * GenDate.TicksPerHour;
         }
     }
 
