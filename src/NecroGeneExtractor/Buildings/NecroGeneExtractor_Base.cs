@@ -464,11 +464,11 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
     {
         foreach (var thing in innerContainer)
         {
-            if (thing is Corpse c)
+            if (thing is Corpse corpse)
             {
-                var comp = c.GetComp<CompRottable>();
+                var comp = corpse.GetComp<CompRottable>();
                 comp.disabled = false;
-                innerContainer.TryDrop(c, InteractionCell, Map, ThingPlaceMode.Near, 1, out var _);
+                innerContainer.TryDrop(corpse, InteractionCell, Map, ThingPlaceMode.Near, 1, out var _);
                 break;
             }
             //else if Neutroamine, don't drop it. Keep it in, for the vat is a vampire of Neutroamine.
