@@ -16,8 +16,6 @@ namespace Bardez.Biotech.NecroGeneExtractor.Buildings;
 public abstract class NecroGeneExtractor_Base : GeneExtractorBase
 //Building_Enterable, IStoreSettingsParent, IThingHolderWithDrawnPawn, IThingHolder
 {
-    private const int TICKS_PER_HOUR = 2500;
-
     protected NecroGeneExtractorSettings NecroSettings => NecroGeneExtractorMod.Settings;
 
     protected abstract TierSettings TierSettings { get; }
@@ -89,7 +87,7 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
             if (starvationTicks > 0)
             {
                 //presume that 4 hours is starvation period
-                starvation = starvationTicks / (TICKS_PER_HOUR * 4f);
+                starvation = starvationTicks / (GenDate.TicksPerHour * 4f);
             }
 
             return starvation;
@@ -113,6 +111,9 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
             return -0.1f;
         }
     }
+
+    protected override float OverchargeSpeedFactor 
+        => 1f / TierSettings.CostMultiplierOverdriveTime; //it's a % of time multiplier
 
     public float NeutroConsumedPerHour
     {
@@ -145,25 +146,21 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
 
     protected virtual RotStage TargetCorpseRotStage => selectedCorpse.GetRotStage();
 
-    public override int ExtractionTimeInTicks
+    public override float ExtractionTimeInTicks
     {
         get
         {
             var corpseType = TargetCorpseRotStage;
-            var multiplier = corpseType switch
+            var corpseMultiplier = corpseType switch
             {
                 RotStage.Rotting => NecroSettings.CorpseRotting.CostMultiplierTime,
                 RotStage.Dessicated => NecroSettings.CorpseDessicated.CostMultiplierTime,
                 RotStage.Fresh or _ => 1f,
             };
 
-            var hours = NecroSettings.CorpseFresh.CostTime * multiplier * TierSettings.CostMultiplierTime;
-            if (OverchargeActive)
-            {
-                hours /= TierSettings.CostMultiplierOverdriveTime;
-            }
+            var hours = NecroSettings.CorpseFresh.CostTime * corpseMultiplier * TierSettings.CostMultiplierTime;
 
-            return Convert.ToInt32(hours) * TICKS_PER_HOUR;
+            return hours * GenDate.TicksPerHour;
         }
     }
 
@@ -393,7 +390,7 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
     {
         //how much - per hour * multiplier / 1 hour of ticks
         var value = NeutroamineStored;
-        var consumedPerTick = (NeutroConsumedPerHour / TICKS_PER_HOUR);
+        var consumedPerTick = (NeutroConsumedPerHour / GenDate.TicksPerHour);
         var clamped = Mathf.Clamp(consumedPerTick, 0f, 2.1474836E+09f); //yuge
         neutroaminePartiallyConsumed += clamped;
 
