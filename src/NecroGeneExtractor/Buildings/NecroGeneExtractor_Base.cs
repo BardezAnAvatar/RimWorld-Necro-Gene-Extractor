@@ -148,14 +148,14 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
         get
         {
             var corpseType = TargetCorpseRotStage;
-            var multiplier = corpseType switch
+            var corpseMultiplier = corpseType switch
             {
                 RotStage.Rotting => NecroSettings.CorpseRotting.CostMultiplierTime,
                 RotStage.Dessicated => NecroSettings.CorpseDessicated.CostMultiplierTime,
                 RotStage.Fresh or _ => 1f,
             };
 
-            var hours = NecroSettings.CorpseFresh.CostTime * multiplier * TierSettings.CostMultiplierTime;
+            var hours = NecroSettings.CorpseFresh.CostTime * corpseMultiplier * TierSettings.CostMultiplierTime;
             if (OverchargeActive)
             {
                 hours /= TierSettings.CostMultiplierOverdriveTime;
