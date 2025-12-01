@@ -468,9 +468,11 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
             {
                 var comp = c.GetComp<CompRottable>();
                 comp.disabled = false;
+                innerContainer.TryDrop(c, InteractionCell, Map, ThingPlaceMode.Near, 1, out var _);
+                break;
             }
+            //else if Neutroamine, don't drop it. Keep it in, for the vat is a vampire of Neutroamine.
         }
-        base.DropContents();
     }
 
 
