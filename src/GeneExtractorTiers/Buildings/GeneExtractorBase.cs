@@ -34,9 +34,9 @@ public abstract class GeneExtractorBase : Building_Enterable, IThingHolderWithDr
 
     protected const float WorkingPowerUsageFactor = 1f;
 
-    protected const float OverchargePowerFactor = 4f;
+    protected virtual float OverchargePowerFactor => 4f;
 
-    protected const int OverchargeSpeedFactor = 2;
+    protected virtual int OverchargeSpeedFactor => 2;
 
 
     // Settings
