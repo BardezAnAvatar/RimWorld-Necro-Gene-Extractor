@@ -33,6 +33,7 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
     }
 
     private float neutroaminePartiallyConsumed;
+    private float neutroamineStored;
     private int starvationTicks;
     private Corpse containedCorpse;
     private Corpse selectedCorpse;
@@ -47,36 +48,9 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
 
     protected override void UnsetTarget() => selectedCorpse = null;
 
-    public float NeutroamineStored
-    {
-        get
-        {
-            float num = 0;
-            for (int i = 0; i < innerContainer.Count; i++)
-            {
-                Thing thing = innerContainer[i];
-                if (thing.def == NecroGeneExtractor_DefsOf.Resources.Neutroamine)
-                {
-                    num += thing.stackCount;
-                }
-            }
+    public float NeutroamineStored => neutroamineStored;
 
-            return num;
-        }
-    }
-
-    public float NeutroamineNeeded
-    {
-        get
-        {
-            if (selectedCorpse == null)
-            {
-                return 0f;
-            }
-
-            return 50f - NeutroamineStored;
-        }
-    }
+    public float NeutroamineNeeded => 50f - NeutroamineStored;
 
     public float NeutroamineStarvationSeverity
     {
@@ -235,68 +209,10 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
         }
     }
 
-    private void TryAbsorbNeutroamine()
-    {
-        for (int i = 0; i < innerContainer.Count; i++)
-        {
-            if (innerContainer[i].def == NecroGeneExtractor_DefsOf.Resources.Neutroamine)
-            {
-                neutroaminePartiallyConsumed -= 1;
-                innerContainer[i].SplitOff(1).Destroy();
-                break;
-            }
-        }
-    }
-
     public void TryAddNeutroamine(int count)
     {
         //how many stacks are we adding?
-        var fullStacks = count / NecroGeneExtractor_DefsOf.Resources.Neutroamine.stackLimit;
-        var remainder = count % NecroGeneExtractor_DefsOf.Resources.Neutroamine.stackLimit;
-
-        //see if we can combine with any existing stacks inside
-        if (remainder > 0)
-        {
-            var partialIndex = -1;
-
-            for (int i = 0; i < innerContainer.Count; i++)
-            {
-                var thing = innerContainer[i];
-
-                if (thing.def == NecroGeneExtractor_DefsOf.Resources.Neutroamine
-                    && (thing.stackCount + remainder) < NecroGeneExtractor_DefsOf.Resources.Neutroamine.stackLimit)
-                {
-                    partialIndex = i;
-                    break;
-                }
-            }
-
-            //add remainder
-            if (partialIndex > -1)
-            {
-                innerContainer[partialIndex].stackCount += remainder;
-            }
-            else
-            {
-                var neutro = new Thing
-                {
-                    def = NecroGeneExtractor_DefsOf.Resources.Neutroamine,
-                    stackCount = remainder,
-                };
-                innerContainer.TryAdd(neutro);
-            }
-        }
-
-        //add in full stacks
-        for (int i = 0; i < fullStacks; i++)
-        {
-            var neutro = new Thing
-            {
-                def = NecroGeneExtractor_DefsOf.Resources.Neutroamine,
-                stackCount = NecroGeneExtractor_DefsOf.Resources.Neutroamine.stackLimit,
-            };
-            innerContainer.TryAdd(neutro);
-        }
+        neutroamineStored += count;
     }
 
 
@@ -406,7 +322,7 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
         //we have exceeded a single unit; consume it.
         if (neutroaminePartiallyConsumed > 0f)
         {
-            TryAbsorbNeutroamine();
+            neutroamineStored -= 1;
         }
     }
 
