@@ -69,7 +69,7 @@ public abstract class GeneExtractorBase : Building_Enterable, IThingHolderWithDr
 
     protected bool OverchargeActive = false;
 
-    public virtual int ExtractionTimeInTicks => (int)(Settings.extractionHours * TICKS_PER_HOUR / SpeedMultiplier) / (OverchargeActive ? OverchargeSpeedFactor : 1);
+    public virtual int ExtractionTimeInTicks => (int)(Settings.extractionHours * TICKS_PER_HOUR / SpeedMultiplier);
 
 
     // Work
@@ -310,13 +310,11 @@ public abstract class GeneExtractorBase : Building_Enterable, IThingHolderWithDr
     protected virtual void ActivateOverdrive()
     {
         OverchargeActive = true;
-        TicksRemaining /= OverchargeSpeedFactor;
     }
 
     protected virtual void DeactivateOverdrive()
     {
         OverchargeActive = false;
-        TicksRemaining *= OverchargeSpeedFactor;
     }
 
     protected virtual void SetTargetGene(GeneDef gene)
@@ -605,9 +603,15 @@ public abstract class GeneExtractorBase : Building_Enterable, IThingHolderWithDr
         if (Working && PowerTraderComp.PowerOn)
         {
             Tick_Effects();
-            if (PowerOn) TicksRemaining--;
+            if (PowerOn)
+            {
+                TicksRemaining -= OverchargeActive ? OverchargeSpeedFactor : 1;
+            }
 
-            if (TicksRemaining <= 0) Finish();
+            if (TicksRemaining <= 0)
+            {
+                Finish();
+            }
         }
         else if (progressBar != null)
         {
