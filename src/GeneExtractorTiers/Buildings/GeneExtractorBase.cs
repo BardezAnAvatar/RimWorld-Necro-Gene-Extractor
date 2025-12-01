@@ -159,7 +159,7 @@ public abstract class GeneExtractorBase : Building_Enterable, IThingHolderWithDr
         OnStop();
     }
 
-    protected virtual void DropContents()
+    protected virtual void DropContents(bool minifying = false)
     {
         innerContainer.TryDropAll(def.hasInteractionCell ? InteractionCell : Position, Map, ThingPlaceMode.Near);
     }
@@ -180,9 +180,9 @@ public abstract class GeneExtractorBase : Building_Enterable, IThingHolderWithDr
         selectedPawn.Kill(null, firstHediffOfDef);
     }
 
-    protected virtual void OnStop()
+    protected virtual void OnStop(bool minifying = false)
     {
-        DropContents();
+        DropContents(minifying);
         UnsetTarget();
         ResetStartTick();
         StopSustainer();
@@ -197,7 +197,7 @@ public abstract class GeneExtractorBase : Building_Enterable, IThingHolderWithDr
 
     public override void DeSpawn(DestroyMode mode = DestroyMode.Vanish)
     {
-        OnStop();
+        OnStop(true);
         base.DeSpawn(mode);
     }
 

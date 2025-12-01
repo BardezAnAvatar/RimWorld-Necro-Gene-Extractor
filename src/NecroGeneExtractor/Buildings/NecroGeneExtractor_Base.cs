@@ -416,9 +416,9 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
 
 
     // Operations
-    protected override void OnStop()
+    protected override void OnStop(bool minifying = false)
     {
-        base.OnStop();
+        base.OnStop(minifying);
         neutroaminePartiallyConsumed = 0f;
         containedCorpse = null;
     }
@@ -460,17 +460,28 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
         }
     }
 
-    protected override void DropContents()
+    protected override void DropContents(bool minifying = false)
     {
         foreach (var thing in innerContainer)
         {
-            if (thing is Corpse c)
+            if (thing is Corpse corpse)
             {
-                var comp = c.GetComp<CompRottable>();
+                var comp = corpse.GetComp<CompRottable>();
                 comp.disabled = false;
+
+                if (!minifying)
+                {
+                    innerContainer.TryDrop(corpse, InteractionCell, Map, ThingPlaceMode.Near, 1, out var _);
+                    break;
+                }
             }
+            //else if Neutroamine, don't drop it (unless minifying). Keep it in, for the vat is a vampire of Neutroamine.
         }
-        base.DropContents();
+
+        if (minifying)
+        {
+            base.DropContents(minifying);
+        }
     }
 
 
