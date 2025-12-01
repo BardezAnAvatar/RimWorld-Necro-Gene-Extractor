@@ -32,8 +32,6 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
         }
     }
 
-    private float neutroaminePartiallyConsumed;
-    private float neutroamineStored;
     private int starvationTicks;
     private Corpse containedCorpse;
     private Corpse selectedCorpse;
@@ -48,9 +46,9 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
 
     protected override void UnsetTarget() => selectedCorpse = null;
 
-    public float NeutroamineStored => neutroamineStored;
+    public float NeutroamineStored => GetComp<CompRefuelable>().Fuel;
 
-    public float NeutroamineNeeded => 50f - NeutroamineStored;
+    public float NeutroamineNeeded => GetComp<CompRefuelable>().Props.fuelCapacity - NeutroamineStored;
 
     public float NeutroamineStarvationSeverity
     {
@@ -138,6 +136,12 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
         }
     }
 
+    public NecroGeneExtractor_Base()
+    {
+        var props = GetComp<CompRefuelable>().Props;
+        props.fuelConsumptionRate = NeutroConsumedPerHour / GenDate.TicksPerHour;
+    }
+
 
 
     //Accept Pawn
@@ -212,7 +216,7 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
     public void TryAddNeutroamine(int count)
     {
         //how many stacks are we adding?
-        neutroamineStored += count;
+        GetComp<CompRefuelable>().Refuel(count);
     }
 
 
@@ -305,10 +309,12 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
     protected override void Tick_ConsumeResources()
     {
         //how much - per hour * multiplier / 1 hour of ticks
-        var value = NeutroamineStored;
         var consumedPerTick = (NeutroConsumedPerHour / GenDate.TicksPerHour);
         var clamped = Mathf.Clamp(consumedPerTick, 0f, 2.1474836E+09f); //yuge
-        neutroaminePartiallyConsumed += clamped;
+
+        //TEMP:
+        Log.Message($"[Necro Gene Extraction Tiers] (clamped) fuel consumption on tick: {clamped}");
+
 
         if (NeutroamineStored <= 0f)
         {
@@ -319,11 +325,8 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
             starvationTicks--;
         }
 
-        //we have exceeded a single unit; consume it.
-        if (neutroaminePartiallyConsumed > 0f)
-        {
-            neutroamineStored -= 1;
-        }
+        var comp = GetComp<CompRefuelable>();
+        comp.ConsumeFuel(clamped);
     }
 
 
@@ -332,7 +335,6 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
     protected override void OnStop(bool minifying = false)
     {
         base.OnStop(minifying);
-        neutroaminePartiallyConsumed = 0f;
         containedCorpse = null;
     }
 
@@ -403,7 +405,6 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
     public override void ExposeData()
     {
         base.ExposeData();
-        Scribe_Values.Look(ref neutroaminePartiallyConsumed, nameof(neutroaminePartiallyConsumed), 0f);
         Scribe_Values.Look(ref starvationTicks, nameof(starvationTicks), -1);
         Scribe_References.Look(ref selectedCorpse, nameof(selectedCorpse));
         Scribe_References.Look(ref containedCorpse, nameof(containedCorpse));
