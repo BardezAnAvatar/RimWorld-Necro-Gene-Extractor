@@ -160,7 +160,7 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
             var hours = NecroSettings.CorpseFresh.CostTime * multiplier * TierSettings.CostMultiplierTime;
             if (OverchargeActive)
             {
-                hours *= TierSettings.CostMultiplierOverdriveTime;
+                hours /= TierSettings.CostMultiplierOverdriveTime;
             }
 
             return Convert.ToInt32(hours) * TICKS_PER_HOUR;
