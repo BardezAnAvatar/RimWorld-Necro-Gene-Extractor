@@ -87,7 +87,7 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
             if (starvationTicks > 0)
             {
                 //presume that 4 hours is starvation period
-                starvation = starvationTicks / (TICKS_PER_HOUR * 4f);
+                starvation = starvationTicks / (GenDate.TicksPerHour * 4f);
             }
 
             return starvation;
@@ -161,7 +161,7 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
                 hours /= TierSettings.CostMultiplierOverdriveTime;
             }
 
-            return Convert.ToInt32(hours) * TICKS_PER_HOUR;
+            return Convert.ToInt32(hours) * GenDate.TicksPerHour;
         }
     }
 
@@ -391,7 +391,7 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
     {
         //how much - per hour * multiplier / 1 hour of ticks
         var value = NeutroamineStored;
-        var consumedPerTick = (NeutroConsumedPerHour / TICKS_PER_HOUR);
+        var consumedPerTick = (NeutroConsumedPerHour / GenDate.TicksPerHour);
         var clamped = Mathf.Clamp(consumedPerTick, 0f, 2.1474836E+09f); //yuge
         neutroaminePartiallyConsumed += clamped;
 

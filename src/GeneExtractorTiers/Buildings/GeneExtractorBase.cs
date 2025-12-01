@@ -26,8 +26,6 @@ public abstract class GeneExtractorBase : Building_Enterable, IThingHolderWithDr
     public PawnPosture HeldPawnPosture => PawnPosture.LayingOnGroundFaceUp;
     #endregion
 
-    protected const int TICKS_PER_HOUR = 2500;
-
     public virtual bool TargetSelected => selectedPawn != null;
 
     public virtual bool ContainsTarget => innerContainer.Contains(selectedPawn);
@@ -69,7 +67,7 @@ public abstract class GeneExtractorBase : Building_Enterable, IThingHolderWithDr
 
     protected bool OverchargeActive = false;
 
-    public virtual int ExtractionTimeInTicks => (int)(Settings.extractionHours * TICKS_PER_HOUR / SpeedMultiplier);
+    public virtual int ExtractionTimeInTicks => (int)(Settings.extractionHours * GenDate.TicksPerHour / SpeedMultiplier);
 
 
     // Work
@@ -435,7 +433,7 @@ public abstract class GeneExtractorBase : Building_Enterable, IThingHolderWithDr
     {
         stringBuilder
             .AppendLineIfNotEmpty()
-            .Append($"{"TimeLeft".Translate().CapitalizeFirst()}: {(TicksRemaining / TICKS_PER_HOUR) + 1} {"HoursLower".Translate()}");
+            .Append($"{"TimeLeft".Translate().CapitalizeFirst()}: {(TicksRemaining / GenDate.TicksPerHour ) + 1} {"HoursLower".Translate()}");
     }
 
     protected virtual void InspectStringAddPawn(StringBuilder stringBuilder)
