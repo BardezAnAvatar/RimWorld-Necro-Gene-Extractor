@@ -112,6 +112,9 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
         }
     }
 
+    protected override float OverchargeSpeedFactor 
+        => 1f / TierSettings.CostMultiplierOverdriveTime; //it's a % of time multiplier
+
     public float NeutroConsumedPerHour
     {
         get
@@ -156,10 +159,6 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
             };
 
             var hours = NecroSettings.CorpseFresh.CostTime * corpseMultiplier * TierSettings.CostMultiplierTime;
-            if (OverchargeActive)
-            {
-                hours /= TierSettings.CostMultiplierOverdriveTime;
-            }
 
             return Convert.ToInt32(hours) * GenDate.TicksPerHour;
         }
