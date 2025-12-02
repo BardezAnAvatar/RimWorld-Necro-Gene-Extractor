@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Bardez.Biotech.NecroGeneExtractor.Defs;
+using Bardez.Biotech.NecroGeneExtractor.Comps;
 using Bardez.Biotech.NecroGeneExtractor.Gui;
 using Bardez.Biotech.NecroGeneExtractor.Settings;
 using Bardez.Biotech.NecroGeneExtractor.Settings.Tiers;
@@ -16,7 +15,16 @@ namespace Bardez.Biotech.NecroGeneExtractor.Buildings;
 public abstract class NecroGeneExtractor_Base : GeneExtractorBase
 //Building_Enterable, IStoreSettingsParent, IThingHolderWithDrawnPawn, IThingHolder
 {
+    private int starvationTicks;
+    private Corpse containedCorpse;
+    private Corpse selectedCorpse;
+
+    // Unsaved
+    [Unsaved(false)] private CompRefuelableNecroVat cachedCompRefuelable;
+
     protected NecroGeneExtractorSettings NecroSettings => NecroGeneExtractorMod.Settings;
+
+    protected CompRefuelableNecroVat Refuelable => cachedCompRefuelable ??= this.TryGetComp<CompRefuelableNecroVat>();
 
     protected abstract TierSettings TierSettings { get; }
 
@@ -32,11 +40,6 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
         }
     }
 
-    private float neutroaminePartiallyConsumed;
-    private int starvationTicks;
-    private Corpse containedCorpse;
-    private Corpse selectedCorpse;
-
     public Corpse Corpse => this.containedCorpse;
 
     public Corpse TargetedCorpse => this.selectedCorpse;
@@ -47,36 +50,9 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
 
     protected override void UnsetTarget() => selectedCorpse = null;
 
-    public float NeutroamineStored
-    {
-        get
-        {
-            float num = 0;
-            for (int i = 0; i < innerContainer.Count; i++)
-            {
-                Thing thing = innerContainer[i];
-                if (thing.def == NecroGeneExtractor_DefsOf.Resources.Neutroamine)
-                {
-                    num += thing.stackCount;
-                }
-            }
+    public float NeutroamineStored => Refuelable.Fuel;
 
-            return num;
-        }
-    }
-
-    public float NeutroamineNeeded
-    {
-        get
-        {
-            if (selectedCorpse == null)
-            {
-                return 0f;
-            }
-
-            return 50f - NeutroamineStored;
-        }
-    }
+    public float NeutroamineNeeded => Refuelable.GetFuelCountToFullyRefuel();
 
     public float NeutroamineStarvationSeverity
     {
@@ -98,7 +74,7 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
     {
         get
         {
-            if (!base.Working)
+            if (!Working)
             {
                 return 0f;
             }
@@ -112,8 +88,7 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
         }
     }
 
-    protected override float OverchargeSpeedFactor 
-        => 1f / TierSettings.CostMultiplierOverdriveTime; //it's a % of time multiplier
+    protected override float OverchargeSpeedFactor => TierSettings.CostMultiplierOverdriveTime;
 
     public float NeutroConsumedPerHour
     {
@@ -144,6 +119,9 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
         }
     }
 
+    //how much = per hour / 1 hour of ticks
+    public float NeutroConsumedPerTick => (NeutroConsumedPerHour / GenDate.TicksPerHour);
+
     protected virtual RotStage TargetCorpseRotStage => selectedCorpse.GetRotStage();
 
     public override float ExtractionTimeInTicks
@@ -166,7 +144,7 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
 
 
 
-    //Accept Pawn
+    // Accept Pawn
     public override AcceptanceReport CanAcceptPawn(Pawn pawn) => false;
 
     public AcceptanceReport CanAcceptCorpse(Corpse corpse)
@@ -225,8 +203,7 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
             {
                 var comp = corpse.GetComp<CompRottable>();
                 comp.disabled = true;
-                SetStartTick();
-                TicksRemaining = ExtractionTimeInTicks;
+                StartNewCycle();
             }
             if (deselect)
             {
@@ -235,68 +212,25 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
         }
     }
 
-    private void TryAbsorbNeutroamine()
+
+
+    // Fuel
+    protected void UpdateConsumptionRate()
     {
-        for (int i = 0; i < innerContainer.Count; i++)
-        {
-            if (innerContainer[i].def == NecroGeneExtractor_DefsOf.Resources.Neutroamine)
-            {
-                neutroaminePartiallyConsumed -= 1;
-                innerContainer[i].SplitOff(1).Destroy();
-                break;
-            }
-        }
+        Refuelable.Props.consumeFuelOnlyWhenUsed = false;
+        Refuelable.Props.fuelConsumptionRate = NeutroConsumedPerTick * GenDate.TicksPerDay;
+    }
+
+    protected void DisableConsumptionRate()
+    {
+        Refuelable.Props.consumeFuelOnlyWhenUsed = true;
+        Refuelable.Props.fuelConsumptionRate = 0;
     }
 
     public void TryAddNeutroamine(int count)
     {
         //how many stacks are we adding?
-        var fullStacks = count / NecroGeneExtractor_DefsOf.Resources.Neutroamine.stackLimit;
-        var remainder = count % NecroGeneExtractor_DefsOf.Resources.Neutroamine.stackLimit;
-
-        //see if we can combine with any existing stacks inside
-        if (remainder > 0)
-        {
-            var partialIndex = -1;
-
-            for (int i = 0; i < innerContainer.Count; i++)
-            {
-                var thing = innerContainer[i];
-
-                if (thing.def == NecroGeneExtractor_DefsOf.Resources.Neutroamine
-                    && (thing.stackCount + remainder) < NecroGeneExtractor_DefsOf.Resources.Neutroamine.stackLimit)
-                {
-                    partialIndex = i;
-                    break;
-                }
-            }
-
-            //add remainder
-            if (partialIndex > -1)
-            {
-                innerContainer[partialIndex].stackCount += remainder;
-            }
-            else
-            {
-                var neutro = new Thing
-                {
-                    def = NecroGeneExtractor_DefsOf.Resources.Neutroamine,
-                    stackCount = remainder,
-                };
-                innerContainer.TryAdd(neutro);
-            }
-        }
-
-        //add in full stacks
-        for (int i = 0; i < fullStacks; i++)
-        {
-            var neutro = new Thing
-            {
-                def = NecroGeneExtractor_DefsOf.Resources.Neutroamine,
-                stackCount = NecroGeneExtractor_DefsOf.Resources.Neutroamine.stackLimit,
-            };
-            innerContainer.TryAdd(neutro);
-        }
+        Refuelable.Refuel(count);
     }
 
 
@@ -335,6 +269,7 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
         => GizmoHelper.BuildCorpseSelectGizmo(this, Corpse);
 
 
+
     // Inspect String
     protected override void InspectStringAddResourceStarvation(StringBuilder stringBuilder)
     {
@@ -354,13 +289,7 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
 
     protected override void InspectStringAddResourceConsumption(StringBuilder stringBuilder)
     {
-        stringBuilder.AppendLineIfNotEmpty().Append("NGET_Neutroamine".Translate()).Append(": ")
-            .Append(NeutroamineStored.ToStringByStyle(ToStringStyle.FloatMaxOne));
-
-        if (base.Working)
-        {
-            stringBuilder.Append(" (-").Append("PerHour".Translate((NeutroConsumedPerHour).ToString("F2"))).Append(")");
-        }
+        //Handled by CompRefuelable
     }
 
     protected override NamedArgument GetTargetName()
@@ -375,24 +304,13 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
 
 
     // Ticks
-    protected override bool Tick_ResourceStarvation()
+    protected override bool Tick_AbortDueToResourceStarvation()
     {
         if (NeutroamineStarvationSeverity >= 1f)
         {
             Fail();
             return true;
         }
-
-        return false;
-    }
-
-    protected override void Tick_ConsumeResources()
-    {
-        //how much - per hour * multiplier / 1 hour of ticks
-        var value = NeutroamineStored;
-        var consumedPerTick = (NeutroConsumedPerHour / GenDate.TicksPerHour);
-        var clamped = Mathf.Clamp(consumedPerTick, 0f, 2.1474836E+09f); //yuge
-        neutroaminePartiallyConsumed += clamped;
 
         if (NeutroamineStored <= 0f)
         {
@@ -403,20 +321,29 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
             starvationTicks--;
         }
 
-        //we have exceeded a single unit; consume it.
-        if (neutroaminePartiallyConsumed > 0f)
-        {
-            TryAbsorbNeutroamine();
-        }
+        return false;
+    }
+
+    protected override void Tick_ConsumeResources()
+    {
+        UpdateConsumptionRate();
+
+        //Note: consumption is handled in CompRefuelable instead
     }
 
 
 
     // Operations
+    protected override void StartNewCycle()
+    {
+        UpdateConsumptionRate();
+        base.StartNewCycle();
+    }
+
     protected override void OnStop(bool minifying = false)
     {
+        DisableConsumptionRate();
         base.OnStop(minifying);
-        neutroaminePartiallyConsumed = 0f;
         containedCorpse = null;
     }
 
@@ -439,6 +366,9 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
         OnStop();
     }
 
+
+
+    // Pawn
     protected override Pawn GetContainedPawn() => containedCorpse?.InnerPawn;
 
     protected override void SetPawnHediffXenogermReplicating(Pawn containedPawn)
@@ -457,6 +387,9 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
         }
     }
 
+
+
+    // Container
     protected override void DropContents(bool minifying = false)
     {
         foreach (var thing in innerContainer)
@@ -487,7 +420,6 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
     public override void ExposeData()
     {
         base.ExposeData();
-        Scribe_Values.Look(ref neutroaminePartiallyConsumed, nameof(neutroaminePartiallyConsumed), 0f);
         Scribe_Values.Look(ref starvationTicks, nameof(starvationTicks), -1);
         Scribe_References.Look(ref selectedCorpse, nameof(selectedCorpse));
         Scribe_References.Look(ref containedCorpse, nameof(containedCorpse));

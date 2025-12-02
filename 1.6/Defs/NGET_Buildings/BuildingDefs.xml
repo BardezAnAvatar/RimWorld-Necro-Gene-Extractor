@@ -62,6 +62,23 @@
 				<idlePowerDraw>80</idlePowerDraw>
 			</li>
 			<li Class="CompProperties_Flickable" />
+			<li Class="Bardez.Biotech.NecroGeneExtractor.Comps.Properties.CompProperties_RefuelableNecroVat">
+				<fuelFilter>
+					<thingDefs>
+						<li>Neutroamine</li>
+					</thingDefs>
+				</fuelFilter>
+				<fuelCapacity>200.0</fuelCapacity>
+				<fuelLabel>Neutroamine</fuelLabel>
+				<targetFuelLevelConfigurable>true</targetFuelLevelConfigurable>
+				<consumeFuelOnlyWhenUsed>true</consumeFuelOnlyWhenUsed>
+				<initialFuelPercent>0</initialFuelPercent>
+				<autoRefuelPercent>1</autoRefuelPercent>
+				<showFuelGizmo>true</showFuelGizmo>
+				<drawFuelGaugeInMap>false</drawFuelGaugeInMap>
+				<showAllowAutoRefuelToggle>true</showAllowAutoRefuelToggle>
+				<canEjectFuel>true</canEjectFuel>
+			</li>
 		</comps>
 	</ThingDef>
 

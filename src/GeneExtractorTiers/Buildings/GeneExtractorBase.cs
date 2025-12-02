@@ -70,9 +70,13 @@ public abstract class GeneExtractorBase : Building_Enterable, IThingHolderWithDr
     public virtual float ExtractionTimeInTicks => (Settings.extractionHours * GenDate.TicksPerHour / SpeedMultiplier);
 
 
+
     // Work
     protected float TicksRemaining = 0;
     protected int ProgressBarTicks = 0;
+
+    protected virtual float WorkPerTick => OverchargeActive ? OverchargeSpeedFactor : 1;
+
 
 
     // Graphics
@@ -91,6 +95,7 @@ public abstract class GeneExtractorBase : Building_Enterable, IThingHolderWithDr
     }
 
 
+
     // Unsaved
     [Unsaved(false)] private CompPowerTrader cachedPowerComp;
     [Unsaved(false)] private Sustainer sustainerWorking;
@@ -102,6 +107,11 @@ public abstract class GeneExtractorBase : Building_Enterable, IThingHolderWithDr
 
     protected void ResetStartTick() => startTick = -1;
 
+    /// <summary>Set the startTick property</summary>
+    /// <remarks>
+    ///     When this tick >= 0, .Working returns `true`
+    ///     Building_Enterable: public bool Working => startTick >= 0;
+    /// </remarks>
     protected void SetStartTick() => startTick = Find.TickManager.TicksGame;
 
     protected virtual void UnsetTarget() => selectedPawn = null;
@@ -114,6 +124,7 @@ public abstract class GeneExtractorBase : Building_Enterable, IThingHolderWithDr
     protected virtual CompPowerTrader PowerTraderComp => cachedPowerComp ??= this.TryGetComp<CompPowerTrader>();
 
 
+
     // Save Game persistence
     public override void ExposeData()
     {
@@ -122,6 +133,8 @@ public abstract class GeneExtractorBase : Building_Enterable, IThingHolderWithDr
         Scribe_Values.Look(ref OverchargeActive, "overchargeActive", false);
         Scribe_Defs.Look(ref TargetGene, "targetGene");
     }
+
+
 
     // Graphics (Again)
     //NOTE: Why do the pawns not float like the Biosculptor?
@@ -151,6 +164,7 @@ public abstract class GeneExtractorBase : Building_Enterable, IThingHolderWithDr
     protected static Dictionary<Rot4, ThingDef> GlowMotePerRotation;
 
     protected static Dictionary<Rot4, EffecterDef> BubbleEffecterPerRotation;
+
 
 
     // Operation
@@ -322,6 +336,7 @@ public abstract class GeneExtractorBase : Building_Enterable, IThingHolderWithDr
     }
 
 
+
     // Pawn
     protected virtual Pawn GetContainedPawn()
     {
@@ -341,8 +356,7 @@ public abstract class GeneExtractorBase : Building_Enterable, IThingHolderWithDr
 
             if (innerContainer.TryAddOrTransfer(pawn))
             {
-                SetStartTick();
-                TicksRemaining = ExtractionTimeInTicks;
+                StartNewCycle();
             }
             if (deselect)
             {
@@ -350,6 +364,7 @@ public abstract class GeneExtractorBase : Building_Enterable, IThingHolderWithDr
             }
         }
     }
+
 
 
     // Float Menus
@@ -362,6 +377,7 @@ public abstract class GeneExtractorBase : Building_Enterable, IThingHolderWithDr
     {
         FloatMenuHelper.BuildFloatMenuAvailablePawns(Map, CanAcceptPawn, SelectPawn);
     }
+
 
 
     // Gizmos
@@ -428,12 +444,16 @@ public abstract class GeneExtractorBase : Building_Enterable, IThingHolderWithDr
     }
 
 
+
     // Inspect string build-out
     protected virtual void InspectStringAddTime(StringBuilder stringBuilder)
     {
+        var tickTimeRemaining = TicksRemaining / WorkPerTick;
+        var intTicks = Convert.ToInt32(tickTimeRemaining);
+
         stringBuilder
             .AppendLineIfNotEmpty()
-            .Append($"{"TimeLeft".Translate().CapitalizeFirst()}: {(TicksRemaining / GenDate.TicksPerHour ) + 1} {"HoursLower".Translate()}");
+            .Append($"{"NGET_ExtractionTimeRemaining".Translate().CapitalizeFirst()}: {intTicks.ToStringTicksToPeriod()}");
     }
 
     protected virtual void InspectStringAddPawn(StringBuilder stringBuilder)
@@ -456,8 +476,8 @@ public abstract class GeneExtractorBase : Building_Enterable, IThingHolderWithDr
         {
             if (TargetSelected && ContainsTarget)
             {
-                InspectStringAddTime(stringBuilder);
                 InspectStringAddPawn(stringBuilder);
+                InspectStringAddTime(stringBuilder);
             }
 
             InspectStringAddResourceStarvation(stringBuilder);
@@ -501,7 +521,7 @@ public abstract class GeneExtractorBase : Building_Enterable, IThingHolderWithDr
 
         if (Working)
         {
-            if (Tick_ResourceStarvation())
+            if (Tick_AbortDueToResourceStarvation())
                 return;
 
             Tick_HandleSustainer();
@@ -513,7 +533,7 @@ public abstract class GeneExtractorBase : Building_Enterable, IThingHolderWithDr
         Tick_DoWork();
     }
 
-    protected abstract bool Tick_ResourceStarvation();
+    protected abstract bool Tick_AbortDueToResourceStarvation();
 
     protected void Tick_HandleSustainer()
     {
@@ -603,7 +623,7 @@ public abstract class GeneExtractorBase : Building_Enterable, IThingHolderWithDr
             Tick_Effects();
             if (PowerOn)
             {
-                TicksRemaining -= OverchargeActive ? OverchargeSpeedFactor : 1;
+                TicksRemaining -= WorkPerTick;
             }
 
             if (TicksRemaining <= 0)
