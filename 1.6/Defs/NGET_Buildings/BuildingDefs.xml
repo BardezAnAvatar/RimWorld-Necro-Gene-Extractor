@@ -74,7 +74,6 @@
 				<initialFuelPercent>0</initialFuelPercent>
 				<autoRefuelPercent>1</autoRefuelPercent>
 				<showFuelGizmo>true</showFuelGizmo>
-				<drawOutOfFuelOverlay>true</drawOutOfFuelOverlay>
 				<drawFuelGaugeInMap>false</drawFuelGaugeInMap>
 				<showAllowAutoRefuelToggle>true</showAllowAutoRefuelToggle>
 				<canEjectFuel>true</canEjectFuel>
