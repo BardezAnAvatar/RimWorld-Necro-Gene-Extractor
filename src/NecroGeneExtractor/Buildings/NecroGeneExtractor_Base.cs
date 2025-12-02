@@ -217,7 +217,7 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
     protected void UpdateConsumptionRate()
     {
         Refuelable.Props.consumeFuelOnlyWhenUsed = false;
-        Refuelable.Props.fuelConsumptionPerTickInRain = NeutroConsumedPerTick * GenDate.TicksPerDay;
+        Refuelable.Props.fuelConsumptionRate = NeutroConsumedPerTick * GenDate.TicksPerDay;
     }
 
     protected void DisableConsumptionRate()
