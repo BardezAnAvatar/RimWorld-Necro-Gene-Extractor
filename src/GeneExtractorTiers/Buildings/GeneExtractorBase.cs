@@ -620,7 +620,7 @@ public abstract class GeneExtractorBase : Building_Enterable, IThingHolderWithDr
             Tick_Effects();
             if (PowerOn)
             {
-                TicksRemaining -= OverchargeActive ? OverchargeSpeedFactor : 1;
+                TicksRemaining -= WorkPerTick;
             }
 
             if (TicksRemaining <= 0)
