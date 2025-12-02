@@ -314,15 +314,6 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
             return true;
         }
 
-        return false;
-    }
-
-    protected override void Tick_ConsumeResources()
-    {
-        UpdateConsumptionRate();
-
-        //Note: consumption is handled in CompRefuelable instead
-
         if (NeutroamineStored <= 0f)
         {
             starvationTicks++;
@@ -331,6 +322,15 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
         {
             starvationTicks--;
         }
+
+        return false;
+    }
+
+    protected override void Tick_ConsumeResources()
+    {
+        UpdateConsumptionRate();
+
+        //Note: consumption is handled in CompRefuelable instead
     }
 
 
