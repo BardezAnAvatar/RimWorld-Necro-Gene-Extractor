@@ -88,8 +88,7 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
         }
     }
 
-    protected override float OverchargeSpeedFactor 
-        => TierSettings.CostMultiplierOverdriveTime;
+    protected override float OverchargeSpeedFactor => TierSettings.CostMultiplierOverdriveTime;
 
     public float NeutroConsumedPerHour
     {
