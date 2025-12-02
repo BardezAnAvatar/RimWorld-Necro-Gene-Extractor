@@ -118,6 +118,9 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
         }
     }
 
+    //how much = per hour / 1 hour of ticks
+    public float NeutroConsumedPerTick => (NeutroConsumedPerHour / GenDate.TicksPerHour);
+
     protected virtual RotStage TargetCorpseRotStage => selectedCorpse.GetRotStage();
 
     public override float ExtractionTimeInTicks
@@ -303,9 +306,7 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
 
     protected override void Tick_ConsumeResources()
     {
-        //how much - per hour * multiplier / 1 hour of ticks
-        var consumedPerTick = (NeutroConsumedPerHour / GenDate.TicksPerHour);
-        var clamped = Mathf.Clamp(consumedPerTick, 0f, 2.1474836E+09f); //yuge
+        var clamped = Mathf.Clamp(NeutroConsumedPerTick, 0f, 2.1474836E+09f); //yuge
 
         //TEMP:
         Log.Message($"[Necro Gene Extraction Tiers] (clamped) fuel consumption on tick: {clamped}");
