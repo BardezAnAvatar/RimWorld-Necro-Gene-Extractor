@@ -448,9 +448,12 @@ public abstract class GeneExtractorBase : Building_Enterable, IThingHolderWithDr
     // Inspect string build-out
     protected virtual void InspectStringAddTime(StringBuilder stringBuilder)
     {
+        var tickTimeRemaining = TicksRemaining / WorkPerTick;
+        var intTicks = Convert.ToInt32(tickTimeRemaining);
+
         stringBuilder
             .AppendLineIfNotEmpty()
-            .Append($"{"NGET_ExtractionTimeRemaining".Translate().CapitalizeFirst()}: {Convert.ToInt32(TicksRemaining / WorkPerTick).ToStringTicksToPeriod()}");
+            .Append($"{"NGET_ExtractionTimeRemaining".Translate().CapitalizeFirst()}: {intTicks.ToStringTicksToPeriod()}");
     }
 
     protected virtual void InspectStringAddPawn(StringBuilder stringBuilder)
