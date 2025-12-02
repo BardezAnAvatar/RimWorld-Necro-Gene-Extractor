@@ -211,6 +211,21 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
         }
     }
 
+
+
+    //Fuel
+    protected void UpdateConsumptionRate()
+    {
+        Refuelable.Props.consumeFuelOnlyWhenUsed = false;
+        Refuelable.Props.fuelConsumptionPerTickInRain = NeutroConsumedPerTick * GenDate.TicksPerDay;
+    }
+
+    protected void DisableConsumptionRate()
+    {
+        Refuelable.Props.consumeFuelOnlyWhenUsed = true;
+        Refuelable.Props.fuelConsumptionPerTickInRain = 0;
+    }
+
     public void TryAddNeutroamine(int count)
     {
         //how many stacks are we adding?
@@ -306,6 +321,8 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
 
     protected override void Tick_ConsumeResources()
     {
+        UpdateConsumptionRate();
+
         if (NeutroamineStored <= 0f)
         {
             starvationTicks++;
@@ -333,15 +350,13 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
     // Operations
     protected override void StartNewCycle()
     {
-        Refuelable.Props.consumeFuelOnlyWhenUsed = false;
-        Refuelable.Props.fuelConsumptionPerTickInRain = NeutroConsumedPerTick * GenDate.TicksPerDay;
+        UpdateConsumptionRate();
         base.StartNewCycle();
     }
 
     protected override void OnStop(bool minifying = false)
     {
-        Refuelable.Props.consumeFuelOnlyWhenUsed = true;
-        Refuelable.Props.fuelConsumptionPerTickInRain = 0;
+        DisableConsumptionRate();
         base.OnStop(minifying);
         containedCorpse = null;
     }
