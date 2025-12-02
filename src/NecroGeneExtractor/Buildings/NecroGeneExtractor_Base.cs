@@ -141,7 +141,7 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
 
 
 
-    //Accept Pawn
+    // Accept Pawn
     public override AcceptanceReport CanAcceptPawn(Pawn pawn) => false;
 
     public AcceptanceReport CanAcceptCorpse(Corpse corpse)
@@ -211,7 +211,7 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
 
 
 
-    //Fuel
+    // Fuel
     protected void UpdateConsumptionRate()
     {
         Refuelable.Props.consumeFuelOnlyWhenUsed = false;
