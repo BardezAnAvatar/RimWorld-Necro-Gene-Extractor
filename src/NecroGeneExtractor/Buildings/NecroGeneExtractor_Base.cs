@@ -266,6 +266,7 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
         => GizmoHelper.BuildCorpseSelectGizmo(this, Corpse);
 
 
+
     // Inspect String
     protected override void InspectStringAddResourceStarvation(StringBuilder stringBuilder)
     {
@@ -368,6 +369,9 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
         OnStop();
     }
 
+
+
+    // Pawn
     protected override Pawn GetContainedPawn() => containedCorpse?.InnerPawn;
 
     protected override void SetPawnHediffXenogermReplicating(Pawn containedPawn)
@@ -386,6 +390,9 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
         }
     }
 
+
+
+    // Container
     protected override void DropContents(bool minifying = false)
     {
         foreach (var thing in innerContainer)
