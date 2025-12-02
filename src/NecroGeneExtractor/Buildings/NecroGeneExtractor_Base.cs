@@ -227,7 +227,7 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
     public void TryAddNeutroamine(int count)
     {
         //how many stacks are we adding?
-        GetComp<CompRefuelable>().Refuel(count);
+        Refuelable.Refuel(count);
     }
 
 
