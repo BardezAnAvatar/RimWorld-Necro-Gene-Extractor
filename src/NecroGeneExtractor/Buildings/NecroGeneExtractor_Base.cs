@@ -328,8 +328,17 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
 
 
     // Operations
+    protected override void StartNewCycle()
+    {
+        Refuelable.Props.consumeFuelOnlyWhenUsed = false;
+        Refuelable.Props.fuelConsumptionPerTickInRain = NeutroConsumedPerTick * GenDate.TicksPerDay;
+        base.StartNewCycle();
+    }
+
     protected override void OnStop(bool minifying = false)
     {
+        Refuelable.Props.consumeFuelOnlyWhenUsed = true;
+        Refuelable.Props.fuelConsumptionPerTickInRain = 0;
         base.OnStop(minifying);
         containedCorpse = null;
     }
