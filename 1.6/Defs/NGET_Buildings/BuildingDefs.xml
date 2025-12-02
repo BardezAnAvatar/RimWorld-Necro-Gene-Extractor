@@ -62,7 +62,7 @@
 				<idlePowerDraw>80</idlePowerDraw>
 			</li>
 			<li Class="CompProperties_Flickable" />
-			<li Class="CompProperties_Refuelable">
+			<li Class="Bardez.Biotech.NecroGeneExtractor.Comps.Properties.CompProperties_RefuelableNecroVat">
 				<fuelFilter>
 					<thingDefs>
 						<li>Neutroamine</li>
