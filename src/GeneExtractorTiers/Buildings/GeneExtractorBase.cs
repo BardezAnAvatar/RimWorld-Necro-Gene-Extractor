@@ -473,8 +473,8 @@ public abstract class GeneExtractorBase : Building_Enterable, IThingHolderWithDr
         {
             if (TargetSelected && ContainsTarget)
             {
-                InspectStringAddTime(stringBuilder);
                 InspectStringAddPawn(stringBuilder);
+                InspectStringAddTime(stringBuilder);
             }
 
             InspectStringAddResourceStarvation(stringBuilder);
