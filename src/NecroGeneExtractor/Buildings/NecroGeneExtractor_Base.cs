@@ -289,13 +289,7 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
 
     protected override void InspectStringAddResourceConsumption(StringBuilder stringBuilder)
     {
-        stringBuilder.AppendLineIfNotEmpty().Append("NGET_Neutroamine".Translate()).Append(": ")
-            .Append(NeutroamineStored.ToStringByStyle(ToStringStyle.FloatMaxOne));
-
-        if (Working)
-        {
-            stringBuilder.Append(" (-").Append("PerHour".Translate((NeutroConsumedPerHour).ToString("F2"))).Append(")");
-        }
+        //Handled by CompRefuelable
     }
 
     protected override NamedArgument GetTargetName()
