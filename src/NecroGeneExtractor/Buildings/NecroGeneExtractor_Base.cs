@@ -16,6 +16,10 @@ namespace Bardez.Biotech.NecroGeneExtractor.Buildings;
 public abstract class NecroGeneExtractor_Base : GeneExtractorBase
 //Building_Enterable, IStoreSettingsParent, IThingHolderWithDrawnPawn, IThingHolder
 {
+    private int starvationTicks;
+    private Corpse containedCorpse;
+    private Corpse selectedCorpse;
+
     protected NecroGeneExtractorSettings NecroSettings => NecroGeneExtractorMod.Settings;
 
     protected abstract TierSettings TierSettings { get; }
@@ -31,10 +35,6 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
             return cachedTopGraphic;
         }
     }
-
-    private int starvationTicks;
-    private Corpse containedCorpse;
-    private Corpse selectedCorpse;
 
     public Corpse Corpse => this.containedCorpse;
 
