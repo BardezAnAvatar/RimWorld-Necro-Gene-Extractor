@@ -48,7 +48,7 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
 
     public float NeutroamineStored => GetComp<CompRefuelable>().Fuel;
 
-    public float NeutroamineNeeded => GetComp<CompRefuelable>().Props.fuelCapacity - NeutroamineStored;
+    public float NeutroamineNeeded => GetComp<CompRefuelable>().GetFuelCountToFullyRefuel();
 
     public float NeutroamineStarvationSeverity
     {
