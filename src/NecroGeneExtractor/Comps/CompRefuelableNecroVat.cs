@@ -12,7 +12,7 @@ public class CompRefuelableNecroVat : CompRefuelable
         string text = Props.FuelLabel + ": " + Fuel.ToStringDecimalIfSmall() + " / ";
         if (Props.targetFuelLevelConfigurable)
         {
-            text += "ConfiguredTargetFuelLevel".Translate(TargetFuelLevel.ToStringDecimalIfSmall())
+            text += TargetFuelLevel.ToStringDecimalIfSmall()
                 + " [" + Props.fuelCapacity.ToStringDecimalIfSmall() + "]";
         }
         else
