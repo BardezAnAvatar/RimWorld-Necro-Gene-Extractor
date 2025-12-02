@@ -15,6 +15,7 @@
 	<NGET_FlatValue>{0}</NGET_FlatValue>
 	<NGET_MultiplierValue>{0}×</NGET_MultiplierValue>
 	<NGET_RemainingFuelTime>({0} left)</NGET_RemainingFuelTime>
+	<NGET_ExtractionTimeRemaining>gene extraction time left</NGET_ExtractionTimeRemaining>
 
 	<NGET_WorkHours>Hours of work:</NGET_WorkHours>
 	<NGET_WorkHoursTooltip>The amount of in-game hours it should take to extract one genepack from a fresh corpse</NGET_WorkHoursTooltip>

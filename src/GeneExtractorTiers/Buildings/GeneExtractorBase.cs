@@ -450,7 +450,7 @@ public abstract class GeneExtractorBase : Building_Enterable, IThingHolderWithDr
     {
         stringBuilder
             .AppendLineIfNotEmpty()
-            .Append($"{"TimeLeft".Translate().CapitalizeFirst()}: {Convert.ToInt32(TicksRemaining / WorkPerTick).ToStringTicksToPeriod()}");
+            .Append($"{"NGET_ExtractionTimeRemaining".Translate().CapitalizeFirst()}: {Convert.ToInt32(TicksRemaining / WorkPerTick).ToStringTicksToPeriod()}");
     }
 
     protected virtual void InspectStringAddPawn(StringBuilder stringBuilder)
