@@ -293,7 +293,7 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
 
 
     // Ticks
-    protected override bool Tick_ResourceStarvation()
+    protected override bool Tick_AbortDueToResourceStarvation()
     {
         if (NeutroamineStarvationSeverity >= 1f)
         {

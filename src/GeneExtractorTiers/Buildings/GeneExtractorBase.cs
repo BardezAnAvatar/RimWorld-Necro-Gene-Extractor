@@ -500,7 +500,7 @@ public abstract class GeneExtractorBase : Building_Enterable, IThingHolderWithDr
 
         if (Working)
         {
-            if (Tick_ResourceStarvation())
+            if (Tick_AbortDueToResourceStarvation())
                 return;
 
             Tick_HandleSustainer();
@@ -512,7 +512,7 @@ public abstract class GeneExtractorBase : Building_Enterable, IThingHolderWithDr
         Tick_DoWork();
     }
 
-    protected abstract bool Tick_ResourceStarvation();
+    protected abstract bool Tick_AbortDueToResourceStarvation();
 
     protected void Tick_HandleSustainer()
     {
