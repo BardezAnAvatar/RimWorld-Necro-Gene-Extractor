@@ -19,9 +19,9 @@ public static class FloatMenuHelper
             GeneHelper.AddBaselinerGenes(allPawnGenes);
         }
 
+        var existingGenes = GeneHelper.GetAllGenesOnMap(map);
         foreach (var gene in allPawnGenes)
         {
-            var existingGenes = GeneHelper.GetAllGenesOnMap(map);
             if (existingGenes.ContainsKey(gene) && existingGenes[gene] == GeneState.SinglePack)
             {
                 continue;
