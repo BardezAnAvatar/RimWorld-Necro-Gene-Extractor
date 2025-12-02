@@ -18,6 +18,9 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
     private Corpse containedCorpse;
     private Corpse selectedCorpse;
 
+    // Unsaved
+    [Unsaved(false)] private CompRefuelable cachedCompRefuelable;
+
     protected NecroGeneExtractorSettings NecroSettings => NecroGeneExtractorMod.Settings;
 
     protected abstract TierSettings TierSettings { get; }
@@ -44,7 +47,7 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
 
     protected override void UnsetTarget() => selectedCorpse = null;
 
-    protected CompRefuelable Refuelable => GetComp<CompRefuelable>();
+    protected CompRefuelable Refuelable => cachedCompRefuelable ??= this.TryGetComp<CompRefuelable>();
 
     public float NeutroamineStored => Refuelable.Fuel;
 
