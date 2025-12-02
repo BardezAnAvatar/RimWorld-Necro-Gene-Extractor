@@ -71,6 +71,7 @@
 				<fuelCapacity>200.0</fuelCapacity>
 				<targetFuelLevelConfigurable>true</targetFuelLevelConfigurable>
 				<initialConfigurableTargetFuelLevel>100</initialConfigurableTargetFuelLevel>
+				<consumeFuelOnlyWhenUsed>true</consumeFuelOnlyWhenUsed>
 				<initialFuelPercent>0</initialFuelPercent>
 				<autoRefuelPercent>1</autoRefuelPercent>
 				<showFuelGizmo>true</showFuelGizmo>
