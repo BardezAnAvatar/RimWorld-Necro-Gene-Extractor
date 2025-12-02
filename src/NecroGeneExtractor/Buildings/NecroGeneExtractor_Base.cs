@@ -136,12 +136,6 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
         }
     }
 
-    public NecroGeneExtractor_Base()
-    {
-        var props = GetComp<CompRefuelable>().Props;
-        props.fuelConsumptionRate = NeutroConsumedPerHour / GenDate.TicksPerHour;
-    }
-
 
 
     //Accept Pawn
