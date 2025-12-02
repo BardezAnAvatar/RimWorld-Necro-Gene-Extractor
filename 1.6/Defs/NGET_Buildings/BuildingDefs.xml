@@ -69,8 +69,8 @@
 					</thingDefs>
 				</fuelFilter>
 				<fuelCapacity>200.0</fuelCapacity>
+				<fuelLabel>Neutroamine</fuelLabel>
 				<targetFuelLevelConfigurable>true</targetFuelLevelConfigurable>
-				<initialConfigurableTargetFuelLevel>100</initialConfigurableTargetFuelLevel>
 				<consumeFuelOnlyWhenUsed>true</consumeFuelOnlyWhenUsed>
 				<initialFuelPercent>0</initialFuelPercent>
 				<autoRefuelPercent>1</autoRefuelPercent>
