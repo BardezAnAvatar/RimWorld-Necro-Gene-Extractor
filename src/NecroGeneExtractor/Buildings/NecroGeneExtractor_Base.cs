@@ -197,8 +197,7 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
             {
                 var comp = corpse.GetComp<CompRottable>();
                 comp.disabled = true;
-                SetStartTick();
-                TicksRemaining = ExtractionTimeInTicks;
+                StartNewCycle();
             }
             if (deselect)
             {

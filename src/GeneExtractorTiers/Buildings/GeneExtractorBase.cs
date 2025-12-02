@@ -341,8 +341,7 @@ public abstract class GeneExtractorBase : Building_Enterable, IThingHolderWithDr
 
             if (innerContainer.TryAddOrTransfer(pawn))
             {
-                SetStartTick();
-                TicksRemaining = ExtractionTimeInTicks;
+                StartNewCycle();
             }
             if (deselect)
             {
