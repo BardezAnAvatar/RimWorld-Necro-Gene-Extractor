@@ -72,7 +72,7 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
     {
         get
         {
-            if (!base.Working)
+            if (!Working)
             {
                 return 0f;
             }
@@ -275,7 +275,7 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
         stringBuilder.AppendLineIfNotEmpty().Append("NGET_Neutroamine".Translate()).Append(": ")
             .Append(NeutroamineStored.ToStringByStyle(ToStringStyle.FloatMaxOne));
 
-        if (base.Working)
+        if (Working)
         {
             stringBuilder.Append(" (-").Append("PerHour".Translate((NeutroConsumedPerHour).ToString("F2"))).Append(")");
         }
