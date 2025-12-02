@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Bardez.Biotech.NecroGeneExtractor.Comps;
 using Bardez.Biotech.NecroGeneExtractor.Gui;
 using Bardez.Biotech.NecroGeneExtractor.Settings;
 using Bardez.Biotech.NecroGeneExtractor.Settings.Tiers;
@@ -19,7 +20,7 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
     private Corpse selectedCorpse;
 
     // Unsaved
-    [Unsaved(false)] private CompRefuelable cachedCompRefuelable;
+    [Unsaved(false)] private CompRefuelableNecroVat cachedCompRefuelable;
 
     protected NecroGeneExtractorSettings NecroSettings => NecroGeneExtractorMod.Settings;
 
@@ -47,7 +48,7 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
 
     protected override void UnsetTarget() => selectedCorpse = null;
 
-    protected CompRefuelable Refuelable => cachedCompRefuelable ??= this.TryGetComp<CompRefuelable>();
+    protected CompRefuelableNecroVat Refuelable => cachedCompRefuelable ??= this.TryGetComp<CompRefuelableNecroVat>();
 
     public float NeutroamineStored => Refuelable.Fuel;
 
