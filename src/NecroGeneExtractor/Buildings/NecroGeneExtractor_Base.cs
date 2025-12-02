@@ -46,9 +46,11 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
 
     protected override void UnsetTarget() => selectedCorpse = null;
 
-    public float NeutroamineStored => GetComp<CompRefuelable>().Fuel;
+    protected CompRefuelable Refuelable => GetComp<CompRefuelable>();
 
-    public float NeutroamineNeeded => GetComp<CompRefuelable>().GetFuelCountToFullyRefuel();
+    public float NeutroamineStored => Refuelable.Fuel;
+
+    public float NeutroamineNeeded => Refuelable.GetFuelCountToFullyRefuel();
 
     public float NeutroamineStarvationSeverity
     {
