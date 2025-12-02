@@ -75,6 +75,8 @@ public abstract class GeneExtractorBase : Building_Enterable, IThingHolderWithDr
     protected float TicksRemaining = 0;
     protected int ProgressBarTicks = 0;
 
+    protected virtual float WorkPerTick => OverchargeActive ? OverchargeSpeedFactor : 1;
+
 
 
     // Graphics
@@ -448,7 +450,7 @@ public abstract class GeneExtractorBase : Building_Enterable, IThingHolderWithDr
     {
         stringBuilder
             .AppendLineIfNotEmpty()
-            .Append($"{"TimeLeft".Translate().CapitalizeFirst()}: {(TicksRemaining / GenDate.TicksPerHour ) + 1} {"HoursLower".Translate()}");
+            .Append($"{"TimeLeft".Translate().CapitalizeFirst()}: {(TicksRemaining / WorkPerTick / GenDate.TicksPerHour ) + 1} {"HoursLower".Translate()}");
     }
 
     protected virtual void InspectStringAddPawn(StringBuilder stringBuilder)
