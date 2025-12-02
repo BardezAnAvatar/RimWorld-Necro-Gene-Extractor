@@ -221,7 +221,7 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
     protected void DisableConsumptionRate()
     {
         Refuelable.Props.consumeFuelOnlyWhenUsed = true;
-        Refuelable.Props.fuelConsumptionPerTickInRain = 0;
+        Refuelable.Props.fuelConsumptionRate = 0;
     }
 
     public void TryAddNeutroamine(int count)
