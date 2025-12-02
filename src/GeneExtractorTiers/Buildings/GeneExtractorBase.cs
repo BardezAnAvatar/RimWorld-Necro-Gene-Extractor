@@ -102,6 +102,11 @@ public abstract class GeneExtractorBase : Building_Enterable, IThingHolderWithDr
 
     protected void ResetStartTick() => startTick = -1;
 
+    /// <summary>Set the startTick property</summary>
+    /// <remarks>
+    ///     When this tick >= 0, .Working returns `true`
+    ///     Building_Enterable: public bool Working => startTick >= 0;
+    /// </remarks>
     protected void SetStartTick() => startTick = Find.TickManager.TicksGame;
 
     protected virtual void UnsetTarget() => selectedPawn = null;
