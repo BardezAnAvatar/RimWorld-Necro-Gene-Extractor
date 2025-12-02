@@ -70,9 +70,11 @@ public abstract class GeneExtractorBase : Building_Enterable, IThingHolderWithDr
     public virtual float ExtractionTimeInTicks => (Settings.extractionHours * GenDate.TicksPerHour / SpeedMultiplier);
 
 
+
     // Work
     protected float TicksRemaining = 0;
     protected int ProgressBarTicks = 0;
+
 
 
     // Graphics
@@ -89,6 +91,7 @@ public abstract class GeneExtractorBase : Building_Enterable, IThingHolderWithDr
             return cachedTopGraphic;
         }
     }
+
 
 
     // Unsaved
@@ -119,6 +122,7 @@ public abstract class GeneExtractorBase : Building_Enterable, IThingHolderWithDr
     protected virtual CompPowerTrader PowerTraderComp => cachedPowerComp ??= this.TryGetComp<CompPowerTrader>();
 
 
+
     // Save Game persistence
     public override void ExposeData()
     {
@@ -127,6 +131,8 @@ public abstract class GeneExtractorBase : Building_Enterable, IThingHolderWithDr
         Scribe_Values.Look(ref OverchargeActive, "overchargeActive", false);
         Scribe_Defs.Look(ref TargetGene, "targetGene");
     }
+
+
 
     // Graphics (Again)
     //NOTE: Why do the pawns not float like the Biosculptor?
@@ -156,6 +162,7 @@ public abstract class GeneExtractorBase : Building_Enterable, IThingHolderWithDr
     protected static Dictionary<Rot4, ThingDef> GlowMotePerRotation;
 
     protected static Dictionary<Rot4, EffecterDef> BubbleEffecterPerRotation;
+
 
 
     // Operation
@@ -327,6 +334,7 @@ public abstract class GeneExtractorBase : Building_Enterable, IThingHolderWithDr
     }
 
 
+
     // Pawn
     protected virtual Pawn GetContainedPawn()
     {
@@ -356,6 +364,7 @@ public abstract class GeneExtractorBase : Building_Enterable, IThingHolderWithDr
     }
 
 
+
     // Float Menus
     protected virtual void OpenFloatMenuGenePicker()
     {
@@ -366,6 +375,7 @@ public abstract class GeneExtractorBase : Building_Enterable, IThingHolderWithDr
     {
         FloatMenuHelper.BuildFloatMenuAvailablePawns(Map, CanAcceptPawn, SelectPawn);
     }
+
 
 
     // Gizmos
@@ -430,6 +440,7 @@ public abstract class GeneExtractorBase : Building_Enterable, IThingHolderWithDr
 
         yield return BuildInsertGizmo();
     }
+
 
 
     // Inspect string build-out
