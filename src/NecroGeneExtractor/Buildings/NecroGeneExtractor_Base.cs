@@ -306,12 +306,6 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
 
     protected override void Tick_ConsumeResources()
     {
-        var clamped = Mathf.Clamp(NeutroConsumedPerTick, 0f, 2.1474836E+09f); //yuge
-
-        //TEMP:
-        Log.Message($"[Necro Gene Extraction Tiers] (clamped) fuel consumption on tick: {clamped}");
-
-
         if (NeutroamineStored <= 0f)
         {
             starvationTicks++;
@@ -321,8 +315,17 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
             starvationTicks--;
         }
 
+
+        //Remove if the consume fuel if used is functioning
+        /*
+        var clamped = Mathf.Clamp(NeutroConsumedPerTick, 0f, 2.1474836E+09f); //yuge
+
+        //TEMP:
+        Log.Message($"[Necro Gene Extraction Tiers] (clamped) fuel consumption on tick: {clamped}");
+
         var comp = GetComp<CompRefuelable>();
         comp.ConsumeFuel(clamped);
+        */
     }
 
 
