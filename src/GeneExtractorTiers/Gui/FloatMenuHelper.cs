@@ -20,13 +20,11 @@ public static class FloatMenuHelper
         }
 
         var existingGenes = GeneHelper.GetAllGenesOnMap(map);
-        foreach (var gene in allPawnGenes)
-        {
-            if (existingGenes.ContainsKey(gene) && existingGenes[gene] == GeneState.SinglePack)
-            {
-                continue;
-            }
+        var missingGenes = allPawnGenes
+            .Where(gene => !existingGenes.ContainsKey(gene) || existingGenes[gene] != GeneState.SinglePack);
 
+        foreach (var gene in missingGenes.Any() ? missingGenes : allPawnGenes)
+        {
             list.Add(new FloatMenuOption(gene.LabelCap, delegate
             {
                 setTargetGene(gene);
