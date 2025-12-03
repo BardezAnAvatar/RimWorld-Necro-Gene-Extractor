@@ -269,7 +269,8 @@ public abstract class GeneExtractorBase : Building_Enterable, IThingHolderWithDr
                 }
                 if (zeroCostGenes.Any() && nonZeroCostGenes.Any())
                 {
-                    Messages.Message("GET_DidSplitZeroCost".Translate(), MessageTypeDefOf.TaskCompletion);
+                    var lookTarget = new LookTargets(this);
+                    Messages.Message("GET_DidSplitZeroCost".Translate(), lookTarget, MessageTypeDefOf.TaskCompletion);
                 }
             }
             else
