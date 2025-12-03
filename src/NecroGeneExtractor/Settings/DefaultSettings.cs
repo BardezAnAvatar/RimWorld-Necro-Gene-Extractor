@@ -19,7 +19,7 @@ internal static class DefaultSettings
         public const bool ACCEPT_DESSICATED = false;
         public const float MULTIPLIER_TIME = 1f; //base speed
         public const float MULTIPLIER_RESOURCE = 1f; //base consumption
-        public const float MULTIPLIER_OVERDRIVE_TIME = 3f; //base overdrive speed-up
+        public const float MULTIPLIER_OVERDRIVE_TIME = 2f; //base overdrive speed-up
         public const float MULTIPLIER_OVERDRIVE_RESOURCE = 2f; //base overdrive consumption
     }
 
@@ -29,7 +29,7 @@ internal static class DefaultSettings
         public const bool ACCEPT_DESSICATED = false;
         public const float MULTIPLIER_TIME = 0.8f; //125% faster
         public const float MULTIPLIER_RESOURCE = 2f; //200% consumption
-        public const float MULTIPLIER_OVERDRIVE_TIME = 3f; //overdrive speed-up
+        public const float MULTIPLIER_OVERDRIVE_TIME = 2f; //overdrive speed-up
         public const float MULTIPLIER_OVERDRIVE_RESOURCE = 2f; //overdrive consumption
     }
 
@@ -39,7 +39,7 @@ internal static class DefaultSettings
         public const bool ACCEPT_DESSICATED = true;
         public const float MULTIPLIER_TIME = 0.4f; //250% faster
         public const float MULTIPLIER_RESOURCE = 4f; //400% consumption
-        public const float MULTIPLIER_OVERDRIVE_TIME = 3f; //base overdrive speed-up
+        public const float MULTIPLIER_OVERDRIVE_TIME = 2f; //base overdrive speed-up
         public const float MULTIPLIER_OVERDRIVE_RESOURCE = 2f; //base overdrive consumption
     }
 }
