@@ -462,7 +462,7 @@ public abstract class GeneExtractorBase : Building_Enterable, IThingHolderWithDr
     {
         stringBuilder
             .AppendLineIfNotEmpty()
-            .Append($"{"CasketContains".Translate()}: {GetContainedNameColorized()}, {GetContainedXenotypeColorized()}, {GetContainedAge()}");
+            .Append($"{"CasketContains".Translate()}: {GetContainedNameColorized()} ({GetContainedXenotypeColorized()}), {GetContainedAge()}");
     }
 
     protected abstract void InspectStringAddResourceStarvation(StringBuilder stringBuilder);
