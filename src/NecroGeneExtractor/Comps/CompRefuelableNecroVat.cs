@@ -20,7 +20,7 @@ public class CompRefuelableNecroVat : CompRefuelable
             text += Props.fuelCapacity.ToStringDecimalIfSmall();
         }
 
-        if (!Props.consumeFuelOnlyWhenUsed && HasFuel)
+        if (HasFuel)
         {
             text += " ";
             int numTicks = (int)(Fuel / Props.fuelConsumptionRate * 60000f);
