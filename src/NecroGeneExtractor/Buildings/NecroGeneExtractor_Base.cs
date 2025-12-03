@@ -314,6 +314,8 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
 
     protected override void Tick_ConsumeResources()
     {
+        var clamped = Mathf.Clamp(NeutroConsumedPerTick, 0f, int.MaxValue); //yuge
+        Refuelable.ConsumeFuel(clamped);
     }
 
 
