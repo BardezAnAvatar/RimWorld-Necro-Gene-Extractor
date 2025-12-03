@@ -511,6 +511,8 @@ public abstract class GeneExtractorBase : Building_Enterable, IThingHolderWithDr
 
     protected virtual string GetContainedNameColorized() => selectedPawn.NameShortColored.Resolve();
 
+    protected virtual string GetContainedXenotypeColorized() => selectedPawn.genes.XenotypeLabelCap.Colorize(Color.magenta);
+
     protected virtual int GetContainedAge() => selectedPawn.ageTracker.AgeBiologicalYears;
 
 
