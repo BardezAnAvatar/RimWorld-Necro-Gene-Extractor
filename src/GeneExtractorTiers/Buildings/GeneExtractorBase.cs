@@ -269,7 +269,8 @@ public abstract class GeneExtractorBase : Building_Enterable, IThingHolderWithDr
                 }
                 if (zeroCostGenes.Any() && nonZeroCostGenes.Any())
                 {
-                    Messages.Message("GET_DidSplitZeroCost".Translate(), MessageTypeDefOf.TaskCompletion);
+                    var lookTarget = new LookTargets(this);
+                    Messages.Message("GET_DidSplitZeroCost".Translate(), lookTarget, MessageTypeDefOf.TaskCompletion);
                 }
             }
             else
@@ -285,7 +286,8 @@ public abstract class GeneExtractorBase : Building_Enterable, IThingHolderWithDr
                 GenPlace.TryPlaceThing(genepack, center, Map, ThingPlaceMode.Near);
 
                 SetPawnHediffXenogermReplicating(containedPawn);
-                Messages.Message("GET_Extracted".Translate(containedPawn.Name.ToStringShort, geneList.Join(x => x.LabelCap)), MessageTypeDefOf.TaskCompletion);
+                var lookTarget = new LookTargets(genepack);
+                Messages.Message("GET_Extracted".Translate(containedPawn.Name.ToStringShort, geneList.Join(x => x.LabelCap)), lookTarget, MessageTypeDefOf.TaskCompletion);
             }
         }
         StartNewCycle();
