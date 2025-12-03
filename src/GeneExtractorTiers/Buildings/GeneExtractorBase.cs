@@ -509,11 +509,11 @@ public abstract class GeneExtractorBase : Building_Enterable, IThingHolderWithDr
         return selectedPawn.Named("PAWN");
     }
 
-    protected virtual string GetContainedNameColorized() => selectedPawn.NameShortColored.Resolve();
+    protected virtual string GetContainedNameColorized() => GetContainedPawn().NameShortColored.Resolve();
 
-    protected virtual string GetContainedXenotypeColorized() => selectedPawn.genes.XenotypeLabelCap.Colorize(Color.magenta);
+    protected virtual string GetContainedXenotypeColorized() => GetContainedPawn().genes.XenotypeLabelCap.Colorize(Color.cyan);
 
-    protected virtual int GetContainedAge() => selectedPawn.ageTracker.AgeBiologicalYears;
+    protected virtual int GetContainedAge() => GetContainedPawn().ageTracker.AgeBiologicalYears;
 
 
 

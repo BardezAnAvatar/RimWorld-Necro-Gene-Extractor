@@ -285,12 +285,6 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
         return selectedCorpse.InnerPawn.Named("PAWN");
     }
 
-    protected override string GetContainedNameColorized() => GetContainedPawn().NameShortColored.Resolve();
-
-    protected override string GetContainedXenotypeColorized() => GetContainedPawn().genes.XenotypeLabelCap.Colorize(Color.magenta);
-
-    protected override int GetContainedAge() => GetContainedPawn().ageTracker.AgeBiologicalYears;
-
 
 
     // Ticks
