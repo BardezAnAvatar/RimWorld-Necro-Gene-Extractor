@@ -462,7 +462,7 @@ public abstract class GeneExtractorBase : Building_Enterable, IThingHolderWithDr
     {
         stringBuilder
             .AppendLineIfNotEmpty()
-            .Append($"{"CasketContains".Translate()}: {GetContainedNameColorized()}, {GetContainedAge()}");
+            .Append($"{"CasketContains".Translate()}: {GetContainedNameColorized()} ({GetContainedXenotypeColorized()}), {GetContainedAge()}");
     }
 
     protected abstract void InspectStringAddResourceStarvation(StringBuilder stringBuilder);
@@ -509,9 +509,11 @@ public abstract class GeneExtractorBase : Building_Enterable, IThingHolderWithDr
         return selectedPawn.Named("PAWN");
     }
 
-    protected virtual string GetContainedNameColorized() => selectedPawn.NameShortColored.Resolve();
+    protected virtual string GetContainedNameColorized() => GetContainedPawn().NameShortColored.Resolve();
 
-    protected virtual int GetContainedAge() => selectedPawn.ageTracker.AgeBiologicalYears;
+    protected virtual string GetContainedXenotypeColorized() => GetContainedPawn().genes.XenotypeLabelCap.Colorize(Color.cyan);
+
+    protected virtual int GetContainedAge() => GetContainedPawn().ageTracker.AgeBiologicalYears;
 
 
 
