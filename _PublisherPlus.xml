@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Configuration>
+	<Excluded>
+		<exclude>.assets</exclude>
+		<exclude>.git</exclude>
+		<exclude>.gitattributes</exclude>
+		<exclude>.github</exclude>
+		<exclude>.gitignore</exclude>
+		<exclude>1.6/Assemblies/GeneExtractorTiers.dll</exclude>
+		<exclude>src</exclude>
+		<exclude>MAINTENANCE-NOTICE.md</exclude>
+		<exclude>README.md</exclude>
+	</Excluded>
+</Configuration>
