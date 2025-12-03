@@ -215,18 +215,6 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
 
 
     // Fuel
-    protected void UpdateConsumptionRate()
-    {
-        Refuelable.Props.consumeFuelOnlyWhenUsed = false;
-        Refuelable.Props.fuelConsumptionRate = NeutroConsumedPerTick * GenDate.TicksPerDay;
-    }
-
-    protected void DisableConsumptionRate()
-    {
-        Refuelable.Props.consumeFuelOnlyWhenUsed = true;
-        Refuelable.Props.fuelConsumptionRate = 0;
-    }
-
     public void TryAddNeutroamine(int count)
     {
         //how many stacks are we adding?
@@ -326,9 +314,8 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
 
     protected override void Tick_ConsumeResources()
     {
-        UpdateConsumptionRate();
-
-        //Note: consumption is handled in CompRefuelable instead
+        var clamped = Mathf.Clamp(NeutroConsumedPerTick, 0f, int.MaxValue); //yuge
+        Refuelable.ConsumeFuel(clamped);
     }
 
 
@@ -336,13 +323,11 @@ public abstract class NecroGeneExtractor_Base : GeneExtractorBase
     // Operations
     protected override void StartNewCycle()
     {
-        UpdateConsumptionRate();
         base.StartNewCycle();
     }
 
     protected override void OnStop(bool minifying = false)
     {
-        DisableConsumptionRate();
         base.OnStop(minifying);
         containedCorpse = null;
     }

@@ -1,4 +1,5 @@
-﻿using Bardez.Biotech.NecroGeneExtractor.Buildings;
+﻿using System;
+using Bardez.Biotech.NecroGeneExtractor.Buildings;
 using RimWorld;
 using Verse;
 
@@ -20,20 +21,20 @@ public class CompRefuelableNecroVat : CompRefuelable
             text += Props.fuelCapacity.ToStringDecimalIfSmall();
         }
 
-        if (!Props.consumeFuelOnlyWhenUsed && HasFuel)
+        if (HasFuel)
         {
-            text += " ";
-            int numTicks = (int)(Fuel / Props.fuelConsumptionRate * 60000f);
+            if (parent is not NecroGeneExtractor_Base necroVat)
+                return text;
 
-            if (parent is NecroGeneExtractor_Base necroVat && necroVat.Working)
+            if (necroVat.Working)
             {
                 var hourlyNeutroRate = necroVat.NeutroConsumedPerHour.ToString("F2");
-                text += "(-" + "PerHour".Translate(hourlyNeutroRate) + ") ";
+                text += " (-" + "PerHour".Translate(hourlyNeutroRate) + ")";
             }
-            text += "NGET_RemainingFuelTime".Translate().Formatted(numTicks.ToStringTicksToPeriod());
+            int numTicks = Convert.ToInt32(Fuel / necroVat.NeutroConsumedPerTick);
+            text += " " + "NGET_RemainingFuelTime".Translate().Formatted(numTicks.ToStringTicksToPeriod());
         }
-
-        if (!HasFuel && !Props.outOfFuelMessage.NullOrEmpty())
+        else if (!HasFuel && !Props.outOfFuelMessage.NullOrEmpty())
         {
             string arg = Props.outOfFuelMessage;
             text += $"\n{arg} ({GetFuelCountToFullyRefuel()}x {Props.fuelFilter.AnyAllowedDef.label})";
