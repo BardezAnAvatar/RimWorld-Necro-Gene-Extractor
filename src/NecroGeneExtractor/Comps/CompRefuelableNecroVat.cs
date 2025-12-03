@@ -22,10 +22,13 @@ public class CompRefuelableNecroVat : CompRefuelable
 
         if (HasFuel)
         {
+        if (parent is not NecroGeneExtractor_Base necroVat)
+            return text;
+
             text += " ";
             int numTicks = (int)(Fuel / Props.fuelConsumptionRate * 60000f);
 
-            if (parent is NecroGeneExtractor_Base necroVat && necroVat.Working)
+            if (necroVat.Working)
             {
                 var hourlyNeutroRate = necroVat.NeutroConsumedPerHour.ToString("F2");
                 text += "(-" + "PerHour".Translate(hourlyNeutroRate) + ") ";
