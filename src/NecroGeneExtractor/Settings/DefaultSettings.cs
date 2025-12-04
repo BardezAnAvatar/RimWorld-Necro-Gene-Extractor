@@ -6,7 +6,7 @@ internal static class DefaultSettings
     public const float FRESH_RESOURCE = .25f;
 
     /// <summary>Processing time of a single cycle of the corpse gene extraction, in hours</summary>
-    public const float FRESH_TIME = 24f;
+    public const float FRESH_TIME = 96f;
 
     public const float MULTIPLIER_RESOURCE_ROTTING = 3f;
     public const float MULTIPLIER_RESOURCE_DESSICATED = 5f;
