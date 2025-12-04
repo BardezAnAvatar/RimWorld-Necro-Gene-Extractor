@@ -1,13 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ModMetaData>
-  <packageId>Bardez.Biotech.NecroGeneExtractor</packageId>
-  <name>Necro Gene Extractor Tiers</name>
+	<packageId>Bardez.Biotech.NecroGeneExtractor</packageId>
+	<name>Necro Gene Extractor Tiers</name>
 	<modVersion>1.0</modVersion>
 	<author>Bardez</author>
-  <supportedVersions>
-    <li>1.6</li>
-  </supportedVersions>
-  <author>Bardez</author>
-  <description>Adds a new set of biotech buildings, the Necro Genepack Extractors. These extract genes from dead bodies.</description>
+	<supportedVersions>
+		<li>1.6</li>
+	</supportedVersions>
+	<modDependencies>
+		<li>
+			<packageId>Ludeon.RimWorld.Biotech</packageId>
+			<displayName>Biotech</displayName>
+		</li>
+		<li>
+			<packageId>RedMattis.GeneExtractor</packageId>
+			<displayName>Gene Extractor Tiers</displayName>
+			<steamWorkshopUrl>steam://url/CommunityFilePage/3016454783</steamWorkshopUrl>
+		</li>
+	</modDependencies>
+	<loadAfter>
+		<li>Ludeon.RimWorld</li>
+		<li>Ludeon.RimWorld.Biotech</li>
+		<li>RedMattis.GeneExtractor</li>
+	</loadAfter>
 	<description>Adds a new set of biotech buildings, the Necro Gene Extractors. These extract genes from corpses.</description>
 </ModMetaData>
