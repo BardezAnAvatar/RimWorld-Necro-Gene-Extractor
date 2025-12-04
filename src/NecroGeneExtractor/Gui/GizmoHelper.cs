@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Bardez.Biotech.NecroGeneExtractor.Utilities;
 using Bardez.GeneExtractorTiers.Gui;
 using RimWorld;
 using UnityEngine;

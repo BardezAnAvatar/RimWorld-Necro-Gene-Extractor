@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using RimWorld;
+﻿using RimWorld;
 
 namespace Bardez.Biotech.NecroGeneExtractor.Comps.Properties;
 

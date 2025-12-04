@@ -5,8 +5,6 @@ using System.Reflection;
 using GeneExtractorTiers;
 using RimWorld;
 using Verse;
-using static HarmonyLib.Code;
-using static UnityEngine.Networking.UnityWebRequest;
 
 namespace Bardez.GeneExtractorTiers.Utilities;
 
